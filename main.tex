@@ -2,7 +2,7 @@
 %% e.g., "A4", "letter", "legal", "executive", ...
 %% The size of the paper of the resulting PDF file.
 
-\newcommand{\mylaterality}{twoside}
+\newcommand{\mylaterality}{oneside} %TODO: change to twoside when finished
 %% "oneside" or "twoside"
 %% Either you are creating a document which is printed on both, left pages
 %% and right pages (twoside) or you create a document which is printed
@@ -155,7 +155,9 @@
 %% ========================================================================
 %%%% MISC usepackages
 %% ========================================================================
-
+\usepackage{tikz}
+\usepackage{caption}
+\usepackage{subcaption}
 %% ... it's OK to put here your own usepackage commands ...
 
 
@@ -203,8 +205,6 @@
 
 \frontmatter                    %% KOMA: roman page numbers and such; only available in scrbook
 
-\input{colophon}                %% defines information about editor, LaTeX, font, ...
-
 %% Choose your desired title page:
 \input{\mytitlepage}            %% include title page
 
@@ -232,10 +232,11 @@
 \mainmatter                     %% KOMA: marks main part using arabic page numbers and such; only available in scrbook
 
 
-\input{example-short-chapter}   %% remove this line to get rid of the example chapter
+% \input{example-short-chapter}   %% remove this line to get rid of the example chapter
 
 %% include tex file chapters:
-% \include{introduction}        %% this is a suggestion: you have to create this file on demand
+\include{introduction}
+\include{related-work}
 % \include{problem}             %% this is a suggestion: you have to create this file on demand
 % \include{solution}            %% this is a suggestion: you have to create this file on demand
 % \include{evaluation}          %% this is a suggestion: you have to create this file on demand
