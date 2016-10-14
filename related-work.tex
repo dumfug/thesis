@@ -1,22 +1,24 @@
 \chapter{Related Work}
 
+
 \section{Graph Theory Basics}
 
 In this section some graph theory related notation is defined which is used during this thesis.
+It is for the most part based on \cite{Thulasiraman1992} and on \cite{Diestel2012}.
 A graph is a mathematical construct that can be used to model and explore the relationship between objects. 
-More formally, a graph \cite{Thulasiraman1992} is a ordered pair of finite sets \(G = (V, E)\), whereas \(V\) denotes the set of \emph{vertices} (i.e., the objects) and \(E \subseteq [V]^2 \) the set of \emph{edges} (i.e., the relationships between the objects).
+More formally, a graph is a ordered pair of finite sets \(G = (V, E)\), whereas \(V\) denotes the set of \emph{vertices} (i.e., the objects) and \(E \subseteq [V]^2 \) the set of \emph{edges} (i.e., the relationships between the objects).
 It is common to write \(V(G)\) and \(E(G)\) to refer to the set of vertices, respectively the set of edges, that are associated with a graph \(G\).
 An edge \(\{v_1, v_2\} \in E(G)\) is an unordered pair of two vertices.
-This means that there is not distinction between the two edges \(\{v_1, v_2 \}\) and \(\{v_2, v_1\}\). 
+This means that there is no distinction between the two edges \(\{v_1, v_2 \}\) and \(\{v_2, v_1\}\). 
 A graph with this property is called a \emph{undirected} graph.
 However, it is also possible to define edges as ordered pairs, so that each edge does have a start- and endpoint. 
 Such a graph is called a \emph{directed} graph.
 An edge of the form \(\{v_i, v_i\} \in E(G)\) is called a \emph{self-loop} of the vertex \(v_i\).
 Furthermore, it is possible that two distinct vertices are joined by multiple edges. 
 Such edges are referred to as \emph{parallel} edges.
-A graph that has no parallel edges and no self-loops is denoted as a \emph{simple} graph.
-Figure \ref{fig:example_graphs} depicts two examples for graphs.
-
+A graph that has no parallel edges and no self-loops is called a \emph{simple} graph.
+Figure \ref{fig:example_graphs} depicts a example for a simple graph and for a graph with multiple edges and a self-loop vertex.
+All further mentions and definitions for graphs are referring to undirected simple graphs unless stated otherwise.
 
 \begin{figure}
    \centering
@@ -54,8 +56,26 @@ Figure \ref{fig:example_graphs} depicts two examples for graphs.
      \caption{A undirected graph with a self-loop and parallel edges.}
    \end{subfigure}
    
-   \caption{Graphical representation of two graphs with different properties.} 
+   \caption{Graphical representation of two graphs with different properties. The vertices are represented by red dots and the edges are the line segments between them.} 
    \label{fig:example_graphs}
 \end{figure}
 
-The \emph{order} of a graph is the number of vertices (i.e., the cardinality of the vertex set) and is denoted as \(n = |V|\). 
+
+The \emph{order} of a graph is its number of vertices (i.e., the cardinality of the vertex set) and is denoted as \(n = |V(G)|\). 
+The neighborhood of a vertex \(v_i\) is defined as \(N(v_i) = \{v_j \in V(G) : \{v_i, v_j \} \in E(G)\}\).
+It is the set of vertices that are \emph{adjacent} to the vertex \(v_i\). 
+The cardinality of this set is called the \emph{degree} of the vertex and is denoted as \(d(v_i) = |N(v_i)|\). 
+A vertex without any neighbors (i.e., with a degree of zero) is called \emph{isolated}.
+It is also often very useful to measure degree properties for the graph. 
+For example, the \emph{minimum degree} \(\delta(G) = \min\{d(v_i) : v_i \in V(G)\}\), the \emph{maximal degree} \(\Delta(G) = \max\{d(v_i) : v_i \in V(G)\}\), and the \emph{average degree} \(d(G) = \frac{1}{n} \sum_{v_i \in V(G)} d(v_i)\).
+These global measures can be used to get an insight in the structure of the graph.
+
+A \emph{path} on a graph can be defined as a finite sequence of vertices \(v_1,v_2,\dots,v_k\), such that between any consecutive pair of vertices exist a edge in the graph.  
+Furthermore, all edges between the vertices and the vertices itself must be distinct. 
+The first and the last vertices in the sequence are called the \emph{end vertices} or \emph{terminal vertices} of the path.
+The \emph{path length} is the number of edges on the path.
+Two vertices are \emph{connected} if it is possible to find a path with these two vertices as end points.
+A vertex is, by definition, connected to itself.
+If there exists a path between all pairs of vertices, then the graph is called connected.
+It is possible to partition the vertex and edge set of a not connected graph in such a way that there are no edges between vertices in different partitions.
+These partitions are called the \emph{components} of the graph.
