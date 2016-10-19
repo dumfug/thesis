@@ -69,6 +69,7 @@ The cardinality of this set is called the \emph{degree} of the vertex and is den
 A vertex without any neighbors (i.e., with a degree of zero) is called \emph{isolated}.
 It is also often very useful to measure degree properties for the graph.
 For example, the \emph{minimum degree} \(\delta(G) = \min\{d(v_i) : v_i \in V(G)\}\), the \emph{maximal degree} \(\Delta(G) = \max\{d(v_i) : v_i \in V(G)\}\), and the \emph{average degree} \(d(G) = \frac{1}{n} \sum_{v_i \in V(G)} d(v_i)\).
+Another way to calculate the average degree is \(d(G) = \frac{2|E|}{n}\), due to the fact that each edge is counted twice during the summation of the vertex degrees.
 These global measures can be used to get an insight in the basic structure of the graph.
 Another global property related to the degree is the \emph{degree distribution} \(p\)~\cite{Barabasi2016} of a graph.
 It yields the probability that that a randomly selected vertex has a degree of \(k\).
@@ -100,7 +101,6 @@ This is, of course, a local property of one vertex.
 However, it is also often useful to consider the average clustering coefficient \(C = \frac{1}{n} \sum_{v(i) \in V(G)} C(v_i)\) of the graph.
 Figure~\ref{fig:clustering-coefficent-examples} shows some examples for neighborhoods with different clustering coefficients.
 
-% NOTE: link to examples for paths (i.e. small world effect) and degree distributions and clustering coefficent in social network context
 
 \begin{figure}[h]
    \centering
@@ -164,7 +164,7 @@ Figure~\ref{fig:clustering-coefficent-examples} shows some examples for neighbor
 
 \section{Social Networks}
 
-In the real world it is common to use graphs to model the complex systems that are arising.
+In the real-world it is common to use graphs to model the complex systems that are arising.
 For example, the web can be represented as a graph, where the vertices correspond to websites and the edges are the hyperlinks between them.
 Another use case are large infrastructure networks, such as power grids.
 In a graph that represents such a power grid network vertices represent things like power stations or transformers and edges the power lines between them.
@@ -172,13 +172,13 @@ However, when modeling these large networks it common to use a slightly differen
 Vertices are often called \emph{nodes} and edges are called \emph{links} in the context of networks.
 
 Social networks~\cite{Newman2010} are another type of network that can benefit from the usage of graph theory methods.
-The study of these networks is considered to be a part of the field of sociology and the researcher may also use slightly different terminology for the vertices and edges.
+The study of these networks is considered to be a part of the field of sociology and researchers may also use slightly different terminology for the vertices and edges in their work.
 Nodes (or vertices) often represent people in social networks and are also sometimes referred to as \emph{actors}.
 However, it is also possible that nodes depict other entities, such as a departments, companies, or countries (i.e., larger groups of people).
 The links (or edges) between these entities can mean, depending of the context, different things as well and are sometimes also referred to as \emph{ties}.
 For example, links between persons can show social relationships (e.g., friendships), collaborations in projects (e.g., co-authorship of a scientific papers), or other social interactions.
 Links between companies could represent trading relationships or the like.
-Often are social networks only mentioned in relation to large online communities, such as Facebook or Twitter, but there is no necessity that a social network must exist in an online form.
+Often social networks are only mentioned in relation to large online communities, such as Facebook or Twitter, but there is no necessity that a social network must exist in an online form.
 The network of acquaintances or friends in a school is also considered as a social network.
 Figure~\ref{fig:karate-club-network} shows a famous example of a small real-world social network.
 
@@ -198,7 +198,7 @@ A \emph{triad} on the other hand describes triples of actors and the ties betwee
 This concept is especially important for the question of transitivity of certain relationships.
 A example for this would be the question \enquote{is the friend of my friend also my friend?}.
 
-A property of many real world social networks is a \emph{community structure}~\cite{Girvan2002}.
+A property of many real-world social networks is a \emph{community structure}~\cite{Girvan2002}.
 Communities are groups of actors that are more connected to actors in the same group, than to actors in a different one.
 This basically means that there exists subsets of densely linked nodes in the network with very few links to other subsets.
 The network shown in figure~\ref{fig:karate-club-network} has two known communities characterized by different node colors.
@@ -209,7 +209,59 @@ Examples are approaches based on hierarchical clustering, or edge betweenness (i
 
 Another attribute that many social networks share is that they are \emph{scale-free networks}~\cite{Barabasi2016}.
 Formally, a network is a scale-free network if its degree distribution is a \emph{power law distribution} (i.e., \(p(k) \sim k^{-\gamma}\), where \(\gamma\) is the parameter of the distribution that denotes the degree exponent).
-The value for \(\gamma\) for most real world (social) networks is in the range between 2 and 3.
+The value for \(\gamma\) for most real-world (social) networks is in the range between 2 and 3.
 A consequence of the power law distribution is that the distribution of the degrees is right-skewed with a long tail.
 This means that there is a large number of nodes in the network that have only a few links (i.e., a small degree) but there is also the chance that there exists a few nodes with a very high degree.
 Such nodes are usually called \emph{hubs} and may correspond in the context of social networks to very influential actors that can play an important role in the network.
+
+
+\section{Time Varying Networks}
+
+
+\section{Network Models}
+
+This section contains descriptions of different network models.
+These models can be used to build graphs that fulfill different properties.
+They are often a useful tool to model some type of real-world network (e.g., a social network) to gain a deeper understanding on the processes that create these networks.
+
+\subsection{The Erdős-Rényi Model}
+
+The Erdős–Rényi (ER) model~\cite{Erdos1959, Newman2010} was in its first form described by the two famous mathematicians Paul Erdős and Alfréd Rényi in 1959.
+The model generates a random graph with \(n\) nodes and \(m\) links.
+It chooses one of the \(\binom{\binom{n}{2}}{m}\) possible graphs of this size with equal probability at random.
+This model is also often called \(G(n, m)\).
+There is another model that is very similar to the \(G(n, m)\) model, called the \(G(n, p)\) model.
+Here is the number of links not fixed beforehand, but determined by \(p\), the probability of the presence of a link between any pair of nodes in the network.
+Hence, the edges of a random network are determined by flipping a biased coin for each of the \(\binom{n}{2}\) possible edges.
+This is a very simple, yet powerful, model to explore some effects that take place in real-world systems.
+
+The probability for an arbitrary network with exactly \(m\) links under this model is \(p^{m} (1-p)^{\binom{n}{2} - m}\).
+Therefore, the probability that the model will generate a network with \(m\) links is \(\mathbb{P}[m] = \binom{\binom{n}{2}}{m} p^{m} (1-p)^{\binom{n}{2} - m}\) (i.e., the probability of such network times the number of possible networks).
+This corresponds to  a binomial distribution \(B(\binom{n}{2}, p)\).
+One simple consequence of that is that the expected value for the number of links \(\mathbb{E}[m] = \sum_{m=0}^{\binom{n}{2}} m \mathbb{P}[m] = \binom{n}{2} p\).
+The expected value for the average degree of a network generated with this model is deduced in equation~\ref{eq:avg-degree-erdos-model}.
+This value is also often called \(c\).
+The probability that an arbitrary node has a degree of exactly \(k\) is given by \(p(k) = \binom{n-1}{k} p^{k} (1-p)^{n-1-k}\) (i.e., \(k\) of its possible \(n-1\) links must exist and there are \(\binom{n-1}{k}\) possible combinations for the \(k\) links).
+Therefore, the degree distribution of this model is a binomial distribution as well.
+However, it is also possible to approximate the degree distribution with an Poisson distribution \(p(k) = e^{-c} \frac{c^{k}}{k!}\) for large values of \(n\).
+
+\begin{equation}
+  c = \mathbb{E}[d(G)] = \sum_{m=0}^{\binom{n}{2}} \frac{2m}{n} \mathbb{P}[m] = \frac{2}{n} \sum_{m=0}^{\binom{n}{2}} m \mathbb{P}[m] = \frac{2}{n} \binom{n}{2} p = (n-1) p
+  \label{eq:avg-degree-erdos-model}
+\end{equation}
+
+A nice property of the Erdős–Rényi model is that it can be used to study the formation of giant components in networks.
+A giant component is a component that contains a large fraction of the nodes.
+It is interesting that even such a simple model can be used to study a phenomenon that is part of many real-world networks.
+However, there are also quite a few problems with this model.
+The degrees in real-world networks are usually not binomial, respectively Poisson, distributed.
+The formation of hubs in networks usually requires a power-law degree distribution.
+Another example for a shortcoming of the model is the inability to generate community structures.
+
+
+\subsection{The Barabási-Albert model}
+
+\subsection{}
+
+
+\section{User Activity Models}
