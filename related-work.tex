@@ -208,9 +208,9 @@ There is a variety of different methods and approaches to perform this task.
 Examples are approaches based on hierarchical clustering, or edge betweenness (i.e., the number of shortest paths going through an edge).
 
 Another attribute that many social networks share is that they are \emph{scale-free networks}~\cite{Barabasi2016}.
-Formally, a network is a scale-free network if its degree distribution is a \emph{power law distribution} (i.e., \(p(k) \sim k^{-\gamma}\), where \(\gamma\) is the parameter of the distribution that denotes the degree exponent).
+Formally, a network is a scale-free network if its degree distribution is a \emph{power-law distribution} (i.e., \(p(k) \sim k^{-\gamma}\), where \(\gamma\) is the parameter of the distribution that denotes the degree exponent).
 The value for \(\gamma\) for most real-world (social) networks is in the range between 2 and 3.
-A consequence of the power law distribution is that the distribution of the degrees is right-skewed with a long tail.
+A consequence of the power-law distribution is that the distribution of the degrees is right-skewed with a long tail.
 This means that there is a large number of nodes in the network that have only a few links (i.e., a small degree) but there is also the chance that there exists a few nodes with a very high degree.
 Such nodes are usually called \emph{hubs} and may correspond in the context of social networks to very influential actors that can play an important role in the network.
 
@@ -229,16 +229,17 @@ They are often a useful tool to model some type of real-world network (e.g., a s
 The Erdős–Rényi (ER) model~\cite{Erdos1959, Newman2010} was in its first form described by the two famous mathematicians Paul Erdős and Alfréd Rényi in 1959.
 The model generates a random graph with \(n\) nodes and \(m\) links.
 It chooses one of the \(\binom{\binom{n}{2}}{m}\) possible graphs of this size with equal probability at random.
-This model is also often called \(G(n, m)\).
+The idea is that large, complex networks often seem random and can be examined using random graphs and statistical methods~\cite{Barabasi2002}.
+Therefore,this is a very simple, yet powerful, model to explore some effects that take place in real-world systems.
+It is also often called \(G(n, m)\).
 There is another model that is very similar to the \(G(n, m)\) model, called the \(G(n, p)\) model.
 Here is the number of links not fixed beforehand, but determined by \(p\), the probability of the presence of a link between any pair of nodes in the network.
 Hence, the edges of a random network are determined by flipping a biased coin for each of the \(\binom{n}{2}\) possible edges.
-This is a very simple, yet powerful, model to explore some effects that take place in real-world systems.
 
 The probability for an arbitrary network with exactly \(m\) links under this model is \(p^{m} (1-p)^{\binom{n}{2} - m}\).
-Therefore, the probability that the model will generate a network with \(m\) links is \(\mathbb{P}[m] = \binom{\binom{n}{2}}{m} p^{m} (1-p)^{\binom{n}{2} - m}\) (i.e., the probability of such network times the number of possible networks).
+Therefore, the probability that the model will generate a network with \(m\) links is \(\prob{m} = \binom{\binom{n}{2}}{m} p^{m} (1-p)^{\binom{n}{2} - m}\) (i.e., the probability of such network times the number of possible networks).
 This corresponds to  a binomial distribution \(B(\binom{n}{2}, p)\).
-One simple consequence of that is that the expected value for the number of links \(\mathbb{E}[m] = \sum_{m=0}^{\binom{n}{2}} m \mathbb{P}[m] = \binom{n}{2} p\).
+One simple consequence of that is that the expected value for the number of links \(\expval{m} = \sum_{m=0}^{\binom{n}{2}} m \prob{m} = \binom{n}{2} p\).
 The expected value for the average degree of a network generated with this model is deduced in equation~\ref{eq:avg-degree-erdos-model}.
 This value is also often called \(c\).
 The probability that an arbitrary node has a degree of exactly \(k\) is given by \(p(k) = \binom{n-1}{k} p^{k} (1-p)^{n-1-k}\) (i.e., \(k\) of its possible \(n-1\) links must exist and there are \(\binom{n-1}{k}\) possible combinations for the \(k\) links).
@@ -246,22 +247,54 @@ Therefore, the degree distribution of this model is a binomial distribution as w
 However, it is also possible to approximate the degree distribution with an Poisson distribution \(p(k) = e^{-c} \frac{c^{k}}{k!}\) for large values of \(n\).
 
 \begin{equation}
-  c = \mathbb{E}[d(G)] = \sum_{m=0}^{\binom{n}{2}} \frac{2m}{n} \mathbb{P}[m] = \frac{2}{n} \sum_{m=0}^{\binom{n}{2}} m \mathbb{P}[m] = \frac{2}{n} \binom{n}{2} p = (n-1) p
+  c = \expval{d(G)} = \sum_{m=0}^{\binom{n}{2}} \frac{2m}{n} \prob{m} = \frac{2}{n} \sum_{m=0}^{\binom{n}{2}} m \prob{m} = \frac{2}{n} \binom{n}{2} p = (n-1) p
   \label{eq:avg-degree-erdos-model}
 \end{equation}
 
 A nice property of the Erdős–Rényi model is that it can be used to study the formation of giant components in networks.
-A giant component is a component that contains a large fraction of the nodes.
+A \emph{giant component} is a component that contains a large fraction of the nodes.
 It is interesting that even such a simple model can be used to study a phenomenon that is part of many real-world networks.
 However, there are also quite a few problems with this model.
 The degrees in real-world networks are usually not binomial, respectively Poisson, distributed.
 The formation of hubs in networks usually requires a power-law degree distribution.
-Another example for a shortcoming of the model is the inability to generate community structures.
+Other examples for a shortcomings of the model is the inability to generate community structures and inadequate average path lengths.
 
 
 \subsection{The Barabási-Albert model}
 
-\subsection{}
+One model that addresses the problem of missing power-law degree distributions is the Barabási-Albert (BA) model~\cite{Barabasi2002}.
+The model is named after its creators Réka Albert and Albert-László Barabási.
+It tries to emulate the dynamic process that is responsible for the creation of scale-free degree distributions and yields a the generated network as result.
+One of the main differences to the ER model is that the size of the network is not fixed.
+The model starts with an small number of nodes and adds new nodes to the network over time (i.e., the network grows).
+A newly added node then forms links with already existing nodes.
+Which other nodes are chosen depends on how important the other nodes are.
+The more important a node is, the more likely it is that the new nodes forms a connection with it.
+This process is called \emph{preferential attachment}.
+It can, for example, be used to describe the behavior of new users in social networks (i.e., new users tend to form ties with already established users) or that new websites on the web link to already popular ones because they are easier to find \todo{find better examples with references to papers?}.
+More formally, the model starts with a small number \(m_{0}\) of nodes and the following two steps are repeated in every time step:
+
+\begin{enumerate}
+    \item add a new node to the network
+    \item choose \(m \leq m_{0}\) already existing nodes at random proportional to their degree and form a link with them
+\end{enumerate}
+
+This means that in this model the degree of a node is a measure of its popularity  and a existing node \(v_{i}\) will be selected with a probability \(\Pi(v_{i})=\frac{d(v_{i})}{\sum_{j} d(v_{j})}\) to form a link.
+The process yields after \(t\) time steps a network that consists of \(m_{0} + t\) nodes and \(mt\) links.
+
+It can be shown, using different methods (e.g., continuum theory, master equations, and numerically), that the node degrees follow a power-law distribution with an degree exponent of \(\gamma = 3\).
+Furthermore, asymptotically does \(\gamma\) not depend on \(m\), the number of links that are generated in each iteration.
+The degree distribution is also (asymptotically) independent on the time, and therefore on the size of the network.
+This is also a property of the model and reflects the fact that there exists real-world networks with a power-law degree distribution with different sizes.
+However, like the ER model, the BA model has its shortcomings as well.
+For example, the average path length of generated networks does not comply with real-world networks.
+However, they are more realistic than the path lengths generated by the ER model.
+Another property that can not be reproduced by this model are the community structures that many real-world, and especially social, networks have~\cite{Reid2011}.
+
+Another interesting question regarding the Barabási-Albert model is if both used mechanisms, the network growth and the preferential attachment, are necessary to produce a scale-free network.
+The result of numerical simulations and formal tests of the model with either of the two mechanisms missing is that both are required.
+Missing preferential attachment results in exponentially distributed node degrees and the missing network growth leads to a power-law degree distribution in the beginning, but it changes to a normal distribution over time.
+This indicates that in fact both mechanisms are required to yield a network with the scale-free property.
 
 
 \section{User Activity Models}
