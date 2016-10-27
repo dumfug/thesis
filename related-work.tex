@@ -162,6 +162,10 @@ Figure~\ref{fig:clustering-coefficent-examples} shows some examples for neighbor
 \end{figure}
 
 
+%% ========================================================================
+%% ========================================================================
+
+
 \section{Social Networks}
 
 In the real-world it is common to use graphs to model the complex systems that are arising.
@@ -215,7 +219,169 @@ This means that there is a large number of nodes in the network that have only a
 Such nodes are usually called \emph{hubs} and may correspond in the context of social networks to very influential actors that can play an important role in the network.
 
 
-\section{Time Varying Networks}
+%% ========================================================================
+%% ========================================================================
+
+
+\section{Time-varying Networks}
+
+This section contains an overview on the concept of time-varying networks~\cite{Holme2012, Holme2015}.
+Since this type of network is used in many different scientific fields it also has a variety of names.
+For example, temporal networks, dynamic networks, evolving graphs, or the name that is mainly used in this thesis, time-varying networks.
+As already mentioned in the section about social networks, the structure, or topology, of networks can be used to understand dynamic processes and their behavior.
+However, there are a lot of dynamical processes that are modeled using networks, in which the links are not active all the time.
+One example would be a communication network, such as the network of phone calls between users.
+Another example would social or collaboration network, where actors do not interact constantly but in irregular intervals.
+These link activation at certain times can, however, be very important to explain the dynamic process and are simply lost when approximated by a static graph.
+So the idea of time-varying networks is to introduce another dimension (i.e., time) to the network and move the information of when something happens from the dynamic process to the network itself.
+
+The usage of static networks in models for dynamic processes often results in a loss of information, that can be regained using time-varying networks.
+However, these temporal networks also introduce more complexity to the model and one have to weight the gain of information versus the extra effort.
+Especially in the case that the knowledge of how often something between two actors in the network happens is more important than when exactly something happens is a use case for weighted networks~\cite{Newman2010}.
+This type of network introduces a mapping between the set of edges and values that represent the strength of the link.
+See \autoref{fig:weighted-network-example} for an illustration of a simple weighted network.
+As a general rule, a time-varying network is applicable when the structure (i.e., the topology) of the system and the temporal process are connected to each other.
+This means that the time scale on which the network itself evolves should be similar to the time scale of the dynamic process that takes place on it.
+For example, a time-varying network is not a suitable model for the internet, since the the infrastructure (i.e., the topology) changes very slowly in comparison to the transmission of the packages that are routed through the network (i.e., the dynamic process).
+
+The underlying concept of time-varying networks is called \emph{contacts} and can be seen as interactions between two nodes at a certain time.
+The duration of the interaction is negligible and thus assumed to be instantaneous.
+Contacts can be interpreted as an extension of links in the static network.
+The unordered pair \(\{v_{i}, v_{j}\}\) becomes a ordered triple \((v_{i}, v_{j}, t)\).
+The order is in this case important, since the third object in the triple must refer to the interaction time \(t\) between the nodes \(v_{i}\) and \(v_{j}\).
+This also means that a time-varying network cannot be represented by a graph.
+Nevertheless, there are many different possibilities to represent a temporal network.
+The simplest way to to this is by using contact sequences.
+A contact sequence is simple a list that contains the contact triples.
+This is a very raw form data (i.e., basically a spreadsheet with three columns) and is therefore very easy to parse and to use in algorithms, but is not very well suited for the analysis of the underlying dynamic process by humans due to the lack of illustrations.
+Another way to represent time-varying networks are graph sequences.
+The idea here is to generate a static graph that contains all contacts between nodes for a given time step.
+This method has the advantage that all tools that work for static graphs can be applied to each of the graphs in the sequence.
+The problem with this representation is, that the time resolution should be rather low to avoid the creation of graphs with no, or only a few, edges for most time steps.
+\autoref{fig:graph-sequence-example} depicts an example of a graph sequence for a time-varying network with four nodes.
+There are also more visual-focused representation methods.
+One example would be assigning a time series of time stamp of the contacts between two nodes to the corresponding link in the static network (see \autoref{fig:time-stamp-edges-example} for an example).
+This allows the usage of the variety of graph layout algorithms to visualize the network, but does not work very well for large networks due to the lack of space for the time stamps on the links and the large numbers of nodes.
+Another idea is to visualize the time-varying network using a timeline of contacts.
+The interactions between nodes (i.e., the tuple of nodes that are interacting with each other) are placed on one axis and the time is placed on the other one.
+A marker is placed for each pair that interacts at a certain time.
+This allows the visual detection of interaction patterns.
+However, similar to the last representation methods, this one also only reasonable for small networks.
+\autoref{fig:timeline-example} shows an example for this type of representation.
+
+\begin{figure}
+   \centering
+   \begin{subfigure}[t]{0.39\textwidth}
+     \centering
+     \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=2pt]}]
+
+       \node[node] (1) at (0, 2) {1};
+       \node[node] (2) at (2, 2) {2};
+       \node[node] (3) at (0, 0) {3};
+       \node[node] (4) at (2, 0) {4};
+
+       \draw[line width=5.00pt] (1) -- (2);
+       \draw[line width=2.50pt] (1) -- (4);
+       \draw[line width=1.25pt] (2) -- (4);
+       \draw[line width=1.25pt] (3) -- (4);
+     \end{tikzpicture}
+
+   \caption{Static approximation of the contact sequence as a weighted network.
+   The width of the lines between the nodes represent the strength (i.e., the weight) of the edges.
+   The thicker the line the higher the weight.}
+   \label{fig:weighted-network-example}
+   \end{subfigure}
+   ~
+   \begin{subfigure}[t]{0.58\textwidth}
+     \centering
+     \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=2pt]}]
+
+       \foreach \t in {0, 1, 2} {
+           \node[text width=6em, align=center] at (0.5+\t*2.5, -0.75)  {\(t=\t\)};
+           \node[node] (1_\t) at (0+\t*2.5, 1) {\scriptsize 1};
+           \node[node] (2_\t) at (1+\t*2.5, 1) {\scriptsize 2};
+           \node[node] (3_\t) at (0+\t*2.5, 0) {\scriptsize 3};
+           \node[node] (4_\t) at (1+\t*2.5, 0) {\scriptsize 4};
+       }
+
+       \draw (1_0) -- (2_0);
+       \draw (1_0) -- (4_0);
+       \draw (3_0) -- (4_0);
+       \draw (2_1) -- (4_1);
+       \draw (1_1) -- (2_1);
+       \draw (1_2) -- (2_2);
+       \draw (1_2) -- (4_2);
+     \end{tikzpicture}
+
+   \caption{Visualization of the graph sequence representation of the three time steps of a time-varying network.
+   There exists an edge in a graph at time \(t\) if there was a contact between the two nodes at this time step.}
+   \label{fig:graph-sequence-example}
+   \end{subfigure}
+
+   \begin{subfigure}[t]{0.39\textwidth}
+     \centering
+     \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=2pt]}]
+
+       \node[node] (1) at (0, 2) {1};
+       \node[node] (2) at (2, 2) {2};
+       \node[node] (3) at (0, 0) {3};
+       \node[node] (4) at (2, 0) {4};
+
+       \draw (1) -- (2) node[midway, above] {0,1,2};
+       \draw (1) -- (4) node[midway, right] {0,2};
+       \draw (2) -- (4) node[midway, right] {1};
+       \draw (3) -- (4) node[midway, above] {0};
+     \end{tikzpicture}
+
+   \caption{A graph that contains an edge between two nodes if there was at least one contact between them.
+   Furthermore, the edges are annotated with a time series of time steps that indicate when the interactions took place.}
+   \label{fig:time-stamp-edges-example}
+   \end{subfigure}
+   ~
+   \begin{subfigure}[t]{0.58\textwidth}
+     \centering
+     \begin{tikzpicture}[contact/.style={rectangle,fill=black,inner sep=0pt,minimum size=4pt]}]
+
+       \draw (0, 2) node[left] {(1,2)} to (6.5, 2);
+       \draw (0, 1.5) node[left] {(1,4)} to (6.5, 1.5);
+       \draw (0, 1) node[left] {(2,4)} to (6.5, 1);
+       \draw (0, 0.5) node[left] {(3,4)} to (6.5, 0.5);
+
+       \draw[->, line width=1.5pt] (0, 0) to (7, 0) node[below] {t};
+       \node[below] at (1, 0) {0};
+       \node[below] at (3, 0) {1};
+       \node[below] at (5, 0) {2};
+
+       \node[contact] at (1, 2) {};
+       \node[contact] at (1, 1.5) {};
+       \node[contact] at (1, 0.5) {};
+       \node[contact] at (3, 2) {};
+       \node[contact] at (3, 1) {};
+       \node[contact] at (5, 2) {};
+       \node[contact] at (5, 1.5) {};
+     \end{tikzpicture}
+
+   \caption{Visualization of the contact sequence as a timeline of contacts.
+   The vertical axis shows the interactions that happened between the nodes in the network and the horizontal axis shows the three time steps.
+   There is a marker, depicted as a black rectangle, if there was a contact between the pair at a given time \(t\).}
+   \label{fig:timeline-example}
+   \end{subfigure}
+
+   \caption[Graphical representations of time-varying networks]{Figures \subref{fig:graph-sequence-example}--\subref{fig:timeline-example} show different visualizations for the contact sequence \((1, 2, 0), (1, 4, 0), (3, 4, 0), (1, 2, 1), (2, 4, 1), (1, 2, 2), (1, 4, 2)\).
+   Figure \subref{fig:weighted-network-example} shows a static network of the same contact sequence where the number of contacts between two nodes is reflected by the edge weights.}
+\end{figure}
+
+\todo{fix different sizes for nodes in subfigures (a) and (c)}
+
+It is also noteworthy that most of the introduced measures for networks do not apply for temporal networks or must be redefined, respectively extended.
+For example, the concept of degree distributions does not exists in this context.
+But there are new measures like the \emph{inter-contact time distributions}, which describe the frequency of the time between contacts between either a specific pair of nodes or any two nodes.
+Paths also cannot be used in temporal networks and are replaced by measures like \emph{latency} (i.e., how long since the last contact between two nodes) or \emph{temporal distance} (i.e., how long does it take to get from one node to another while taking the contacts into account).
+There is also the idea, and many approaches, to extend community detection mechanisms for the usage in time-varying networks by running community detection algorithms for a static approximation of the network at time \(t\) and then including community information from previous time steps.
+
+
+%% ========================================================================
+%% ========================================================================
 
 
 \section{Network Models}
@@ -274,6 +440,8 @@ This process is called \emph{preferential attachment}.
 It can, for example, be used to describe the behavior of new users in social networks (i.e., new users tend to form ties with already established users) or that new websites on the web link to already popular ones because they are easier to find \todo{find better examples with references to papers?}.
 More formally, the model starts with a small number \(m_{0}\) of nodes and the following two steps are repeated in every time step:
 
+% examples at:http://barabasi.com/networksciencebook/chapter/5#origins
+
 \begin{enumerate}
     \item add a new node to the network
     \item choose \(m \leq m_{0}\) already existing nodes at random proportional to their degree and form a link with them
@@ -289,12 +457,16 @@ This is also a property of the model and reflects the fact that there exists rea
 However, like the ER model, the BA model has its shortcomings as well.
 For example, the average path length of generated networks does not comply with real-world networks.
 However, they are more realistic than the path lengths generated by the ER model.
-Another property that can not be reproduced by this model are the community structures that many real-world, and especially social, networks have~\cite{Reid2011}.
+Another property that cannot be reproduced by this model are the community structures that many real-world, and especially social, networks have~\cite{Reid2011}.
 
 Another interesting question regarding the Barabási-Albert model is if both used mechanisms, the network growth and the preferential attachment, are necessary to produce a scale-free network.
 The result of numerical simulations and formal tests of the model with either of the two mechanisms missing is that both are required.
 Missing preferential attachment results in exponentially distributed node degrees and the missing network growth leads to a power-law degree distribution in the beginning, but it changes to a normal distribution over time.
 This indicates that in fact both mechanisms are required to yield a network with the scale-free property.
+
+
+%% ========================================================================
+%% ========================================================================
 
 
 \section{User Activity Models}
