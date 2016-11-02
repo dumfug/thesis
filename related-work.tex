@@ -240,6 +240,13 @@ However, these temporal networks also introduce more complexity to the model and
 Especially in the case that the knowledge of how often something between two actors in the network happens is more important than when exactly something happens is a use case for weighted networks~\cite{Newman2010}.
 This type of network introduces a mapping between the set of edges and values that represent the strength of the link.
 See \autoref{fig:weighted-network-example} for an illustration of a simple weighted network.
+However, a simple graph without weights can also be used to approximate the contact sequence of a time-varying network~\cite{Holme2013}.
+The idea is to calculate a total weight for each pair of nodes in the network.
+If the weight exceeds a certain threshold \(\Omega \in \mathbb{R^{+}}\) then there will be an edge between the two nodes in the static approximation.
+Each contact between two contacts in the sequence \(C\) contributes a part to the total weight.
+However, the weight of the contribution to the total weight decays exponentially.
+Hence, the total weight \(\omega_{i,j}\) between two nodes \(v_{i}\) and \(v_{j}\) is \(\omega_{i,j} = \sum_{(v_{i}, v_{j}, t) \in C} \exp(-t / \tau)\), where \(\tau\) is an additional parameter that controls the exponential decay.
+Networks that are generated using this approach are called exponential-threshold networks.
 As a general rule, a time-varying network is applicable when the structure (i.e., the topology) of the system and the temporal process are connected to each other.
 This means that the time scale on which the network itself evolves should be similar to the time scale of the dynamic process that takes place on it.
 For example, a time-varying network is not a suitable model for the internet, since the the infrastructure (i.e., the topology) changes very slowly in comparison to the transmission of the packages that are routed through the network (i.e., the dynamic process).
@@ -385,6 +392,7 @@ There is also the idea, and many approaches, to extend community detection mecha
 
 
 \section{Network Models}
+\label{sec:network-models}
 
 This section contains descriptions of different network models.
 These models can be used to build graphs that fulfill different properties.
@@ -470,3 +478,50 @@ This indicates that in fact both mechanisms are required to yield a network with
 
 
 \section{User Activity Models}
+
+\subsection{Random Process Models}
+
+The modeling of the activity of users in certain systems (e.g., in social networks) can be a challenging task.
+One of the simplest methods to do this is by using a Poisson process to describe the inter-activity times~\cite{Vazquez2006}.
+This means that the inter-activity times are exponentially distributed and independent of each other, which leads to the effect that activities take place in relative regular intervals and that it is almost impossible to have long times between to consecutive activities.
+However, it has been shown, that a lot of human activity patterns (e.g., email communication) can not be modeled very accurately be a Poisson process.
+A lot of activities are executed in bursts, followed by longer periods of inactivity.
+For example, a person may have a dedicated time in the day for answering emails.
+This behavior can be much better explained by a power-law distribution of the inter-activity times because its long tail allows for longer inactivity periods.
+One approach that tries to model human activity with such a distribution is by using queuing models.
+The idea here is to think of the user as a queue that is constantly filled with new tasks (e.g., answer a email, go shopping, do the dishes,\ldots).
+Each task takes a certain amount of time to finish and is prioritized by the user on arrival.
+Furthermore, the queue is usually bounded in size, since the user can only keep track of a certain amount of tasks at a time.
+At each time step the user selects the task with the highest priority from the queue and executes it.
+It can be shown that the time it takes for a task to be handled (i.e., the waiting time) follows a power-law distribution.
+There is evidence that the waiting time distribution of the queuing model is responsible for the inter-activity time power-law distribution of a specific activity, due to that persons tend to group tasks in categories and reinserting them into the queue with a lower priority after they were handled.
+For example, a person does not keep track of every unanswered email in the queue but has a \enquote{answer email} task that contains all emails to answer.
+Therefore, answering multiple emails in a short period of time, followed by a longer period of no email correspondence due to other tasks with higher priority.
+
+Another possibility to model the user activity in social networks is by using coupled Hidden Markov Models (CHMMs)~\cite{Raghavan2013}.
+The Markov model has two hidden states that describe the user activity (active or inactive) and yields inter-activity times with respect to the current state.
+The previous discussed queuing model only describes the activity for only one user without taking social influence into account.
+   The CHMM model solves this by explicitly coupling the stochastic processes that describe the activity of different users.
+   This is done by letting the transition probabilities between the states be dependent on the activity of the other users that are in the circle of friends (i.e., neighbors in the social network) of the user.
+If the activity of the neighbors exceeds a certain threshold the probability that a user becomes active is larger.
+The results show that this model is able to learn the complex human activity patterns and allows predictions with high accuracy compared to other methods.
+
+% However, these models have the disadvantage that they only model the activity of a single user.
+% cite Simon's paper (activity of a network)
+
+\subsection{Activity-Driven Models}
+
+The earlier discussed user activity models are designed to only describe the activity profile of a single user, or require a stochastic process for each user.
+There are also models that allow the description of the user activity as a time-varying networks (i.e., as contact sequences).
+The difference between the network models for temporal networks and the networks models described in~\autoref{sec:network-models} is that the models for static networks are connectivity driven~\cite{Perra2012}.
+This means that they are laid out to generate specific topological properties (e.g., the formation of community structures or short average path lengths) in the networks.
+One of the simplest methods to generate a time-varying network of user activity is described by~\citet{Holme2013}.
+The idea is to generate a static network and assign each link a set of time stamps that represents the contacts between the two nodes.
+In the first step of this model a static network is generated using the configuration model~\cite[cf. sec. 13.2]{Newman2010}.
+This model assigns a number, drawn from a probability distribution (e.g., a power law distribution), to each node in the network.
+This number represents the number of \enquote{half edges} of the node.
+These \enquote{half edges} can be seen a dangling edges that will be connected at random to other \enquote{half edges} of different nodes.
+Self-loops and parallel edges are avoided in the matching process to generate a simple static network.
+In the next step each link in network is assigned a time span at random in which contacts are possible (i.e., the activity interval).
+In the last step of this approach, a time series of events is generated by drawing inter-event times from a power-law distribution.
+The time series is then split into parts and mapped onto the activity intervals, thus, generating a contact sequence.
