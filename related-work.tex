@@ -484,7 +484,7 @@ This indicates that in fact both mechanisms are required to yield a network with
 
 \section{User Activity Models}
 
-\subsection{Random Process Models}
+\subsection{Stochastic and Queuing Models}
 
 The modeling of the activity of users in certain systems (e.g., in social networks) can be a challenging task.
 One of the simplest methods to do this is by using a Poisson process to describe the inter-activity times~\cite{Masuda2016, Vazquez2006}.
@@ -514,7 +514,7 @@ The previous discussed queuing model only describes the activity for only one us
 If the activity of the neighbors exceeds a certain threshold the probability that a user becomes active is larger.
 The results show that this model is able to learn the complex human activity patterns and allows predictions with high accuracy compared to other methods.
 
-\subsection{Activity-Driven Models}
+\subsection{Activity Driven Models}
 
 The earlier discussed user activity models are designed to only describe the activity profile of a single user, or require a stochastic process for each user.
 There are also models that allow the description of the user activity as a time-varying networks (i.e., as contact sequences).
@@ -537,7 +537,7 @@ Each node \(v_{i}\) in the network is assigned a quantity called activity potent
 The activity potentials of real-world networks can be determined by calculating the ratios of the number of interactions of each user in a time window to the total number of interactions.
 This usually yields long tailed activity potential probability distributions, which corresponds to typical heterogeneous human activity patterns~\cite{Vazquez2006, Jo2012}.
 Furthermore, the size of the time window that is used to estimate the probabilities seems not to effect the resulting distribution in a significant way.
-This activity-driven model first initializes each node in the network by assigning it a activity/firing rate \(a_{i} = \eta x_{i}\), where the activity potential is drawn from a suitable probability distribution \( f(x) \) and \( \eta \) is a re-scaling factor that is chosen in such a way that the expected number of active node in the time window is \(\eta \expval{x} n\).
+This activity driven model first initializes each node in the network by assigning it a activity/firing rate \(a_{i} = \eta x_{i}\), where the activity potential is drawn from a suitable probability distribution \( f(x) \) and \( \eta \) is a re-scaling factor that is chosen in such a way that the expected number of active node in the time window is \(\eta \expval{x} n\).
 However, in this thesis it is assumed that \(\eta = \Delta t = 1\), if not stated otherwise.
 The range of possible activity potential values is \(x_{i}\ \in [\varepsilon, 1]\).
 The activity potential has a lower bound \( \varepsilon \) to avoid possible divergences of the distribution near zero.
@@ -552,6 +552,7 @@ For each time step \(t\) the following steps are repeated:
 
 The probability that a node becomes active does not change over time and is, therefore, also independent of previous activities.
 This resembles the problem already encountered with Poisson processes models.
+The inter-event times for the node \(v_{i}\) will eventually be exponential distributed \(\varphi_{i}(\tau) = a_{i} \exp(-a_{i} \tau)\)~\cite{Moinet2016}.
 However, this model possesses a few considerable advantages over them.
 First, and most important, it produces not only activities for a single user, but it generates snapshots of the user activities for a complete network for each time window.
 Additionally, it is a very simple model.
@@ -563,5 +564,11 @@ Therefore, it is up to a re-scaling factor, the same as the activity potential d
 The model can generate scale-free networks, if the activity potential is a power-law distributed.
 The resulting hubs are not caused by preferential attachment like in other models, but due to the heterogeneous activity profiles of the nodes.
 The re-scaling factor emerges from the fact that the model does not all capture features of real-world networks, like memory effects (e.g., links that were formed in earlier instantaneous networks are more likely to be formed later again).
-Regardless of its simplicity, this activity-driven model can help to understand topological patterns and the dynamics of systems (e.g., epidemic spreading processes).
-It is a fundamental framework for many other studies that use it as start point for their work (e.g.,~\cite{Perra2012b, Liu2013, Rizzo2016}).
+
+Regardless of its simplicity, this activity driven model can help to understand topological patterns and the dynamics of systems (e.g., epidemic spreading processes).
+It is a fundamental framework for many other studies that use it as start point for their work.
+For example, \citet{Perra2012b} use this model to study random walks on temporal networks, or \citet{Rizzo2016} are applying this model for their research about the spreading the of the infectious Ebola disease in Liberia.
+On the other hand, others try to improve the model by making it more realistic.
+\citet{Laurent2015} adds additional social mechanisms (e.g., memory) to the model to allow for the formation of communities.
+Another extensions by \citet{Moinet2015, Moinet2016} solves the problem of inaccurate inter-events times by making the activity potential time depended.
+This model is known as the non-poissonian activity driven (NoPAD) model and can generate inter-event time distributions that can also be observed in real-world networks.
