@@ -5,7 +5,7 @@ This thesis often refers to power-law probability distributions, especially in t
 However, for the sake of simplicity the exact formula of the distribution is never explicitly stated.
 This appendix contains the derivation for the exact density, distribution function, and the mean value of the probability distribution.
 Additionally, it contains an example and a short description of the inverse transform sampling method used in this thesis.
-This requires a more formal definition of the distribution, so let \(X\) be a continuous random variable with the probability density function \(f(x) \sim x^{-\gamma}\), with \(\gamma, \varepsilon > 0\), and taking values in the range \(X \in [\epsilon, 1]\).
+This requires a more formal definition of the distribution, so let \(X\) be a continuous random variable with the probability density function \(f(x) \sim x^{-\gamma}\), taking values in the range \(X \in [\epsilon, 1]\), and with \(\gamma > 0\) and \(0 < \varepsilon \leq 1\).
 
 
 %% ========================================================================
@@ -152,6 +152,6 @@ The inverse CDF for the power-law distribution is \(F^{-1}(x) = \Big( \frac{x(1-
 
 \myfig{example-sampled-pdf}
       {width=0.75\textwidth}
-      {The estimated probability density function of \(f(x) = \frac{x^{-2.5}}{666}\), taking values in the range \([0.01, 1]\) (i.e., the PDF from the example in \autoref{sec:example}). The approximation is archived using 5000 samples obtained using the inverse transform sampling method.}
+      {The estimated probability density function of \(f(x) = \frac{x^{-2.5}}{666}\), taking values in the range \([0.01, 1]\) (i.e., the PDF from the example in \autoref{sec:example}). The approximation is archived using \(n = 5000\) samples, obtained using the inverse transform sampling method.}
       {Inverse transform sampling example.}
       {fig:example-sampled-pdf}

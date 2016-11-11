@@ -2,6 +2,7 @@
 
 
 \section{Graph Theory Basics}
+\label{sec:graph-theory-basics}
 
 In this section some graph theory related notation is defined which is used during this thesis.
 It is for the most part based on~\cite{Thulasiraman1992} and on~\cite{Diestel2012}.
@@ -65,7 +66,6 @@ There are unary operations on graphs (e.g., the removal of vertices and edges) a
 \label{fig:example_graphs}
 \end{figure}
 
-
 The \emph{order} of a graph is its number of vertices (i.e., the cardinality of the vertex set) and is denoted as \(n = |V(G)|\).
 The neighborhood of a vertex \(v_i\) is defined as \(N(v_i) = \{v_j \in V(G) : \{v_i, v_j \} \in E(G)\}\).
 It is the set of vertices that are \emph{adjacent} to the vertex \(v_i\).
@@ -94,17 +94,17 @@ The \emph{clustering coefficient}~\cite{Watts1998} of a vertex is a measure for 
 A \emph{clique} in a graph is a subset of vertices, such that there exists an edge between every pair of vertices in this set.
 The clustering coefficient \(C(v_i)\) is defined as the fraction of possible edges between the neighbors of the vertex \(v_i\).
 There are at most \(\binom{d(v_i)}{2} = \frac{d(v_i)(d(v_i) - 1)}{2}\) possible edges between vertices in the neighborhood.
-Therefore, the clustering coefficient can be calculated using equation~\ref{eq:clustering-coefficent}.
+Therefore, the clustering coefficient can be calculated using equation~\ref{eq:clustering-coefficient}.
 
 \begin{equation}
  C(v_i) =  \frac{2 \, |\{\{v_j, v_k\} \in E(G) : v_j \in N(v_i) \wedge v_k \in N(v_i)\}| }{d(v_i)(d(v_i) - 1)}
- \label{eq:clustering-coefficent}
+ \label{eq:clustering-coefficient}
 \end{equation}
 
 This is, of course, a local property of one vertex.
 However, it is also often useful to consider the average clustering coefficient \(C = \frac{1}{n} \sum_{v(i) \in V(G)} C(v_i)\) of the graph.
-Figure~\ref{fig:clustering-coefficent-examples} shows some examples for neighborhoods with different clustering coefficients.
-
+Figure~\ref{fig:clustering-coefficient-examples} shows some examples for neighborhoods with different clustering coefficients.
+\todo{describe the global clustering coefficient}
 
 \begin{figure}[h]
    \centering
@@ -159,10 +159,10 @@ Figure~\ref{fig:clustering-coefficent-examples} shows some examples for neighbor
      Hence, the clustering coefficient of the red vertex is \(\frac{6}{6} = 1\).}
    \end{subfigure}
 
-   \caption[Clustering coefficent examples]{Examples for the clustering coefficient of a vertex with a small neighborhood.
+   \caption[Clustering coefficient examples]{Examples for the clustering coefficient of a vertex with a small neighborhood.
    The blue vertices are the neighbors of the red vertex.
    The possible number of edges between the four neighbors is \(\binom{4}{2} = 6\).}
-\label{fig:clustering-coefficent-examples}
+\label{fig:clustering-coefficient-examples}
 \end{figure}
 
 
@@ -171,6 +171,7 @@ Figure~\ref{fig:clustering-coefficent-examples} shows some examples for neighbor
 
 
 \section{Social Networks}
+\label{sec:social-networks}
 
 In the real-world it is common to use graphs to model the complex systems that are arising.
 For example, the web can be represented as a graph, where the vertices correspond to websites and the edges are the hyperlinks between them.
@@ -205,6 +206,8 @@ It is a very common research topic to understand the pairwise relationships in s
 A \emph{triad} on the other hand describes triples of actors and the ties between them.
 This concept is especially important for the question of transitivity of certain relationships.
 A example for this would be the question \enquote{is the friend of my friend also my friend?}.
+\todo{strong/weak ties description}
+\todo{egocentric networks}
 
 A property of many real-world social networks is a \emph{community structure}~\cite{Girvan2002}.
 Communities are groups of actors that are more connected to actors in the same group, than to actors in a different one.
@@ -242,7 +245,7 @@ So the idea of time-varying networks is to introduce another dimension (i.e., ti
 
 The usage of static networks in models for dynamic processes often results in a loss of information, that can be regained using time-varying networks.
 However, these temporal networks also introduce more complexity to the model and one have to weight the gain of information versus the extra effort.
-Especially in the case that the knowledge of how often something between two actors in the network happens is more important than when exactly something happens is a use case for weighted networks~\cite{Newman2010}.
+Especially in the case that the knowledge of how often something between two actors in the network happens is more important than when exactly something happens is a use case for weighted networks~\cite{Newman2010}. \todo{describe weighted graphs in the graph theory basics, since it is also relevant for other things}
 This type of network introduces a mapping between the set of edges and values that represent the strength of the link.
 See \autoref{fig:weighted-network-example} for an illustration of a simple weighted network.
 However, a simple graph without weights can also be used to approximate the contact sequence of a time-varying network~\cite{Holme2013}.
@@ -382,7 +385,6 @@ However, similar to the last representation methods, this one also only reasonab
    \caption[Graphical representations of time-varying networks]{Figures \subref{fig:graph-sequence-example}--\subref{fig:timeline-example} show different visualizations for the contact sequence \((1, 2, 0), (1, 4, 0), (3, 4, 0), (1, 2, 1), (2, 4, 1), (1, 2, 2), (1, 4, 2)\).
    Figure \subref{fig:weighted-network-example} shows a static network of the same contact sequence where the number of contacts between two nodes is reflected by the edge weights.}
 \end{figure}
-
 \todo{fix different sizes for nodes in subfigures (a) and (c)}
 
 It is also noteworthy that most of the introduced measures for networks do not apply for temporal networks or must be redefined, respectively extended.
@@ -423,7 +425,7 @@ The expected value for the average degree of a network generated with this model
 This value is also often called \(c\).
 The probability that an arbitrary node has a degree of exactly \(k\) is given by \(p(k) = \binom{n-1}{k} p^{k} (1-p)^{n-1-k}\) (i.e., \(k\) of its possible \(n-1\) links must exist and there are \(\binom{n-1}{k}\) possible combinations for the \(k\) links).
 Therefore, the degree distribution of this model is a binomial distribution as well.
-However, it is also possible to approximate the degree distribution with an Poisson distribution \(p(k) = e^{-c} \frac{c^{k}}{k!}\) for large values of \(n\).
+However, it is also possible to approximate the degree distribution with an Poisson distribution \(p(k) = \exp(-c) \frac{c^{k}}{k!}\) for large values of \(n\).
 
 \begin{equation}
   c = \expval{d(G)} = \sum_{m=0}^{\binom{n}{2}} \frac{2m}{n} \prob{m} = \frac{2}{n} \sum_{m=0}^{\binom{n}{2}} m \prob{m} = \frac{2}{n} \binom{n}{2} p = (n-1) p
@@ -483,18 +485,46 @@ This indicates that in fact both mechanisms are required to yield a network with
 
 
 \section{User Activity Models}
+\label{sec:user-activity-models}
 
-\subsection{Stochastic and Queuing Models}
+The modeling of the activity of users in complex systems (e.g., in social networks) can be a challenging task.
+Usually the actual activities, such as the writing of an e-mails, posts on  Facebook, or tweets, are not of particular interest.
+More relevant is how are these events or activities laid out in time and what  the distribution of intervals between two consecutive events is (i.e., the inter-event time distribution).
+Multiple models that try to capture patterns of human activities based on different approaches are discussed in this section.
 
-The modeling of the activity of users in certain systems (e.g., in social networks) can be a challenging task.
-One of the simplest methods to do this is by using a Poisson process to describe the inter-activity times~\cite{Masuda2016, Vazquez2006}.
-This stochastic process is defined by the event rate \(\lambda\), which states how often a event should occur in a given time window.
+\subsection{Stochastic Models}
+
+One of the simplest methods to model user activity is by using a Poisson process to describe the inter-activity times~\cite{Masuda2016, Vazquez2006}.
+This stochastic process is defined by the event rate \( \lambda \), which states how often a event should occur in a given time window.
 Two important properties of the Poisson process are that the inter-activity times are exponentially distributed and independent of each other.
-This leads to the effect that events (e.g., user activities) take place in regular intervals (i.e., at the given rate) and that it is almost impossible to have long times between to consecutive activities.
-However, it has been shown, that a lot of human activity patterns (e.g., email communication) can not be modeled very accurately be a Poisson process due to its assumptions.
+This leads to the effect that events take place in regular intervals (i.e., at the given rate) and that it is almost impossible to have long periods of time between to consecutive activities.
+However, it has been shown, that a lot of human activity patterns (e.g., email communication) cannot be modeled very accurately be a Poisson process due to its assumptions.
 A lot of activities are executed in bursts, followed by longer periods of inactivity.
 For example, a person may have a dedicated time in the day for answering emails.
 This behavior can be much better explained by a power-law distribution of the inter-activity times because its long tail allows for longer inactivity periods.
+There are, however, approaches that try to tackle this problem that are using extensions of Poisson processes.
+For example, \citet{Malmgren2008} use a mixture of homogeneous and non-homogeneous Poisson processes to model user e-mail activity more precisely.
+The rate of a non-homogeneous Poisson process does depend on the time, whereas the rate of a homogeneous process is constant.
+
+A approach that does not only generate power-law distributed inter-event times, but also captures other patterns of human behavior, such as periodic spikes (e.g., higher activity every 24 hours) or a bimodal distribution of inter-event times (e.g., phases of high activity that are separated by phases of rest) was proposed by \citet{Costa2015}.
+Their Rest-Sleep-and-Comment (RSC) model is based on the idea that a user can be in one of multiple states.
+In the active state, a user generates events with a certain probability at some rate, which depends on how much time has passed since the last event.
+The rest and sleep states are used to model the inactivity of a user.
+The difference is that the rest state produces null-events (i.e., it increments the time) at a certain rate, whereas the sleep state is used to increment only once, but by a larger amount.
+A active user can become inactive (i.e., go to the rest state) or stay active.
+A user in the rest state can either become active, stay inactive, or go to the sleep state.
+The user can not stay in the sleep state, only go into the rest state again.
+The state transition probabilities are parameters of the model.
+This model was the foundation for a classifier, that is able to detect whether a activity sequence was generated by a bot or by a human with very high accuracy.
+
+Another possibility to model the user activity in social networks is by using coupled Hidden Markov Models (CHMMs)~\cite{Raghavan2013}.
+The Markov model has two hidden states that describe the user activity (active or inactive) and yields inter-activity times with respect to the current state.
+The CHMM model takes the social network influence of other users into account by explicitly coupling the stochastic processes of groups of people.
+This is done by letting the transition probabilities between the states of the HMM for a single user be dependent on the activity of other users, that are in the circle of friends of the user (i.e., neighbors in the social network).
+If the activity of the neighbors exceeds a certain threshold the probability that a user becomes active is larger.
+The results show that this model is able to learn the complex human activity patterns and allows predictions with high accuracy compared to other methods.
+
+\subsection{Queuing Models}
 
 One approach that archives to model human activity with a more suitable power-law distributions are queuing models~\cite{Vazquez2006}.
 The idea here is to think of the user as a queue that is constantly filled with new tasks (e.g., answer a email, go shopping, do the dishes,\ldots).
@@ -502,43 +532,35 @@ Each task takes a certain amount of time to finish and is prioritized by the use
 Furthermore, the queue is usually bounded in size, since the user can only keep track of a certain amount of tasks at a time.
 At each time step the user selects the task with the highest priority from the queue and executes it.
 It can be shown that the time it takes for a task to be handled (i.e., the waiting time) follows a power-law distribution.
-There is evidence that the waiting time distribution of the queuing model is responsible for the inter-activity time power-law distribution of a specific activity, due to that persons tend to group tasks in categories and reinserting them into the queue with a lower priority after they were handled.
-For example, a person does not keep track of every unanswered email in the queue but has a \enquote{answer email} task that contains all emails to answer.
+There is evidence that the waiting time distribution of the queuing model is responsible for the inter-activity time power-law distribution of a specific activity, due to the fact that persons tend to group tasks in categories and reinserting them into the queue with a lower priority after they are done.
+For example, a person does not keep track of every unanswered email in the queue, but has a \enquote{answer email} task that contains all emails that need to be replied-to.
 Therefore, answering multiple emails in a short period of time, followed by a longer period of no email correspondence due to other tasks with higher priority.
 
-Another possibility to model the user activity in social networks is by using coupled Hidden Markov Models (CHMMs)~\cite{Raghavan2013}.
-The Markov model has two hidden states that describe the user activity (active or inactive) and yields inter-activity times with respect to the current state.
-The previous discussed queuing model only describes the activity for only one user without taking social influence into account.
-   The CHMM model solves this by explicitly coupling the stochastic processes that describe the activity of different users.
-   This is done by letting the transition probabilities between the states be dependent on the activity of the other users that are in the circle of friends (i.e., neighbors in the social network) of the user.
-If the activity of the neighbors exceeds a certain threshold the probability that a user becomes active is larger.
-The results show that this model is able to learn the complex human activity patterns and allows predictions with high accuracy compared to other methods.
+\subsection{Time-varying Network Models}
+\label{subsec:time-varying-network-models}
 
-\subsection{Activity Driven Models}
-
-The earlier discussed user activity models are designed to only describe the activity profile of a single user, or require a stochastic process for each user.
-There are also models that allow the description of the user activity as a time-varying networks (i.e., as contact sequences).
-The difference between the network models for temporal networks and the networks models described in~\autoref{sec:network-models} is that the models for static networks are connectivity driven~\cite{Perra2012a}.
-This means that they are laid out to generate specific topological properties (e.g., the formation of community structures or short average path lengths) in the networks.
-One of the simplest methods to generate a time-varying network of user activity is described by~\citet{Holme2013}.
+The earlier discussed user activity models are designed to only describe the activity profile of a single user, or require at least a separate stochastic process for each one.
+However, there are also models that allow the description of the activities of multiple users using time-varying networks (i.e., as contact sequences).
+The difference between models for temporal networks and network models described in~\autoref{sec:network-models} is that the models for static networks are connectivity driven~\cite{Perra2012a}.
+This means that they are laid out to generate specific topological properties (e.g., the formation of community structures, or short average path lengths) in the networks, but do not include the the dynamic processes that are forming these structures.
+One of the simplest methods to generate a time-varying network of user activity is described by \citet{Holme2013}.
 The idea is to generate a static network and assign each link a set of time stamps that represents the contacts between the two nodes.
 In the first step of this model a static network is generated using the configuration model~\cite[cf. sec. 13.2]{Newman2010}.
-This model assigns a number, drawn from a probability distribution (e.g., a power law distribution), to each node in the network.
+This model assigns a number, drawn from a probability distribution (e.g., a power-law distribution), to each node in the network.
 This number represents the number of \enquote{half edges} of the node.
 These \enquote{half edges} can be seen a dangling edges that will be connected at random to other \enquote{half edges} of different nodes.
+Therefore, this number is the degree of the node.
 Self-loops and parallel edges are avoided in the matching process to generate a simple static network.
 In the next step each link in network is assigned a time span at random in which contacts are possible (i.e., the activity interval).
 In the last step of this approach, a time series of events is generated by drawing inter-event times from a power-law distribution.
 The time series is then split into parts and mapped onto the activity intervals, thus, generating a contact sequence.
-\todo{add image with inter-event time distribution of a real user and a poisson process}
 
 A different approach by~\citet{Perra2012a} is based on the idea of activity potentials.
-Each node \(v_{i}\) in the network is assigned a quantity called activity potential \(x_{i}\), which is the probability that the node will be active in a time window \(\Delta t\).
+Each node \(v_{i}\) in the network is assigned a quantity called the activity potential \(x_{i}\), which is the probability that the node will be active in a time window \(\Delta t\).
 The activity potentials of real-world networks can be determined by calculating the ratios of the number of interactions of each user in a time window to the total number of interactions.
 This usually yields long tailed activity potential probability distributions, which corresponds to typical heterogeneous human activity patterns~\cite{Vazquez2006, Jo2012}.
 Furthermore, the size of the time window that is used to estimate the probabilities seems not to effect the resulting distribution in a significant way.
-This activity driven model first initializes each node in the network by assigning it a activity/firing rate \(a_{i} = \eta x_{i}\), where the activity potential is drawn from a suitable probability distribution \( f(x) \) and \( \eta \) is a re-scaling factor that is chosen in such a way that the expected number of active node in the time window is \(\eta \expval{x} n\).
-However, in this thesis it is assumed that \(\eta = \Delta t = 1\), if not stated otherwise.
+The first step of this activity-driven model is to initialize each node in the network by assigning it a activity/firing rate \(a_{i} = \eta x_{i}\), where the activity potential is drawn from a suitable probability distribution \( f(x) \) and \( \eta \) is a re-scaling factor that is chosen in such a way that the expected number of active node in the time window is \(\eta \expval{x} n\).
 The range of possible activity potential values is \(x_{i}\ \in [\varepsilon, 1]\).
 The activity potential has a lower bound \( \varepsilon \) to avoid possible divergences of the distribution near zero.
 After the setup phase the time-varying network of activities is generated.
@@ -546,14 +568,18 @@ It follows the idea of representing the temporal network as a sequence of graphs
 For each time step \(t\) the following steps are repeated:
 
 \begin{enumerate}
-    \item Create a new network \(G_{t}\) that contains all nodes but no links.
-    \item Every node \(v_{i}\) becomes active with probability \(a_{i} \Delta t\). Active nodes choose \(m\) distinct other nodes an form a link with them.
+    \item Create a new network \(G_{t}\) that contains all nodes but has no links yet.
+    \item Every node \(v_{i}\) becomes active with probability \(a_{i} \Delta t\). Active nodes choose \(m\) distinct other nodes uniformly at random and form a link with them.
 \end{enumerate}
 
+Since every active node creates \(m\) links, the cardinality of the edge set is given by \(|E_{t}| = m \eta \expval{x} n\).
+Therefore, the average degree of the instantaneous network at time \(t\) is \(d(G_{t}) = \frac{2|E_{t}|}{n} = \frac{2 m \eta \expval{x} n}{n} = 2 m \eta \expval{x}\).
 The probability that a node becomes active does not change over time and is, therefore, also independent of previous activities.
 This resembles the problem already encountered with Poisson processes models.
 The inter-event times for the node \(v_{i}\) will eventually be exponential distributed \(\varphi_{i}(\tau) = a_{i} \exp(-a_{i} \tau)\)~\cite{Moinet2016}.
-However, this model possesses a few considerable advantages over them.
+Additionally, it is not very realistic in the sense that every node selects its neighbors in each iteration uniformly at random, which leads to networks with a random structure.
+Users are usually prone to repeat previous communication~\cite{Karsai2014}.
+Nevertheless, this model possesses a few considerable advantages.
 First, and most important, it produces not only activities for a single user, but it generates snapshots of the user activities for a complete network for each time window.
 Additionally, it is a very simple model.
 It only needs a few parameters and the activity potential distribution is responsible for the dynamical behavior in the network.
@@ -563,12 +589,32 @@ It can be shown that the  degree distribution of this integrated network has the
 Therefore, it is up to a re-scaling factor, the same as the activity potential distribution.
 The model can generate scale-free networks, if the activity potential is a power-law distributed.
 The resulting hubs are not caused by preferential attachment like in other models, but due to the heterogeneous activity profiles of the nodes.
-The re-scaling factor emerges from the fact that the model does not all capture features of real-world networks, like memory effects (e.g., links that were formed in earlier instantaneous networks are more likely to be formed later again).
+The re-scaling factor emerges from the fact that the model does not capture all features of real-world networks, like memory effects (e.g., links that were formed in earlier instantaneous networks are more likely to be formed later again).
 
-Regardless of its simplicity, this activity driven model can help to understand topological patterns and the dynamics of systems (e.g., epidemic spreading processes).
-It is a fundamental framework for many other studies that use it as start point for their work.
+Regardless of its simplicity, this activity-driven model can help to understand topological patterns and the dynamics of systems (e.g., epidemic spreading processes).
+\citet{Starnini2013} study the topological properties of this model in a more formal way by mapping it onto a hidden variables network model.
+The idea of hidden variables models is that the probability of the formation of a link between two nodes depends on some underlying characteristic of the nodes (i.e., the hidden variables).
+In this case the hidden variable is the activity potential.
+A network that was generated using this model fully depends on probability distributions that are related to the hidden variables.
+Therefore, topological properties also depend on these probability distributions and can be expressed with respect to them.
+The degree distribution of the integrated network could be verified using this more formal approach.
+In addition, they showed that the clustering coefficient of the network is rather small and comparable to the clustering coefficient of random networks.
+They also propose to use the hidden-variable approach to study possible extensions of the model, which is for example done for the NoPAD model~\cite{Moinet2015}, which is discussed later in this section.
+
+The activity-driven model is also a fundamental framework for many other studies that use it as start point for their work.
 For example, \citet{Perra2012b} use this model to study random walks on temporal networks, or \citet{Rizzo2016} are applying this model for their research about the spreading the of the infectious Ebola disease in Liberia.
+ \todo{more examples...}
+
 On the other hand, others try to improve the model by making it more realistic.
 \citet{Laurent2015} adds additional social mechanisms (e.g., memory) to the model to allow for the formation of communities.
 Another extensions by \citet{Moinet2015, Moinet2016} solves the problem of inaccurate inter-events times by making the activity potential time depended.
-This model is known as the non-poissonian activity driven (NoPAD) model and can generate inter-event time distributions that can also be observed in real-world networks.
+This model is known as the non-poissonian activity-driven (NoPAD) model and can generate inter-event time distributions that can also be observed in real-world networks.
+\todo{remove Laurent2015 model here (explained in other chapter and replace with something else)}
+
+
+%% ========================================================================
+%% ========================================================================
+
+
+\section{Peer Influence}
+\label{sec:peer-influence}
