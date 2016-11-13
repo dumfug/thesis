@@ -90,21 +90,30 @@ If there exists a path between all pairs of vertices, then the graph is called c
 It is possible to partition the vertex and edge set of a not connected graph in such a way that there are no edges between vertices in different partitions.
 These partitions are called the \emph{components} of the graph.
 
-The \emph{clustering coefficient}~\cite{Watts1998} of a vertex is a measure for the cliquishness of its neighborhood.
+The \emph{clustering coefficient} of a vertex is a measure for the cliquishness of its neighborhood, and was introduced by \citet{Watts1998}.
 A \emph{clique} in a graph is a subset of vertices, such that there exists an edge between every pair of vertices in this set.
 The clustering coefficient \(C(v_i)\) is defined as the fraction of possible edges between the neighbors of the vertex \(v_i\).
 There are at most \(\binom{d(v_i)}{2} = \frac{d(v_i)(d(v_i) - 1)}{2}\) possible edges between vertices in the neighborhood.
-Therefore, the clustering coefficient can be calculated using equation~\ref{eq:clustering-coefficient}.
+Therefore, the clustering coefficient can be calculated using \autoref{eq:clustering-coefficient}.
 
 \begin{equation}
- C(v_i) =  \frac{2 \, |\{\{v_j, v_k\} \in E(G) : v_j \in N(v_i) \wedge v_k \in N(v_i)\}| }{d(v_i)(d(v_i) - 1)}
+ C(v_i) = \frac{2 \, |\{\{v_j, v_k\} \in E(G) : v_j \in N(v_i) \wedge v_k \in N(v_i)\}| }{d(v_i)(d(v_i) - 1)}
  \label{eq:clustering-coefficient}
 \end{equation}
 
-This is, of course, a local property of one vertex.
-However, it is also often useful to consider the average clustering coefficient \(C = \frac{1}{n} \sum_{v(i) \in V(G)} C(v_i)\) of the graph.
+This is, of course, a local property of one vertex and is, therefore, sometimes called \emph{local clustering coefficient}.
+However, it is also often useful to consider the average clustering coefficient \(\bar{C} = \frac{1}{n} \sum_{v(i) \in V(G)} C(v_i)\) of the graph.
 Figure~\ref{fig:clustering-coefficient-examples} shows some examples for neighborhoods with different clustering coefficients.
-\todo{describe the global clustering coefficient}
+There is another definition of a \emph{global clustering coefficient}, which is also often called \emph{transitivity}~\cite{Boccaletti2006}.
+It is the ratio of triangles (i.e., cliques consisting of exactly three vertices) to the number connected triples in the graph (see \autoref{eq:global-clustering-coefficient}).
+A connected triple is made up of three vertices as well, but does only have two edges.
+Hence, a triangle consists of exactly three triples.
+The global clustering coefficient is a measure the extent of transitive connections in the graph (i.e., if there is a edge between vertices A and B, and between B and C, how likely is it that there is also an edge between A and C).
+
+\begin{equation}
+ T = \frac{3 \times \text{\# of triangles}}{\text{\# of connected triples of vertices}}
+ \label{eq:global-clustering-coefficient}
+\end{equation}
 
 \begin{figure}[h]
    \centering
@@ -242,19 +251,6 @@ One example would be a communication network, such as the network of phone calls
 Another example would social or collaboration network, where actors do not interact constantly but in irregular intervals.
 These link activation at certain times can, however, be very important to explain the dynamic process and are simply lost when approximated by a static graph.
 So the idea of time-varying networks is to introduce another dimension (i.e., time) to the network and move the information of when something happens from the dynamic process to the network itself.
-
-The usage of static networks in models for dynamic processes often results in a loss of information, that can be regained using time-varying networks.
-However, these temporal networks also introduce more complexity to the model and one have to weight the gain of information versus the extra effort.
-Especially in the case that the knowledge of how often something between two actors in the network happens is more important than when exactly something happens is a use case for weighted networks~\cite{Newman2010}. \todo{describe weighted graphs in the graph theory basics, since it is also relevant for other things}
-This type of network introduces a mapping between the set of edges and values that represent the strength of the link.
-See \autoref{fig:weighted-network-example} for an illustration of a simple weighted network.
-However, a simple graph without weights can also be used to approximate the contact sequence of a time-varying network~\cite{Holme2013}.
-The idea is to calculate a total weight for each pair of nodes in the network.
-If the weight exceeds a certain threshold \(\Omega \in \mathbb{R^{+}}\) then there will be an edge between the two nodes in the static approximation.
-Each contact between two contacts in the sequence \(C\) contributes a part to the total weight.
-However, the weight of the contribution to the total weight decays exponentially.
-Hence, the total weight \(\omega_{i,j}\) between two nodes \(v_{i}\) and \(v_{j}\) is \(\omega_{i,j} = \sum_{(v_{i}, v_{j}, t) \in C} \exp(-t / \tau)\), where \(\tau\) is an additional parameter that controls the exponential decay.
-Networks that are generated using this approach are called exponential-threshold networks.
 As a general rule, a time-varying network is applicable when the structure (i.e., the topology) of the system and the temporal process are connected to each other.
 This means that the time scale on which the network itself evolves should be similar to the time scale of the dynamic process that takes place on it.
 For example, a time-varying network is not a suitable model for the internet, since the the infrastructure (i.e., the topology) changes very slowly in comparison to the transmission of the packages that are routed through the network (i.e., the dynamic process).
@@ -264,11 +260,24 @@ The duration of the interaction is negligible and thus assumed to be instantaneo
 Contacts can be interpreted as an extension of links in the static network.
 The unordered pair \(\{v_{i}, v_{j}\}\) becomes a ordered triple \((v_{i}, v_{j}, t)\).
 The order is in this case important, since the third object in the triple must refer to the interaction time \(t\) between the nodes \(v_{i}\) and \(v_{j}\).
-This also means that a time-varying network cannot be represented by a graph.
-Nevertheless, there are many different possibilities to represent a temporal network.
-The simplest way to to this is by using contact sequences.
-A contact sequence is simple a list that contains the contact triples.
-This is a very raw form data (i.e., basically a spreadsheet with three columns) and is therefore very easy to parse and to use in algorithms, but is not very well suited for the analysis of the underlying dynamic process by humans due to the lack of illustrations.
+The usage of static networks in models for dynamic processes, that represents some time-depended sequence of contacts between pairs of nodes, often results in a loss of information, that can be regained using time-varying networks.
+However, these temporal networks also introduce more complexity to the model and one have to weight the gain of information versus the extra effort.
+Especially in the case that the knowledge of how often something between two actors in the network happens is more important than when exactly something happens is a use case for weighted networks~\cite{Newman2010}. \todo{describe weighted graphs in the graph theory basics, since it is also relevant for other things}
+This type of network introduces a mapping between the set of edges and values that represent the strength of the link.
+See \autoref{fig:weighted-network-example} for an illustration of a simple weighted network.
+However, a simple graph without weights can also be used to approximate the interaction sequence of a time-varying network~\cite{Holme2013}.
+The idea is to calculate a total weight for each pair of nodes in the network.
+If the weight exceeds a certain threshold \(\Omega \in \mathbb{R}_{0}^{+}\) then there will be an edge between the two nodes in the static approximation.
+Each contact between two contacts in the sequence \(C\) contributes a part to the total weight.
+However, the weight of the contribution to the total weight decays exponentially.
+Hence, the total weight \(\omega_{i,j}\) between two nodes \(v_{i}\) and \(v_{j}\) is \(\omega_{i,j} = \sum_{(v_{i}, v_{j}, t) \in C} \exp(-t / \tau)\), where \(\tau\) is an additional parameter that controls the exponential decay.
+For a static approximation that should contain an edge if there was at least one contact between the two nodes the threshold can be set to \(\Omega = 0\).
+Networks that are generated using this approach are called exponential-threshold networks.
+
+There are also many different possibilities to represent a temporal network without the loss of information.
+The simplest way to to this is by using the actual contact sequences.
+A contact sequence is basically a list that contains all the contact triples.
+This is a very raw form data (i.e., in essence a spreadsheet with three columns) and is therefore very easy to parse and to use in algorithms, but is not very well suited for the analysis of the underlying dynamic process by humans due to the lack of illustrations.
 Another way to represent time-varying networks are graph sequences.
 The idea here is to generate a static graph that contains all contacts between nodes for a given time step.
 This method has the advantage that all tools that work for static graphs can be applied to each of the graphs in the sequence.
@@ -599,17 +608,29 @@ A network that was generated using this model fully depends on probability distr
 Therefore, topological properties also depend on these probability distributions and can be expressed with respect to them.
 The degree distribution of the integrated network could be verified using this more formal approach.
 In addition, they showed that the clustering coefficient of the network is rather small and comparable to the clustering coefficient of random networks.
-They also propose to use the hidden-variable approach to study possible extensions of the model, which is for example done for the NoPAD model~\cite{Moinet2015}, which is discussed later in this section.
+They also propose to use the hidden-variable approach to study possible extensions of the model, which is for example done for the NoPAD model~\cite{Moinet2015}, which is briefly discussed later in this section.
 
 The activity-driven model is also a fundamental framework for many other studies that use it as start point for their work.
 For example, \citet{Perra2012b} use this model to study random walks on temporal networks, or \citet{Rizzo2016} are applying this model for their research about the spreading the of the infectious Ebola disease in Liberia.
- \todo{more examples...}
+Another paper by \citet{Rizzo2014} uses the activity-driven network framework to study how an epidemic effects the behavior of persons.
+They show that a reduction of the activity potential of persons, due to the fact that there are already ill or because they are trying to protect them self from the disease, may help the slow down the spreading process.
+A paper on a similar topic by \citet{Liu2014} proposes a framework to develop strategies on how to contain the spreading of diseases.
+\citet{Mistry2015} use the model to explore the spreading of opinions in social networks.
+They show that activists can  spread messages across the population more effectively and can help to reduce the cost of campaigns.
 
-On the other hand, others try to improve the model by making it more realistic.
-\citet{Laurent2015} adds additional social mechanisms (e.g., memory) to the model to allow for the formation of communities.
-Another extensions by \citet{Moinet2015, Moinet2016} solves the problem of inaccurate inter-events times by making the activity potential time depended.
+On the other hand, others try to improve the model by making it more realistic by implement additional mechanisms.
+\citet{Laurent2015} adds additional social mechanisms (e.g., memory) to the model to allow for the formation of communities on the integrated network.
+Another extension by \citet{Moinet2015, Moinet2016} solves the problem of inaccurate inter-events times by making the activity potential time depended.
 This model is known as the non-poissonian activity-driven (NoPAD) model and can generate inter-event time distributions that can also be observed in real-world networks.
-\todo{remove Laurent2015 model here (explained in other chapter and replace with something else)}
+\citet{Wang2016} proposed the Activity-Security-Trust (AST) model, which not only considers activity as the explicit driving force behind dynamic processes, but also incorporates the implicit factors security and trust.
+Trust can be seen as the belief in honesty or fairness between two nodes and influences the possible link formation between them.
+The second extension, the security level, is like the activity potential a property of each node that determines how well a node is prepared against possible attacks.
+It can be seen as the probability of a node to receive a connection from another one.
+\citet{Sunny2015} adds link lifetimes to the activity-driven framework.
+Every time a link is formed it is assigned a lifetime, that is drawn at random from a probability distribution.
+This link may then be part of multiple consecutive instantaneous networks
+and is only removed after its lifetime has decayed, which is different to the simple activity-driven model, where links are meant to be instantaneous and are deleted after every time step.
+The authors use this new introduces mechanism to study how well link lifetimes are suited to model disease spreading processes.
 
 
 %% ========================================================================
