@@ -8,7 +8,7 @@ In this section some graph theory related notation is defined which is used duri
 It is for the most part based on~\cite{Thulasiraman1992} and on~\cite{Diestel2012}.
 A graph is a mathematical construct that can be used to model and explore the relationship between objects.
 More formally, a graph is a ordered pair of finite sets \(G = (V, E)\), whereas \(V\) denotes the set of \emph{vertices} (i.e., the objects) and \(E \subseteq [V]^{2} \) the set of \emph{edges} (i.e., the relationships between the objects).
-It is common to write \(V(G)\) and \(E(G)\) to refer to the set of vertices  respectively the set of edges, that are associated with a graph \(G\).
+It is common to write \(V(G)\) and \(E(G)\) to refer to the set of vertices and the set of edges, respectively, that are associated with a graph \(G\).
 An edge \(\{v_1, v_2\} \in E(G)\) is an unordered pair of two vertices.
 This means that there is no distinction between the two edges \(\{v_1, v_2 \}\) and \(\{v_2, v_1\}\).
 A graph with this property is called a \emph{undirected} graph.
@@ -19,9 +19,12 @@ Furthermore, it is possible that two distinct vertices are joined by multiple ed
 Such edges are referred to as \emph{parallel} edges.
 A graph that has no parallel edges and no self-loops is called a \emph{simple} graph.
 Figure~\ref{fig:example_graphs} depicts a example for a simple graph and for a graph with multiple edges and a self-loop vertex.
-All further mentions and definitions for graphs are referring to undirected simple graphs unless stated otherwise.
+It is also possible to assign each edge in a graph a real number, that adds additional information to it~\cite{Cormen2009}.
+This number is usually called \emph{weight}, and is determined by the function \(w : E(G) \rightarrow \mathbb{R}\).
+This type of graph is called weighted graph.
+However, all further mentions and definitions for graphs are referring to undirected simple graphs unless stated otherwise.
 It is also possible to perform operations on graphs.
-For example, the union of two graphs \(G_{1} = (V_{1}, E_{1})\) and \(G_{2} = (V_{2}, E_{2})\) results in a graph \(G = (V_{1} \cup V_{2}, E_{1} \cup E_{2})\).
+For instance, the union of two graphs \(G_{1} = (V_{1}, E_{1})\) and \(G_{2} = (V_{2}, E_{2})\) results in a graph \(G = (V_{1} \cup V_{2}, E_{1} \cup E_{2})\).
 Other binary operations, such as the intersection of two graphs, can be done analogous.
 There are unary operations on graphs (e.g., the removal of vertices and edges) as well.
 
@@ -109,6 +112,9 @@ It is the ratio of triangles (i.e., cliques consisting of exactly three vertices
 A connected triple is made up of three vertices as well, but does only have two edges.
 Hence, a triangle consists of exactly three triples.
 The global clustering coefficient is a measure the extent of transitive connections in the graph (i.e., if there is a edge between vertices A and B, and between B and C, how likely is it that there is also an edge between A and C).
+The two global clustering measures are, however, not equivalent to each other and may yield very different values~\cite{Newman2010}.
+The definition of the local clustering clustering coefficient introduces a bias towards vertices with smaller degree, due to smaller values in the denominator.
+Therefore, the value for the average local clustering coefficient maybe larger than the global clustering coefficient for the same graph, if the number of low-degree vertices is sufficiently large.
 
 \begin{equation}
  T = \frac{3 \times \text{\# of triangles}}{\text{\# of connected triples of vertices}}
@@ -168,7 +174,7 @@ The global clustering coefficient is a measure the extent of transitive connecti
      Hence, the clustering coefficient of the red vertex is \(\frac{6}{6} = 1\).}
    \end{subfigure}
 
-   \caption[Clustering coefficient examples]{Examples for the clustering coefficient of a vertex with a small neighborhood.
+   \caption[Clustering coefficient examples]{Examples for the local clustering coefficient of a vertex with a small neighborhood.
    The blue vertices are the neighbors of the red vertex.
    The possible number of edges between the four neighbors is \(\binom{4}{2} = 6\).}
 \label{fig:clustering-coefficient-examples}
@@ -215,17 +221,28 @@ It is a very common research topic to understand the pairwise relationships in s
 A \emph{triad} on the other hand describes triples of actors and the ties between them.
 This concept is especially important for the question of transitivity of certain relationships.
 A example for this would be the question \enquote{is the friend of my friend also my friend?}.
-\todo{strong/weak ties description}
-\todo{egocentric networks}
+Another important concept is the \emph{strength of ties}, which was introduced by \citet{Granovetter1973}.
+The strength of a tie is influenced by factors like the time that two actors spend together, or the intimacy between them.
+Depended on the strength, a tie can either be strong, weak, or absent.
+Absent does not only include non-existing ties, but also ties that are below some threshold of social interactions.
+This concept of strong and weak ties can be used to explain the formation of triads.
+If there already exists a strong tie between the two actors A and B, and between B and C, then there exists at least a weak tie between A and C.
+This is true, due to the opportunities for the formation of a tie between A and C, that will result from a common strong tie to the actor B.
+Furthermore, it is possible to explain the spreading of information in a social network in a better way by considering the strength of ties.
+Weak ties can help the flow of information by acting as a bridge between sparsely connected parts of the network.
 
 A property of many real-world social networks is a \emph{community structure}~\cite{Girvan2002}.
 Communities are groups of actors that are more connected to actors in the same group, than to actors in a different one.
 This basically means that there exists subsets of densely linked nodes in the network with very few links to other subsets.
-The network shown in figure~\ref{fig:karate-club-network} has two known communities characterized by different node colors.
+The network shown in \autoref{fig:karate-club-network} has two known communities characterized by different node colors.
 The detection of community structures in networks is a very import research topic, since the identified communities may correspond to actual social groupings.
 For example, the detected communities in a social network that models the friendship between students may represent the real corresponding social groups (i.e., the circles of friends).
 There is a variety of different methods and approaches to perform this task.
-Examples are approaches based on hierarchical clustering, or edge betweenness (i.e., the number of shortest paths going through an edge).
+Examples are approaches based on hierarchical clustering, or edge betweenness (i.e., the number of shortest paths going through an edge)~\cite{Fortunato2010}.
+However, often is it not possible to study the network and its structure on a fully global scale, due to processing limitations.
+One alternative way is to look at single actors and their immediate neighborhood.
+These small sub-networks are called \emph{ego-centered} or \emph{personal} networks~\cite{Newman2010}.
+Often is some number of these ego-centered networks sampled from the complete networks and examined for local properties, such as the degrees or the local clustering coefficient.
 
 Another attribute that many social networks share is that they are \emph{scale-free networks}~\cite{Barabasi2016}.
 Formally, a network is a scale-free network if its degree distribution is a \emph{power-law distribution} (i.e., \(p(k) \sim k^{-\gamma}\), where \(\gamma\) is the parameter of the distribution that denotes the degree exponent).
@@ -246,7 +263,7 @@ This section contains an overview on the concept of time-varying networks~\cite{
 Since this type of network is used in many different scientific fields it also has a variety of names.
 For example, temporal networks, dynamic networks, evolving graphs, or the name that is mainly used in this thesis, time-varying networks.
 As already mentioned in the section about social networks, the structure, or topology, of networks can be used to understand dynamic processes and their behavior.
-However, there are a lot of dynamical processes that are modeled using networks, in which the links are not active all the time.
+However, there are many dynamical processes that are modeled using networks, in which the links are not active all the time.
 One example would be a communication network, such as the network of phone calls between users.
 Another example would social or collaboration network, where actors do not interact constantly but in irregular intervals.
 These link activation at certain times can, however, be very important to explain the dynamic process and are simply lost when approximated by a static graph.
@@ -262,9 +279,8 @@ The unordered pair \(\{v_{i}, v_{j}\}\) becomes a ordered triple \((v_{i}, v_{j}
 The order is in this case important, since the third object in the triple must refer to the interaction time \(t\) between the nodes \(v_{i}\) and \(v_{j}\).
 The usage of static networks in models for dynamic processes, that represents some time-depended sequence of contacts between pairs of nodes, often results in a loss of information, that can be regained using time-varying networks.
 However, these temporal networks also introduce more complexity to the model and one have to weight the gain of information versus the extra effort.
-Especially in the case that the knowledge of how often something between two actors in the network happens is more important than when exactly something happens is a use case for weighted networks~\cite{Newman2010}. \todo{describe weighted graphs in the graph theory basics, since it is also relevant for other things}
-This type of network introduces a mapping between the set of edges and values that represent the strength of the link.
-See \autoref{fig:weighted-network-example} for an illustration of a simple weighted network.
+Especially in the case that the knowledge of how often something between two actors in the network happens is more important than when exactly something happens is a use case for weighted graph.
+See \autoref{fig:weighted-network-example} for an illustration of a weighted graph.
 However, a simple graph without weights can also be used to approximate the interaction sequence of a time-varying network~\cite{Holme2013}.
 The idea is to calculate a total weight for each pair of nodes in the network.
 If the weight exceeds a certain threshold \(\Omega \in \mathbb{R}_{0}^{+}\) then there will be an edge between the two nodes in the static approximation.
@@ -297,7 +313,7 @@ However, similar to the last representation methods, this one also only reasonab
    \centering
    \begin{subfigure}[t]{0.39\textwidth}
      \centering
-     \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=2pt]}]
+     \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=0pt,align=center,text width=14pt]}]
 
        \node[node] (1) at (0, 2) {1};
        \node[node] (2) at (2, 2) {2};
@@ -310,8 +326,8 @@ However, similar to the last representation methods, this one also only reasonab
        \draw[line width=1.25pt] (3) -- (4);
      \end{tikzpicture}
 
-   \caption{Static approximation of the contact sequence as a weighted network.
-   The width of the lines between the nodes represent the strength (i.e., the weight) of the edges.
+   \caption{Static approximation of the contact sequence as a weighted graph.
+   The width of the lines between the nodes represent the the weight (i.e., the number of interactions) of the edges.
    The thicker the line the higher the weight.}
    \label{fig:weighted-network-example}
    \end{subfigure}
@@ -344,7 +360,7 @@ However, similar to the last representation methods, this one also only reasonab
 
    \begin{subfigure}[t]{0.39\textwidth}
      \centering
-     \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=2pt]}]
+     \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=0pt,align=center,text width=14pt]}]
 
        \node[node] (1) at (0, 2) {1};
        \node[node] (2) at (2, 2) {2};
@@ -394,7 +410,6 @@ However, similar to the last representation methods, this one also only reasonab
    \caption[Graphical representations of time-varying networks]{Figures \subref{fig:graph-sequence-example}--\subref{fig:timeline-example} show different visualizations for the contact sequence \((1, 2, 0), (1, 4, 0), (3, 4, 0), (1, 2, 1), (2, 4, 1), (1, 2, 2), (1, 4, 2)\).
    Figure \subref{fig:weighted-network-example} shows a static network of the same contact sequence where the number of contacts between two nodes is reflected by the edge weights.}
 \end{figure}
-\todo{fix different sizes for nodes in subfigures (a) and (c)}
 
 It is also noteworthy that most of the introduced measures for networks do not apply for temporal networks or must be redefined, respectively extended.
 For example, the concept of degree distributions does not exists in this context.
@@ -461,10 +476,10 @@ A newly added node then forms links with already existing nodes.
 Which other nodes are chosen depends on how important the other nodes are.
 The more important a node is, the more likely it is that the new nodes forms a connection with it.
 This process is called \emph{preferential attachment}.
-It can, for example, be used to describe the behavior of new users in social networks (i.e., new users tend to form ties with already established users) or that new websites on the web link to already popular ones because they are easier to find \todo{find better examples with references to papers?}.
+It can, for example, be used to explain the evolution of the online encyclopedia Wikipedia~\cite{Caldarelli2006}.
+\citet{Eisenberg2003} showed that preferential attachment is the mechanism behind the evolution of protein networks.
+New websites on the World-Wide-Web follow the same pattern, they tend to link to already popular websites, since they are maybe easier to find~\cite{Barabasi1999}.
 More formally, the model starts with a small number \(m_{0}\) of nodes and the following two steps are repeated in every time step:
-
-% examples at:http://barabasi.com/networksciencebook/chapter/5#origins
 
 \begin{enumerate}
     \item add a new node to the network
@@ -499,7 +514,7 @@ This indicates that in fact both mechanisms are required to yield a network with
 The modeling of the activity of users in complex systems (e.g., in social networks) can be a challenging task.
 Usually the actual activities, such as the writing of an e-mails, posts on  Facebook, or tweets, are not of particular interest.
 More relevant is how are these events or activities laid out in time and what  the distribution of intervals between two consecutive events is (i.e., the inter-event time distribution).
-Multiple models that try to capture patterns of human activities based on different approaches are discussed in this section.
+Multiple models try to capture patterns of human activities based on different approaches are discussed in this section.
 
 \subsection{Stochastic Models}
 
@@ -507,8 +522,8 @@ One of the simplest methods to model user activity is by using a Poisson process
 This stochastic process is defined by the event rate \( \lambda \), which states how often a event should occur in a given time window.
 Two important properties of the Poisson process are that the inter-activity times are exponentially distributed and independent of each other.
 This leads to the effect that events take place in regular intervals (i.e., at the given rate) and that it is almost impossible to have long periods of time between to consecutive activities.
-However, it has been shown, that a lot of human activity patterns (e.g., email communication) cannot be modeled very accurately be a Poisson process due to its assumptions.
-A lot of activities are executed in bursts, followed by longer periods of inactivity.
+However, it has been shown, that human activity patterns (e.g., email communication) cannot be modeled very accurately by a Poisson process due to its assumptions.
+Most activities are executed in bursts, followed by longer periods of inactivity.
 For example, a person may have a dedicated time in the day for answering emails.
 This behavior can be much better explained by a power-law distribution of the inter-activity times because its long tail allows for longer inactivity periods.
 There are, however, approaches that try to tackle this problem that are using extensions of Poisson processes.
@@ -579,6 +594,7 @@ For each time step \(t\) the following steps are repeated:
 \begin{enumerate}
     \item Create a new network \(G_{t}\) that contains all nodes but has no links yet.
     \item Every node \(v_{i}\) becomes active with probability \(a_{i} \Delta t\). Active nodes choose \(m\) distinct other nodes uniformly at random and form a link with them.
+    \item Increment the current time \(t \rightarrow t + \Delta t\).
 \end{enumerate}
 
 Since every active node creates \(m\) links, the cardinality of the edge set is given by \(|E_{t}| = m \eta \expval{x} n\).

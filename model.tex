@@ -17,9 +17,9 @@ It produces adjustable community structures and weight-topological correlations 
     \item Node deletion
 \end{enumerate}
 
-The first mechanism introduces memory to the nodes. \todo{this is based on the idea in: time varying networks and the weakness of strong ties (explain more in detail)}
+The first mechanism introduces memory to the nodes. \todo{this is based on the idea in: time varying networks and the weakness of strong ties (explain more in detail) - memory introduces strong and weak ties}
 A node remembers all previous interactions with other nodes (i.e., its neighbors) and is prone to repeat them.
-The memory of a node is represented by a weighted egocentric network, that includes all other nodes, which were already part of an interactions in the past, and the weight represent the number of previous interactions.
+The memory of a node is represented by a weighted egocentric network, that includes all other nodes, which were already part of an interactions in the past, and the weight represent the number of previous interactions. \todo{but scaled by some factor delta}
 The choice of forming a new tie or reinforcing a existing one depends on how many nodes are already in the egocentric network.
 Let \(k_{i} = d(v_{i})\) be the degree of the node \(v_{i}\), then the probability for a new tie is \(p(k_{i}) = \frac{c}{k_{i} + c}\), and the probability to interact with a already established tie is \(\bar{p}(k_{i}) = 1 - p(k_{i}) = 1 - \frac{c}{k_{i} + c} = \frac{k_{i}}{k_{i} + c}\), where the constant \(c\) determines how strong the memory of a user is (cf.  \autoref{fig:reinforcement-process-prob-plot} for details).
 Therefore, the probability for new ties decays exponentially with the degree of the node.
