@@ -233,3 +233,74 @@ For example, weight-topology correlations (i.e., stronger ties within groups) ar
 
 %% ========================================================================
 %% ========================================================================
+
+
+\section{Peer Influence Model}
+\label{sec:peer-influence-model}
+
+\citet{Walk2016}
+
+
+\begin{figure}
+    \centering
+
+    \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=3pt]}, neighbor/.style={circle,fill=blue!70,minimum size=1em,inner sep=3pt]}]
+      \node[node] (1) at (-1, -1)  {i};
+      \node[neighbor] (2) at (2.5, 1.5) {j};
+      \node[neighbor] (3) at (2.5, -1) {k};
+      \node[neighbor] (4) at (2.5, -3.5) {l};
+
+      \draw (1) -- (2) node [midway, above, sloped] (a) {$w_{i,j} = 3$};
+      \draw (1) -- (3) node [midway, above, sloped] (b) {$w_{i,k} = 5$};
+      \draw (1) -- (4) node [midway, above, sloped] (c) {$w_{i,l} = 2$};
+    \end{tikzpicture}
+
+    \caption[Extended egocentric network example]{Extented egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes).}
+    \label{fig:egocentric-network}
+\end{figure}
+
+
+\begin{equation}
+    \alpha_{i} = \frac{\sum_{j \in N(i)} \mathbf{1}_{\{t_{j} = t-1\}} \exp(w_{i, j})}{\sum_{j \in N(i)} \exp(w_{i, j})}
+\end{equation}
+
+
+\begin{equation}
+    p_{i} = g(\alpha_{i}) = \frac{\alpha_{i} q}{\sqrt{\alpha^{2} + \theta^2}}
+\end{equation}
+
+
+\myfig{peer-influence-sigmoid}
+      {width=0.75\textwidth}
+      {ffff}
+      {asdfdf}
+      {fig:peer-influence-sigmoid}
+
+
+\begin{table}[]
+\centering
+\begin{tabular}{lp{10cm}}
+\hline
+\textbf{parameter} & \textbf{description} \\ \hline \hline
+\multicolumn{2}{c}{activity-driven framework} \\ \hline
+\( n \) & The number of nodes in the network. \\
+\( f(x) \) & The probability distribution for the activity potentials of the nodes. In this work a power-law distribution is selected \( f(x) \sim x^{-2.7} \). It has a positive probability for values in the range of \( [\varepsilon, 1] \). \\
+\( \varepsilon \) &  The lower bound of the activity potential. It should be \( 0 < \varepsilon \ll 1 \). \\
+\( \Delta t \) &  The length of the time window in each iteration. \\
+\( \eta \) &  A re-scaling factor for the activity potential to adjust the average number of active nodes in each iteration. \\
+\( m \) & The number of contacts a node initiates, once it become active. \\ \hline \hline
+
+\multicolumn{2}{c}{community structure extension} \\ \hline
+\( p_{\Delta} \) & The probability to form a triangle when establishing a new tie. \\
+\( p_{d} \) & The probability for node to get deleted in a iteration. \\
+\( \delta \) & The constnat factor that is added to the tie strength when it is reinforced. \\
+\( c \) &  The memory constant, which influences the probability for a new tie.\\ \hline \hline
+
+\multicolumn{2}{c}{peer influence extension} \\
+\( q \) & The maximum possible peer influence probability that a node can receive. \\
+\( \theta \) & The critical threshold for the peer influence.  \\ \hline
+\end{tabular}
+
+\caption{An overview of the parameter set of the model.}
+\label{tbl:all-model-parameter}
+\end{table}
