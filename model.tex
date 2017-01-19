@@ -1,54 +1,234 @@
 \chapter{Model}
 
+The proposed user activity model with peer influence effects is in detail described in this chapter.
+It is yet another extension of the activity-driven network framework by \citet{Perra2012a}, that was discussed in \autoref{subsec:time-varying-network-models}.
+However, it is not directly based on it, but on the work of \citet{Laurent2015}, which also relies on the the activity-driven framework.
+This underlying model, which is explained in the first section of this chapter, allows the formation of community structures and the formation of strong an weak ties in the network, which is a crucial condition for the occurrence of peer influenced activity.
+The additional introduced mechanisms, that allow for peer influenced activity to actually happen in the network, are then discussed in \autoref{sec:peer-influence-model} of this chapter.
+
+
+%% ========================================================================
+%% ========================================================================
+
 
 \section{The Base Model}
-
-\todo{rewrite!}
-% explain in short the relation to the activity-driven framework (i.e., the activity potentials) and note the distribution that is used to draw the samples and note that w.l.o.g. delta t = eta = 1 and epsilon is 10^-3 in the beginning of this section
+\label{sec:base-model}
 
 
-To generate artificial contact sequences, a extension of an already established activity driven model by \citet{Laurent2015} was used.
-This model, which is based the activity-driven framework by \citet{Perra2012a} (see \autoref{subsec:activity-driven-models} for details), introduces additional social mechanisms and memory effects to provide a more realistic view on temporal networks.
-It produces adjustable community structures and weight-topological correlations by adding the following three mechanisms:
+\subsection{Description}
+
+Since this model~\cite{Laurent2015} is based on the activity-driven framework by \citet{Perra2012a}, a activity potential \( a_{i} = \eta x_{i}\),  which is drawn from a suitable distribution, is assigned to each node.
+To reflect the heterogeneous activity patterns of people, a power-law distribution \( f(x) \sim x^{-\gamma}\) is selected.
+The exponent for the activity potential distribution is fixed to \( \gamma = 2.7 \), which is a value that is similar to the exponent observed in real world communication networks.
+The lower bound for the activity potential is set to \( \varepsilon = 10^{-3} \), and the time scaling parameter is set to \( \eta = 1\), so that \( a_{i} = x_{i} \in [\varepsilon, 1] \).
+Furthermore, for the sake of simplicity and without loss of generality are the time window \( \Delta t \), and the number of generated links at each activation \( m \) all set to the value one.
+
+The dynamic part of the model is basically identical to the activity-driven framework.
+A node becomes active in every time window with probability equal to its activity potential and selects other nodes to interact with.
+The difference is how the interaction partners are selected once a node becomes active.
+The goal of this model is it to produce adjustable community structures and weight-topological correlations in the integrated network, which can be archived by changing the way the other nodes are selected.
+More specifically, to archive these more realistic topological properties, the following two additional social mechanisms are introduced:
 
 \begin{enumerate}
     \item Memory effects
     \item Closure processes
-    \item Node deletion
 \end{enumerate}
 
-The first mechanism introduces memory to the nodes. \todo{this is based on the idea in: time varying networks and the weakness of strong ties (explain more in detail) - memory introduces strong and weak ties}
-A node remembers all previous interactions with other nodes (i.e., its neighbors) and is prone to repeat them.
-The memory of a node is represented by a weighted egocentric network, that includes all other nodes, which were already part of an interactions in the past, and the weight represent the number of previous interactions. \todo{but scaled by some factor delta}
-The choice of forming a new tie or reinforcing a existing one depends on how many nodes are already in the egocentric network.
-Let \(k_{i} = d(v_{i})\) be the degree of the node \(v_{i}\), then the probability for a new tie is \(p(k_{i}) = \frac{c}{k_{i} + c}\), and the probability to interact with a already established tie is \(\bar{p}(k_{i}) = 1 - p(k_{i}) = 1 - \frac{c}{k_{i} + c} = \frac{k_{i}}{k_{i} + c}\), where the constant \(c\) determines how strong the memory of a user is (cf.  \autoref{fig:reinforcement-process-prob-plot} for details).
-Therefore, the probability for new ties decays exponentially with the degree of the node.
-This corresponds to the observations of actual social interaction dynamics, where actors tend to communicate within their social cycle, which has a limited size due to cognitive capacities of the actors.
-The memory mechanism allows the introduction of dependencies of successive interactions between nodes and replaces the approach of selecting a communication partner uniformly at random when a node becomes active in the original activity-driven framework.
+The first mechanism introduces memory to the nodes, in the sense that nodes remember all previous interactions with other nodes.
+This idea was adapted from the work of \citet{Karsai2014}, and enables the formation of strong ties (i.e., interactions that are repeated often) and weak ties (i.e., interactions that area repeated infrequently) between the nodes.
+This heterogeneity of tie strengths is an important role for processes that take place in many real world networks.
+For instance, they showed in their work, that strong ties are able to slow down the spreading of rumors in networks of social interaction (e.g., a network of phone calls).
+This counter intuitive result can be explained by the observation that most activity is concentrated in strongly tied groups, which prevents a fast spreading of the rumor into other parts of the network.
+
+The memory of a node is represented by a weighted egocentric network, that includes all other nodes, which were already part of one or more interactions in the past.
+These previous communication partners are also called neighbors.
+The weight represents the number of previous interactions, scaled by the link-reinforcement constant \( \delta \).
+\autoref{fig:egocentric-network} shows an exemplary egocentric network of the node \( v_{i} \) and its neighbors.
+The choice of forming a new tie or reinforcing an existing one depends on the number of neighbors of a node.
+This corresponds to the observations of social interaction dynamics, where actors tend to communicate almost exclusively within their social cycle, which has a limited size, due to cognitive capacities of the actors~\cite{Dunbar1992}.
+Let \( k_{i} = d(v_{i}) \) be the degree of the node \( v_{i} \) in its egocentric network, then the probability to form a new tie is \( p(k_{i}) = \frac{c}{k_{i} + c} \), and the probability to interact with an already established tie is \( \bar{p}(k_{i}) = 1 - p(k_{i}) = 1 - \frac{c}{k_{i} + c} = \frac{k_{i}}{k_{i} + c} \), where the constant \(c\) determines how strong the memory of an actor is (cf.  \autoref{fig:reinforcement-process-prob-plot} for details).
+Therefore, the probability for the formation of a new tie decays very fast with increasing size of the egocentric network.
+The memory strength constant is fixed to \( c = 1 \) in the context of this work.
+If an active node decides to reinforce an existing tie, the neighbor is selected proportional to the current tie strength.
+Therefore, the probability for node \( v_{j} \) to be selected as communication partner of node \( v_{i} \) is given by
+\( p_{i,j} = \sfrac{w_{i,j}}{\sum_{k \in N(v_{i})} w_{i, k}} \), where \( w_{i,j} \) denotes the tie strength between node \( v_{i} \) and \( v_{j} \) in the egocentric network of \( v_{i} \).
+This reinforcement process allows the introduction of dependencies between successive interactions of node pairs and replaces the approach of selecting a communication partner uniformly at random when a node becomes active in the original activity-driven framework.
+
+
+\begin{figure}
+    \centering
+
+    \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=3pt]}, neighbor/.style={circle,fill=blue!70,minimum size=1em,inner sep=3pt]}]
+      \node[node] (1) at (-1, -1)  {i};
+      \node[neighbor] (2) at (2.5, 1.5) {j};
+      \node[neighbor] (3) at (2.5, -1) {k};
+      \node[neighbor] (4) at (2.5, -3.5) {l};
+
+      \draw (1) -- (2) node [midway, above, sloped] (a) {$w_{i,j} = 3$};
+      \draw (1) -- (3) node [midway, above, sloped] (b) {$w_{i,k} = 5$};
+      \draw (1) -- (4) node [midway, above, sloped] (c) {$w_{i,l} = 2$};
+    \end{tikzpicture}
+
+    \caption[Egocentric network example]{Egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes).}
+    \label{fig:egocentric-network}
+\end{figure}
+
 
 \myfig{reinforcement-process-prob-function}
       {width=0.75\textwidth}
-      {Plots of the function that determines the probability for the formation of a new tie based on the degree of a node \(p(k)\) for different values of the scaling factor for the memory strength \(c\). This constant can help to model different types of users. Larger values may correspond to social explorers, that are more prone to form new ties, and smaller values are related to social keepers, which communicate almost exclusively to peers in their social circle.}
+      {Plots of the function that determines the probability for the formation of a new tie based on the degree of a node \( p(k) \) for different values of the memory strength \( c \). This constant can help to model different types of users. Larger values may correspond to social explorers, that are more prone to form new ties, and smaller values are related to social keepers, which communicate almost exclusively to peers in their social circle.}
       {Probability distribution for the formation of new ties.}
       {fig:reinforcement-process-prob-plot}
 
-The second mechanism introduces two different closure processes to the model.
-The first one, cyclic closure, assures the formation of triangles (i.e., cliques between three nodes), which are linked to the formation of community structures in the network.
-If a node tries to form a new tie, it performs with probability \(p_{\Delta}\) a cyclic closure by interacting with a neighbor of a neighbor at random.
-The second closure process, focal closure, tries to emulate the social dynamic that users tend to form ties with other users that are similar (e.g., they have common interests).
-This process is also performed when a new tie should be formed and has a probability of \(1 - p_{\Delta}\) and is simply done by selecting a new node to interact with uniformly at random (i.e., by a random search in the network).
 
-The third, and last, mechanism that is included into the model is the deletion of nodes.
-In the original activity-driven framework, nodes live forever and are forever part of the network.
-In this extension, nodes have an intrinsic probability to die \(p_{d}\) in every time step.
+The second mechanism introduces two different closure processes to the model.
+The first one, cyclic closure, assures the formation of triangles (i.e., cliques between three nodes), which were linked to the formation of community structures in the network by \citet{Bianconi2014}.
+They showed that this mechanism is sufficient to generate networks with complex topological structures (e.g., long-tailed degree distributions), where the strength of communities depends on the cyclic closure probability.
+If a node wants to form a new tie, it tries to perform with probability \( p_{\Delta} \) a cyclic closure, by interacting with a randomly selected neighbor of a neighbor.
+The second closure process, focal closure, tries to emulate the social dynamic that users tend to form ties with other users that are similar to them (e.g., they have common interests).
+This process is performed when a new tie should be created with a probability of \( 1 - p_{\Delta} \) or if there are no suitable candidates for a cyclical closure available.
+This is, for instance, the case if a node becomes active the first time.
+The weight of a new tie is always initialized to a value of one, regardless of the type of closure that was used to establish the new tie.
+The actual implementation of these two closure mechanisms was adapted from the work of \citet{Kumpula2007}, who used the same closure mechanisms to study the formation of community structures in weighted static networks.
+They model cyclic closure as a biased local search (cf. \autoref{fig:cyclic-closure} for details) and focal closure as an unbiased global search, which means selecting a new node uniformly at random from the entire network.
+Furthermore, the introduced a node deletion mechanism in their model, which was adapted here as well.
+
+
+\begin{figure}
+    \centering
+
+    \begin{subfigure}[t]{0.3\textwidth}
+    \begin{tikzpicture}[active/.style={circle,fill=red!70,minimum size=1em,inner sep=3pt]}, neighbor/.style={circle,fill=blue!70,minimum size=1em,inner sep=3pt]}]
+      \node[active]   (1) at (0, 1) {};
+      \node[neighbor] (2) at (1, 0) {};
+      \node[neighbor] (3) at (1, 2) {};
+      \node[neighbor] (4) at (2, 1) {};
+      \node[neighbor] (5) at (3, 0) {};
+      \node[neighbor] (6) at (3, 2) {};
+
+      % dangling edges
+      \draw (3) -- (1.3, 2.3);
+      \draw (3) -- (0.7, 2.3);
+      \draw (2) -- (0.7, -0.3);
+      \draw (6) -- (2.7, 2.3);
+      \draw (5) -- (3.4, 0);
+      \draw (6) -- (3.4, 2);
+
+      \draw (1) -- (2) node [midway, above] (a) {2};
+      \draw (1) -- (3) node [midway, above] (b) {3};
+      \draw (1) -- (4) node [midway, above] (c) {5};
+      \draw (4) -- (6) node [midway, below] (d) {3};
+      \draw (4) -- (5) node [midway, above] (e) {4};
+      \draw (2) -- (5) node [midway, above] (f) {7};
+    \end{tikzpicture}
+    \caption{}
+    \label{subfig:cyclic-closure-a}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.3\textwidth}
+    ~
+    \begin{tikzpicture}[active/.style={circle,fill=red!70,minimum size=1em,inner sep=3pt]}, neighbor/.style={circle,fill=blue!70,minimum size=1em,inner sep=3pt]}, selected/.style={circle,fill=green!70,minimum size=1em,inner sep=3pt]}]
+      \node[active]   (1) at (0, 1) {};
+      \node[neighbor] (2) at (1, 0) {};
+      \node[neighbor] (3) at (1, 2) {};
+      \node[selected] (4) at (2, 1) {};
+      \node[neighbor] (5) at (3, 0) {};
+      \node[neighbor] (6) at (3, 2) {};
+
+      % dangling edges
+      \draw (3) -- (1.3, 2.3);
+      \draw (3) -- (0.7, 2.3);
+      \draw (2) -- (0.7, -0.3);
+      \draw (6) -- (2.7, 2.3);
+      \draw (5) -- (3.4, 0);
+      \draw (6) -- (3.4, 2);
+
+      \draw (1) -- (2) node [midway, above] (a) {2};
+      \draw (1) -- (3) node [midway, above] (b) {3};
+      \draw[line width=0.5mm] (1) -- (4) node [midway, above] (c) {5};
+      \draw (4) -- (6) node [midway, below] (d) {3};
+      \draw (4) -- (5) node [midway, above] (e) {4};
+      \draw (2) -- (5) node [midway, above] (f) {7};
+    \end{tikzpicture}
+    \caption{}
+    \label{subfig:cyclic-closure-b}
+    \end{subfigure}
+    ~
+    \begin{subfigure}[t]{0.3\textwidth}
+    \begin{tikzpicture}[active/.style={circle,fill=red!70,minimum size=1em,inner sep=3pt]}, neighbor/.style={circle,fill=blue!70,minimum size=1em,inner sep=3pt]}, selected/.style={circle,fill=green!70,minimum size=1em,inner sep=3pt]}]
+      \node[active]   (1) at (0, 1) {};
+      \node[neighbor] (2) at (1, 0) {};
+      \node[neighbor] (3) at (1, 2) {};
+      \node[selected] (4) at (2, 1) {};
+      \node[neighbor] (5) at (3, 0) {};
+      \node[selected] (6) at (3, 2) {};
+
+      % dangling edges
+      \draw (3) -- (1.3, 2.3);
+      \draw (3) -- (0.7, 2.3);
+      \draw (2) -- (0.7, -0.3);
+      \draw (6) -- (2.7, 2.3);
+      \draw (5) -- (3.4, 0);
+      \draw (6) -- (3.4, 2);
+
+      \draw (1) -- (2) node [midway, above] (a) {2};
+      \draw (1) -- (3) node [midway, above] (b) {3};
+      \draw[line width=0.5mm] (1) -- (4) node [midway] (c) {5};
+      \draw[line width=0.5mm] (4) -- (6) node [midway, below] (d) {3};
+      \draw (4) -- (5) node [midway, above] (e) {4};
+      \draw (2) -- (5) node [midway, above] (f) {7};
+      \draw[line width=0.5mm] (1) -- (6) node [midway, above] (g) {1};
+    \end{tikzpicture}
+    \caption{}
+    \label{subfig:cyclic-closure-c}
+    \end{subfigure}
+
+    \caption[Cyclic closure mechanism example]{This is an illustration of the cyclic closure mechanism in the model. The network depicted in these figures is part of the union of all egocentric networks (i.e., the integrated network). \autoref{subfig:cyclic-closure-a} shows the active node in red. In the first step, this node has to select one of his neighbors. This is done at random with respect to the tie strengths. Therefore, the probabilities for the three neighbors to be selected are \(\sfrac{3}{10}\), \(\sfrac{5}{10}\), and \(\sfrac{2}{10}\) respectively. In this example the neighbor with the highest probability was selected, which is depicted in \autoref{subfig:cyclic-closure-b}. Since the selected neighbor has neighbors himself that do not share a link with the active node yet, the cyclic closure can be completed. This is done once more by selecting one of the candidates at random with respect to the weight of the ties and creating a new tie with unit strength with probability \(p_{\Delta}\). \autoref{subfig:cyclic-closure-c} shows the newly formed triangle in the network.}
+    \label{fig:cyclic-closure}
+\end{figure}
+
+
+In the activity-driven framework, nodes live forever and are, therefore, forever part of the network.
+Here, nodes have an intrinsic probability \(p_{d}\) to be removed in every time step, which is the same for every node in the network.
 This ensures that the network can reach a stable state in which the structural characteristics (e.g., the community structures) become invariant in time.
 However, every time a node is removed from the network, a new one joins to keep the size of the network constant.
+The deletion probability of nodes can determine how fast the network reaches its equilibrium.
+A small value for \(p_{d}\) allows nodes to stay a long time in the network and even nodes with relatively small activity potential can become fully integrated in the community structures.
+Therefore, it takes longer to reach the time invariant state of the network, when the low activity nodes are not removed fast enough.
+The expected time that a node will be part of the network can be determined by viewing it as a simple Bernoulli process.
+In each iteration a biased coin is flipped for every node.
+The outcome of this Bernoulli random experiment determines if the nodes stays in the network or is replaced in the next round.
+The probability for a node to be deleted after exactly \( x \) iterations is \( \prob{x} = (1-p_{d})^{x-1} p_{d} = \bar{p}_{d}^{x-1} p_{d}\).
+Hence, the expected value for the lifetime of a node is given by \( \expval{x} = \sum_{x=1}^{\infty} x \prob{x} = \sum_{x=1}^{\infty} x \bar{p}_{d}^{x-1} p_{d} = p_{d} \sum_{x=1}^{\infty} x \bar{p}_{d}^{x-1} \).
+This sum is related to the sum of the geometric series \( \sum_{x=0}^{\infty} r^{x} = \frac{1}{1 - r} \), for \(|r| < 1 \), by being its first derivative\footnote{The first derivative of the sum of the geometric series is \( \frac{\mathrm{d} \sum_{x=0}^{\infty} r^{x}}{\mathrm{d} r} = \sum_{x=0}^{\infty} \frac{\mathrm{d} r^{x}}{\mathrm{d} r} = \sum_{x=1}^{\infty} x r^{x-1} = \frac{\mathrm{d} \frac{1}{1-r}}{\mathrm{d} r} = \frac{1}{(1 - r)^{2}} \), for \(|r| < 1\).}.
+Therefore, the expected value for the lifetime of a node is \( \expval{x} = \frac{p_{d}}{(1 - \bar{p}_{d})^{2}} = \frac{1}{p_{d}} \).
+This means that, for example, nodes with a deletion probability of \(p_{d} = 5e-5\) will be on average deleted after 20,000 iterations.
 
-The probabilities \(p_{\Delta}\) \(p_{d}\) are fixed and the same for every node in the network.
-The memory strength is fixed to \(c = 1\).
-Other parameters of the activity-driven framework are \(\eta = \Delta t = 1\), the lower activity bound \(\varepsilon = 0.001\), and the number of interactions per node \(m = 1\).
 
-\todo{describe used activity dist but with peer influence}
+\subsection{Properties}
+
+These newly introduced mechanisms have interesting effects on how the structures on the integrated network evolve over time.
+In the beginning, after nodes form their first ties, they start to close triangles and reinforce the ties in their egocentric network.
+This means that strong community structures are formed early in the model.
+However, after a while more weak ties are introduced and fewer triangles are closed so that the strength of the communities declines and the network reaches its equilibrium state.
+As mentioned earlier, the node deletion probability can be used to control the time until the network converges, but it can also be used to tune the strength of the communities and the average degree in the network.
+A smaller value for \( p_{d} \) decreased the average local clustering coefficient and increases the average degree.
+
+The cyclic closure probability \( p_{\Delta} \) and the reinforcement increment \( \delta \) control the formation of communities as well (see \autoref{fig:community-structures-in-model}).
+Furthermore, like the node deletion probability, the two parameter have an effect on the average degree of the converged network.
+Higher values for the cyclic closure probability or the tie reinforcement increment result in a smaller average degree.
+However, the two parameter do not influence the actual (heterogeneous) distribution of the degrees in a significant way.
+The tie strengths, which are power-law distributed, are not effected by \( p_{\Delta} \), and higher values for \( \delta \) only influence the length of the tail.
+Another property is the that the cyclic closure probability has an larger impact on the emerging community structures than the tie reinforcement increment, since it simply leads to more triangles.
+Whereas \( \delta \) is responsible for the creation of strong ties, which increases the bias in the local search, and helps to find suitable nodes for the triangle formation.
+Additionally, the model is able to produce higher-order correlations, that are also observable in real-world networks.
+For example, weight-topology correlations (i.e., stronger ties within groups) are measurable and are depended on \( p_{\Delta} \) and \( \delta \).
+
+
+\myfig{community-structures-model}
+      {width=0.9\textwidth}
+      {Depiction of the influence of \( p_{\Delta} \) and \( \delta \) on the resulting community structures (image borrowed from~\cite{Laurent2015}). The networks in the first row (a--c) were generated with a fixed value for the link reinforcement increment \(\delta = 1\) and varying values for the cyclic closure probability (from left to right: \( p_{\Delta} = 0.5 \), \( p_{\Delta} = 0.9 \), and \( p_{\Delta} = 0.995 \)). This shows that \( p_{\Delta} \) directly influences the strength of the communities. Furthermore, tie strength heterogeneities are observable, with strong ties within communities (darker link color) and weak ties between them (brighter link color).The second row shows networks with a fixed cyclic closure probability \( p_{\Delta} = 0.995 \) and different reinforcement constants (from left to right: \(\delta = 0\), \(\delta = 0.5\), and \(\delta = 1.5\)). This shows that a high probability for the formation of triangles is not enough for the formation of communities. The reinforcement process that helps to develop strong ties is required as well.}
+      {Influence of \( p_{\Delta} \) and \( \delta \) on the community structures}
+      {fig:community-structures-in-model}
 
 
 %% ========================================================================
