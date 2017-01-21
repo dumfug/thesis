@@ -657,3 +657,39 @@ The authors use this new introduced mechanism to study how well link lifetimes a
 
 \section{Peer Influence}
 \label{sec:peer-influence}
+
+Peer influence or peer pressure plays an important role in the field of sociology.
+There are a lot of studies that investigate how peer influence affects the behavior of actors.
+This is not only done for for real-world social networks (e.g., a social network of students in  as school), but also for online social and collaboration networks, such as Facebook or StackOverflow. \ldots
+
+While peer influence is a prominent sociology topic, it is not heavily common to consider peer influence effects in network models.
+Especially with respect to activity of users.
+However, \citet{Walk2016} proposed a model that helps to study how the activity in large collaboration and social networks develops over longer time spans and what effects the micro-behavior of users (i.e., their intrinsic activity and the influence on their neighbors) has on the macro-behavior of the system.
+The macro-behavior of the system can be interpreted as the overall activity in the network.
+This helps to understand how some systems can archive a state in which the can become self-sustaining, in the sense that no external influences or stimuli are needed to keep the network permanently active, while others become non-active very quickly, even after lots of activity in the early stages of the network.
+Their model is based on the idea that each user has an intrinsic activity, which declines over time.
+This can be interpreted as the growing loss of interest of users in the system.
+But there is also an opposite force, the peer influence of others, that motivates the user to contribute.
+More formally, the model is defined as a dynamic process that takes place on a network, were users are represented as nodes and there exists a link between two users if they interacted or collaborated at some point.
+Furthermore, every the user \( v_{i} \) is assigned a positive real-valued variable \( a_{i} \), which represents the activity of the user.
+The dynamic process is then defined by the following system of coupled non-linear differential equations:
+
+\begin{equation}
+    \frac{\mathrm{d} a_{i}}{\mathrm{d} t} =  \underbrace{f(a_{i})}_{\text{activity decay}} + \underbrace{\sum_{j \in N(i)} g(a_{j})}_{\text{peer influence}}
+\end{equation}
+
+Where the first part of the right hand side of the equation represents the intrinsic activity decay of a user, and the function \( f \) defines how the loss of activity should be occur.
+In their work a linear function \( f(a_{i}) = -\lambda a_{i} \) is used, where \( \lambda > 0 \) denotes the rate on which the activity decays.
+This leads to an exponential decay of the user activity.
+The second part of the equation denotes the positive peer influence of the users neighbors.
+This is based on the idea, that active neighbors may also increase the activity of a user, due to a boost in their motivation to participate in the network.
+The function \( g \) determines the level of positive peer influence of a neighbor, and is selected to be a algebraic sigmoid function \( g(a_{j}) = \sfrac{q a_{j}}{\sqrt{a_{c}^{2} a_{j}^{2}}} \).
+This function introduces two additional parameter to the model, \( a_{c} > 0 \) controls what level of activity of a neighbor is required such that it influences a user in a significant way, and \( q > 0 \) determines the maximum amount of peer influence activity that a neighbor can transfer to another user.
+
+In their work they perform a linear stability analysis on the system of differential equations and show that stability of the system is determined by the relation between the activity dynamics ratio \( \frac{\lambda}{\mu} \) (with \( \mu = \frac{q}{a_{c}} \)) and the topological structure of the network.
+This means, that to keep the network from becoming or staying inactive, there must either be constant external influences to keep the activity up or the system needs to become unstable by changing the network structure (e.g., removing links) or by manipulating the the three model parameter.
+Furthermore, their apply their activity dynamics model to some real world data sets.
+For instance, different instances of StackExchange collaboration networks, or various Wikis.
+This is done by first estimating the ratio \( \frac{\lambda}{\mu} \) from the activity in the data sets, and then simulating the activity in the networks.
+However, due to some limitations and approximations in the parameter estimation is a highly accurate prediction of the activity not possible.
+Nevertheless, the model is able to predict trends in the activity of a empirical network by simulating its activity dynamics quite well and, therefore, provide additional confidence in the validity of the model.
