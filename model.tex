@@ -206,6 +206,12 @@ This means that, for example, nodes with a deletion probability of \(p_{d} = 5e-
 
 \subsection{Properties}
 
+The properties of this model are examined by analyzing a extended version of the integrated network.
+This is very similar to the basis framework, in which the temporal network is represented as a sequence of graphs.
+These graphs are denoted as instantaneous networks, and the union of these networks up to a time step \( T \) is called the integrated network.
+This is also true for this extension, however, the links in the integrated network have additionally a weight assigned to them, which corresponds to the tie strength in the egocentric networks of the nodes.
+Another equivalent way to define the integrated network is the union of all egocentric networks up to some time step \( T \).
+
 These newly introduced mechanisms have interesting effects on how the structures on the integrated network evolve over time.
 In the beginning, after nodes form their first ties, they start to close triangles and reinforce the ties in their egocentric network.
 This means that strong community structures are formed early in the model.
@@ -235,7 +241,7 @@ For example, weight-topology correlations (i.e., stronger ties within groups) ar
 %% ========================================================================
 
 
-\section{Peer Influence Model}
+\section{Peer Influence Extension}
 \label{sec:peer-influence-model}
 
 \citet{Walk2016}
@@ -255,7 +261,7 @@ For example, weight-topology correlations (i.e., stronger ties within groups) ar
       \draw (1) -- (4) node [midway, above, sloped] (c) {$w_{i,l} = 2$};
     \end{tikzpicture}
 
-    \caption[Extended egocentric network example]{Extented egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes).}
+    \caption[Extended egocentric network example]{Extended egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes).}
     \label{fig:egocentric-network}
 \end{figure}
 
@@ -293,7 +299,7 @@ For example, weight-topology correlations (i.e., stronger ties within groups) ar
 \multicolumn{2}{c}{community structure extension} \\ \hline
 \( p_{\Delta} \) & The probability to form a triangle when establishing a new tie. \\
 \( p_{d} \) & The probability for node to get deleted in a iteration. \\
-\( \delta \) & The constnat factor that is added to the tie strength when it is reinforced. \\
+\( \delta \) & The constant factor that is added to the tie strength when it is reinforced. \\
 \( c \) &  The memory constant, which influences the probability for a new tie.\\ \hline \hline
 
 \multicolumn{2}{c}{peer influence extension} \\
