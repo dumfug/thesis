@@ -25,7 +25,7 @@ This type of graph is called weighted graph.
 However, all further mentions and definitions for graphs are referring to undirected simple graphs unless stated otherwise.
 It is also possible to perform operations on graphs.
 For instance, the union of two graphs \(G_{1} = (V_{1}, E_{1})\) and \(G_{2} = (V_{2}, E_{2})\) results in a graph \(G = (V_{1} \cup V_{2}, E_{1} \cup E_{2})\).
-Other binary operations, such as the intersection of two graphs, can be done analogous.
+Other binary operations, such as the intersection of two graphs, can be done analogously.
 There are unary operations on graphs (e.g., the removal of vertices and edges) as well.
 
 \begin{figure}[h]
@@ -660,7 +660,12 @@ The authors use this new introduced mechanism to study how well link lifetimes a
 
 Peer influence or peer pressure plays an important role in the field of sociology.
 There are a lot of studies that investigate how peer influence affects the behavior of actors.
-This is not only done for for real-world social networks (e.g., a social network of students in  as school), but also for online social and collaboration networks, such as Facebook or StackOverflow. \ldots
+This is not only done for for real-world social networks (e.g., a social network of students in  as school), but also for online social and collaboration networks, such as Facebook or StackOverflow.
+\ldots
+However, peer influence in not necessarily a bad thing.
+For example, \citet{Smith1984} showed that the introduction of peer monitors in a kindergarten classroom decreased non-participation and disruptive behavior of the other children.
+
+\todo{naming games. (shaping of opinions)}
 
 While peer influence is a prominent sociology topic, it is not heavily common to consider peer influence effects in network models.
 Especially with respect to activity of users.
@@ -693,3 +698,16 @@ For instance, different instances of StackExchange collaboration networks, or va
 This is done by first estimating the ratio \( \frac{\lambda}{\mu} \) from the activity in the data sets, and then simulating the activity in the networks.
 However, due to some limitations and approximations in the parameter estimation is a highly accurate prediction of the activity not possible.
 Nevertheless, the model is able to predict trends in the activity of a empirical network by simulating its activity dynamics quite well and, therefore, provide additional confidence in the validity of the model.
+Additionally, two stability measures for social or collaboration networks are introduced in this work.
+First, the system mass is defined as the inverse of the normalized standard deviation of the activity dynamics ratio \( \frac{\lambda}{\mu} \), and indicates the robustness of a system with respect to change of the activity dynamics parameter.
+The second measure is called activity momentum and is defined as product of the system mass and the over some time span averaged last observed activity in the network., and is an improved indicator of the robustness.
+For instance, a system with a large activity momentum value handles the sudden inactivity of a considerable number of users better by keeping most of its activity.
+Therefore, much more \enquote{force} is needed to render a network with high activity momentum inactive.
+
+Another interesting question was raised in the work of \citet{Aral2009}.
+They suggested that the behavior of a user in a network may not be entirely driven by the influence of its peers but can be explained in large parts by homophily.
+Homophily (also known as assortativity or assortative mixing) is the effect that user tend to interact with other user that are similar to them self.
+They examined a temporal network of instant-message communication between users and studied how the adaption of a new feature in the messaging application could be explained.
+The idea was, that users may not adapt the feature shortly after their friends because of peer-influence, but do it but simply because behave similar to them anyways.
+For instance, users that have the property of being early-adopters are more likely to be early-adopters as well, and therefore, start using the feature at about the same time.
+They proposed a statistical framework in their work, that is able to distinguish between peer influence and homophily, and showed that other methods overestimate the share of influenced adaption by a factor of four to eight, and that at least half of the adaption in their instant-messaging data set is introduced by homophily.
