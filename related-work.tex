@@ -286,7 +286,7 @@ The idea is to calculate a total weight for each pair of nodes in the network.
 If the weight exceeds a certain threshold \(\Omega \in \mathbb{R}_{0}^{+}\) then there will be an edge between the two nodes in the static approximation.
 Each contact between two contacts in the sequence \(C\) contributes a part to the total weight.
 However, the weight of the contribution to the total weight decays exponentially.
-Hence, the total weight \(\omega_{i,j}\) between two nodes \(v_{i}\) and \(v_{j}\) is \(\omega_{i,j} = \sum_{(v_{i}, v_{j}, t) \in C} \exp(-t / \tau)\), where \(\tau\) is an additional parameter that controls the exponential decay.
+Hence, the total weight \(\omega_{i,j}\) between two nodes \(v_{i}\) and \(v_{j}\) is \(\omega_{i,j} = \sum_{(v_{i}, v_{j}, t) \in C} \exp(\sfrac{-t}{\tau})\), where \(\tau\) is an additional parameter that controls the exponential decay.
 For a static approximation that should contain an edge if there was at least one contact between the two nodes the threshold can be set to \(\Omega = 0\).
 Networks that are generated using this approach are called exponential-threshold networks.
 
@@ -512,9 +512,11 @@ This indicates that in fact both mechanisms are required to yield a network with
 \label{sec:user-activity-models}
 
 The modeling of the activity of users in complex systems (e.g., in social networks) can be a challenging task.
-Usually the actual activities, such as the writing of an e-mails, posts on  Facebook, or tweets, are not of particular interest.
+Usually the specific activities, such as writing of e-mails, posts on  Facebook, or tweets, are not of particular interest.
 More relevant is how are these events or activities laid out in time and what  the distribution of intervals between two consecutive events is (i.e., the inter-event time distribution).
-Multiple models try to capture patterns of human activities based on different approaches are discussed in this section.
+More formally, the sequence of timestamps of events for user \( i \) is written as \(t_{i,0}, t_{i,1}, t_{i,2}, \ldots \) with \( t_{i,j} \in \mathbb{N}_0 \), which is ordered in the sense that if \( t_{i,l} \ge  t_{i,k} \) then \( l \ge k \) and vice versa.
+The inter-event times for the user \( i \) are defined as \( \tau_{i,j} = t_{i,j} - t_{i,j-1} \), for \(j = 1, 2, \ldots \) and their distribution is denoted as \( \varphi_{i} \).
+There are various models that try to capture the patterns of human activities based on different approaches and some are discussed in this section.
 
 \subsection{Stochastic Models}
 
