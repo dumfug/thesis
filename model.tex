@@ -195,7 +195,7 @@ The deletion probability of nodes can determine how fast the network reaches its
 A small value for \(p_{d}\) allows nodes to stay a long time in the network and even nodes with relatively small activity potential can become fully integrated in the community structures.
 Therefore, it takes longer to reach the time invariant state of the network, when the low activity nodes are not removed fast enough.
 The expected time that a node will be part of the network can be determined by viewing it as a simple Bernoulli process.
-In each iteration a biased coin is flipped for every node.
+In each iteration a biased coin is tossed for every node.
 The outcome of this Bernoulli random experiment determines if the nodes stays in the network or is replaced in the next round.
 The probability for a node to be deleted after exactly \( x \) iterations is \( \prob{x} = (1-p_{d})^{x-1} p_{d} = \bar{p}_{d}^{x-1} p_{d}\).
 Hence, the expected value for the lifetime of a node is given by \( \expval{x} = \sum_{x=1}^{\infty} x \prob{x} = \sum_{x=1}^{\infty} x \bar{p}_{d}^{x-1} p_{d} = p_{d} \sum_{x=1}^{\infty} x \bar{p}_{d}^{x-1} \).
@@ -278,32 +278,21 @@ Since the peer influence probability depends on the neighbors that were active i
 This is done by extending the egocentric networks to save the timestamp of the last activation for each node.
 The time of last activation of a node \( v_{i} \) is called \( t_{i} \) and is updated independent of the type of activation (i.e., due to self activation or by being contacted by another active node).
 For nodes that were not active yet, \( t_{i} \) should be initialized with some dummy value, for example -1.
-However, the peer influence probability should not only depend on how many neighbors were active the round before, but also on the strength of the ties in the egocentric network.
+Furthermore, the peer influence probability should not only depend on how many of a nodes neighbors were active in the round before, but also on the strength of the ties between them.
 A neighbor that shares a strong connection with a node should be more influential than, for example, neighbors that were only recently introduced to the egocentric network.
 This can easily be described by a weighted fraction of the last active neighbors.
-However, to make it more general and tune-able the following version of the weighted fraction of active neighbors at time \(t - 1\) is used, that transforms the weights beforehand.
-Each weight in the egocentric networks is transformed and normalized by \( w'_{i,j} = \sfrac{\exp(\beta w_{i,j})}{\sum_{k} \exp(\beta w_{i,k})} \), where \( \beta \) is a free parameter.
+However, to make the model more general and adaptable the following version of the weighted fraction of active neighbors at time \(t - 1\) is used, that transforms the weights beforehand.
+Each weight in the egocentric networks of \( v_{i} \) is transformed and normalized by \( w'_{i,j} = \sfrac{\exp(\beta w_{i,j})}{\sum_{k \in N(i)} \exp(\beta w_{i,k})} \), where \( \beta \) is a free parameter.
 This corresponds to applying the softmax or normalized exponential function~\cite{Bishop2006} to each weight.
-The softmax function is strongly related to the Boltzmann distribution~\cite{vanLaarhoven1987}, which describes the probability for states in a physical system with respect to the systems temperature and the energy of its states.
+The softmax function is strongly related to the Boltzmann distribution~\cite{vanLaarhoven1987}, which describes the probability for states in a physical system (e.g., particles in a magnetic field) with respect to the systems temperature and the energy of its states.
 Low energy states have a higher probability in the distribution, and as the temperature of the system gets close to zero, the probability for the state with the lowest energy is almost equal to one.
 Whereas, in a high temperature system all states are nearly equiprobable.
 The free parameter \( \beta \) in the softmax function called is inverse temperature and replicates this behavior.
-For example, a value of \( \beta = 0 \) (very high temperature) would scale every weight to the same value, which means that every active neighbor influences a node equally, regardless of the tie strength.
-However, it also possible to make \( \beta \) depended on the time (i.e., \( \beta(t) \)), similar to a physical system that is cooling off or heating up.
-For this thesis, the temperature at time \( t \) is set to the average weight in the integrated network \( G_{T} = \sum_{i=0}{t} G_{i}\) (i.e., \( \beta(t) = \frac{1}{m} \sum_{(i,j) \in E(G_{T})} w_{i,j} \)).
-The average weight, similar to the local clustering coefficient and average degree, converges to a value after some time as well.
-The normalized weights \( w'_{i,j} \) are part of the extended egocentric as well (c.f. \autoref{fig:extended-egocentric-network}) and must be updated at the end of every iteration.
-The fraction of active neighbors \( \alpha_{i}(t) \) of node \(v_{i} \) at time \( t - 1 \) is then given by
-
-\begin{equation}
-    \alpha_{i}(t) = \frac{\sum_{j \in N(i)} \mathbf{1}_{\{t_{j} = t-1\}} \exp(\beta w_{i, j})}{\sum_{j \in N(i)} \exp(\beta w_{i, j})} = \frac{\sum_{j \in N(i)} \mathbf{1}_{\{t_{j} = t-1\}} w'_{i, j}}{\sum_{j \in N(i)} w'_{i, j}},
-\end{equation}
-
-where \( \mathbf{1} \) is the indicator function, which yields the value of one every time its condition is true, otherwise it is zero.
-
-\begin{equation}
-    p_{i}(t) = g(\alpha_{i}(t)) = \frac{\alpha_{i}(t) q}{\sqrt{\alpha_{i}^{2}(t) + \theta^2}}
-\end{equation}
+It is defined as the reciprocal value of the temperature.
+This softmax function is used in many applications in different fields besides physics as well.
+For instance, it is used in the machine learning area of reinforcement learning, where the actions of agents in a setting are based on the probabilities yielded by the softmax function.
+\citet{Crites1998} apply this method to control a group of elevators using multiple agents.
+It is also, for example, used in the modeling of the decision making behavior of humans in economic settings~\cite{Ray2008}.
 
 
 \begin{figure}
@@ -319,16 +308,65 @@ where \( \mathbf{1} \) is the indicator function, which yields the value of one 
       \draw (1) -- (4) node [midway, above, sloped, align=right] (c) {$w_{i,l} = 2$ \\ $w'_{i,l} = 0.042$};
     \end{tikzpicture}
 
-    \caption[Extended egocentric network example]{Extended egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes). Each node stores additionally the point in time on which it was last active. For instance, node \(v_{j} \) was the last time active at \( t = 42 \).}
+    \caption[Extended egocentric network example]{Extended egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes). Each node stores additionally the point in time on which it was last active. For instance, node \(v_{j} \) was last active at \( t = 42 \). Furthermore, the scaled and normalized weights \( w'_{i,j} \) are part of the network. For example, the scaled weight for the tie between \( v_{i} \) and \( v_{j} \) can be calculated by \(\sfrac{\exp(3)}{\exp(3) + \exp(5) + \exp(3)} = 0.114 \). For the sake of simplicity is \( \beta = 1 \) in this example.}
     \label{fig:extended-egocentric-network}
 \end{figure}
 
 
+The usage of the softmax function for this model allows different influence scenarios.
+For example, a value of \( \beta = 0 \) (this would correspond to a very high temperature) would scale every weight to the same value, which means that every active neighbor influences a node equally, regardless of the tie strength.
+However, it also possible to make \( \beta \) depended on the time (i.e., \( \beta(t) \)), similar to a physical system that is cooling off or heating up.
+For this thesis, the temperature at time \( t \) is set to the average weight in the integrated network \( G_{T} = \sum_{i=0}^{t} G_{i}\) (i.e., \( \beta(t) = (\frac{1}{m} \sum_{(i,j) \in E(G_{T})} w_{i,j})^{-1} \)).
+The average weight, similar to the local clustering coefficient and average degree, converges to a value after some time as well.
+The normalized weights \( w'_{i,j} \) are also part of the extended egocentric (c.f. \autoref{fig:extended-egocentric-network}) and must be updated at the end of every iteration.
+The fraction of active neighbors \( \alpha_{i}(t) \) of node \(v_{i} \) at time \( t - 1 \) is then given by
+
+\begin{equation}
+    \alpha_{i}(t) = \frac{\sum_{j \in N(i)} \mathbf{1}_{\{t_{j} = t-1\}} \exp(\beta(t) w_{i, j})}{\sum_{j \in N(i)} \exp(\beta(t) w_{i, j})} = \frac{\sum_{j \in N(i)} \mathbf{1}_{\{t_{j} = t-1\}} w'_{i, j}}{\sum_{j \in N(i)} w'_{i, j}},
+\end{equation}
+
+where \( \mathbf{1} \) is the indicator function, which yields the value one every time the predicate is true, otherwise it is zero.
+In the next step this weighted fraction of prior active neighbors must be mapped into a peer influence probability in the range \( [0, q] \) using a monotonically increasing function.
+One possibility would be the usage of a linear function \( g(\alpha) = q \alpha \) defined for values \(0 \leq \alpha \leq 1 \).
+However, this function seems to not describe the peer influence mechanism very well.
+One one hand should another active neighbor not be heavily influential when there is already a large portion of neighbors active.
+The peer influence should saturate after some fraction of neighbors is active.
+On the other hand, should the peer influence for a node become noticeable after some threshold of active neighbors is reached.
+This can be archived using an sigmoid function.
+Similar to~\cite{Walk2016} the following algebraic sigmoid  function \( g \) is used to determine the peer influence for the node \( v_{i} \)
+
+\begin{equation}
+    p_{i}(t) = g(\alpha_{i}(t)) = \frac{\alpha_{i}(t) q}{\sqrt{\alpha_{i}^{2}(t) + \theta^2}},
+\end{equation}
+
+where the parameter \( q \) is the maximum peer influence, as discussed prior, and \( \theta > 0 \) denotes a critical threshold, which determines the required (weighted) fraction of active neighbors to set the peer influence probability close to its maximum.
+Therefore, active neighbors always influence the peer influence probability, but only after a certain point in a significant way.
+The satisfaction of the prior described requirements for the function can be verified by studing its first derivative \( \frac{\mathrm{d} g}{\mathrm{d} \alpha} = \frac{q \theta^{2}}{(\theta^2 + \alpha^2)^{\sfrac{3}{2}}}  \), which approaches zero very fast for values grater than \( q \).
+Sigmoid functions are usually defined for all real values since there are often used to re-scale values to the range of \([-1, 1] \) or \( [0, 1] \).
+However, for this work only input values on the unit interval are relevant and the two parameter \( q \) and \( \theta \) should be selected carefully to archive the desired peer influence behavior.
+For instance, too large values for \( \theta \) may obstruct the peer influence mechanism crtically, since the maximum influence may never be reached, even for \( \alpha = 1 \).
+\autoref{fig:peer-influence-sigmoid} shows the discussed sigmoid function with different values for the critical threshold.
+
+
 \myfig{peer-influence-sigmoid}
       {width=0.75\textwidth}
-      {ffff}
-      {asdfdf}
+      {Depiction of the sigmoid function that is used to calculate the peer influence probability \(p_{i} \) of a node based on its (weighted) fraction of active neighbors \( \alpha \) for different values of the critical threshold \( \theta \). The maximum possible peer influence probability in this example is fixed to \( q = 0.10 \). The critical threshold determines how fast the maximum peer probability can be reached. Values in the range between 5\% and 20\% seem to be a sound choice, since already a small number of influential neighbors should suffice to have an notable effect on a user.}
+      {Peer influence sigmoid function examples}
       {fig:peer-influence-sigmoid}
+
+
+The process of a node becoming active by himself must be adapted as well.
+The simple biased coin flip becomes a more sophisticated two-step random experiment.
+First, like in the base model, a biased coin is tossed to determine if a node becomes active with probability that corresponds to its activity potential.
+If this first random experiment fails the node gets a second chance to become active by himself.
+This is done by calculating its peer influence probability and tossing another biased coin.
+Therefore, the total probability of a node \( v_{i} \) becoming active can be expressed by
+
+\begin{equation}
+    \prob{v_i \text{ becomes active}} = a_{i} + (1 - a_{i}) p_{i}.
+\end{equation}
+
+
 
 \begin{table}[]
 \centering
@@ -350,6 +388,7 @@ where \( \mathbf{1} \) is the indicator function, which yields the value of one 
 \( c \) &  The memory constant, which influences the probability for a new tie.\\ \hline \hline
 
 \multicolumn{2}{c}{peer influence extension} \\ \hline
+\( \beta \) & Inverse temperature parameter for the softmax re-scaling of the weights. This parameter may also be time depended. \\
 \( q \) & The maximum possible peer influence probability that a node can receive. \\
 \( \theta \) & The critical threshold for the peer influence.  \\ \hline
 \end{tabular}
