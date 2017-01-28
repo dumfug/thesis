@@ -660,60 +660,72 @@ The authors use this new introduced mechanism to study how well link lifetimes a
 \section{Peer Influence}
 \label{sec:peer-influence}
 
-Peer influence or peer pressure plays an important role in the field of sociology.
-There are a lot of studies that investigate how peer influence affects the behavior of actors.
+Peer influence or peer pressure plays an important role in the field of sociology and psychology.
+There are a lot of studies that investigate how peer influence affects the behavior of people in different settings.
 This is not only done for for real-world social networks (e.g., a social network of students in  as school), but also for online social and collaboration networks, such as Facebook or StackOverflow.
-\ldots
+These studies often investigate peer effects for harmful behavior like smoking or drinking~\cite{Simons2001, Powell2005}.
+\citet{Krasnova2008} showed that peer pressure is an important factor for adolescents to participate in online social networks, and \citet{Huang2014} concluded in their work that being exposed to pictures of drinking and smoking friends on social media websites may lead to an adaption of these behaviors.
 However, peer influence in not necessarily a bad thing.
 For example, \citet{Smith1984} showed that the introduction of peer monitors in a kindergarten classroom decreased non-participation and disruptive behavior of the other children.
+Another example would be the study conducted by \citet{Christakis2008}.
+They examined a relatively large social network of approximately 12,000 people over more than 30 years and evaluated the spreading of smoking in the network.
+The results of this study  not only shows that the number of smokers declined over the years, but also that clusters of smokers in the network seem to disappear at roughly the same time.
+This indicates that people that quit smoking may trigger a cascading cessation effect in their social circle.
+For instance, they showed that in their data set smoking the cessation by a spouse reduces the probability for the other to smoke by 67\%.
 
-\todo{naming games. (shaping of opinions)}
-Another work by \citet{Estrada2013} studies the effect of peer influence in the shaping of opinions in social groups.
+Peer influence plays also an important role in opinion dynamics models.
+In these models the formation and diffusion of opinions in complex networks is examined.
+Opinions can be trivial things like taste in food and entertainment, or more sophisticated issues like political views, and are usually heavily influenced by others~\cite{Acemoglu2011}.
+One popular use case for these types of models are voter models, which try to maximize the number of voters for a political party in a election (i.e., the opinion) with a minimum amount of cost that is associated with winning voters over.
+For instance, the voter model by \citet{Masuda2015} considers two different types of voters, the partisan voters (often also referred to as zealots), which do not change their opinion, and independent voters, which can.
+An independent voter adapts a political view proportionally to the presence of this view in its neighborhood and with respect to zealots that influence him or her.
+It can be used to determine the optimal set of nodes in the network of independent voters, that should be controlled and influenced by zealots of one party to obtain the maximum number of voters.
+In another work by \citet{Estrada2013} the effect of peer influence on reaching consensus in social groups is examined.
 They model the influence between two user as their social distance, which is a function of the length of the shortest path between them in the social network.
-This allows for a node to receive indirect peer pressure from other nodes that are not directly connected to it (i.e., do not share a edge).
-They showed that this indirect peer influence is not only important for reaching consensus in social groups, but also for social group leader to emerge, which affect the opinions in the entire network and help to reduce the time until consensus is reached.  
+This allows for a node to receive indirect peer pressure from other nodes that are not directly connected to it (i.e., do not share a edge) as well.
+They showed that this indirect peer influence is not only important for reaching consensus in social groups, but also for social group leader to emerge, which affect the opinions in the entire network and help to reduce the time until consensus is reached.
 
-While peer influence is a prominent sociology topic, it is not heavily common to consider peer influence effects in network models.
-Especially with respect to activity of users.
-However, \citet{Walk2016} proposed a model that helps to study how the activity in large collaboration and social networks develops over longer time spans and what effects the micro-behavior of users (i.e., their intrinsic activity and the influence on their neighbors) has on the macro-behavior of the system.
+Another interesting application for the usage of peer influence are network models that incorporate peer effects on the activity of nodes.
+For instance, \citet{Walk2016} proposed a model that helps to study how the activity in large collaboration and social networks develops over longer time spans and what effects the micro-behavior of users (i.e., their intrinsic activity and the influence on their neighbors) has on the macro-behavior of the system.
 The macro-behavior of the system can be interpreted as the overall activity in the network.
 This helps to understand how some systems can archive a state in which the can become self-sustaining, in the sense that no external influences or stimuli are needed to keep the network permanently active, while others become non-active very quickly, even after lots of activity in the early stages of the network.
 Their model is based on the idea that each user has an intrinsic activity, which declines over time.
 This can be interpreted as the growing loss of interest of users in the system.
 But there is also an opposite force, the peer influence of others, that motivates the user to contribute.
 More formally, the model is defined as a dynamic process that takes place on a network, were users are represented as nodes and there exists a link between two users if they interacted or collaborated at some point.
-Furthermore, every the user \( v_{i} \) is assigned a positive real-valued variable \( a_{i} \), which represents the activity of the user.
+Furthermore, every user \( v_{i} \) is assigned a positive real-valued variable \( a_{i} \), which represents the activity of the user.
 The dynamic process is then defined by the following system of coupled non-linear differential equations:
 
 \begin{equation}
     \frac{\mathrm{d} a_{i}}{\mathrm{d} t} =  \underbrace{f(a_{i})}_{\text{activity decay}} + \underbrace{\sum_{j \in N(i)} g(a_{j})}_{\text{peer influence}}
 \end{equation}
 
-Where the first part of the right hand side of the equation represents the intrinsic activity decay of a user, and the function \( f \) defines how the loss of activity should be occur.
+Where the first part of the right hand side of the equation represents the intrinsic activity decay of a user, and the function \( f \) defines how fast the loss of activity should occur.
 In their work a linear function \( f(a_{i}) = -\lambda a_{i} \) is used, where \( \lambda > 0 \) denotes the rate on which the activity decays.
 This leads to an exponential decay of the user activity.
 The second part of the equation denotes the positive peer influence of the users neighbors.
-This is based on the idea, that active neighbors may also increase the activity of a user, due to a boost in their motivation to participate in the network.
-The function \( g \) determines the level of positive peer influence of a neighbor, and is selected to be a algebraic sigmoid function \( g(a_{j}) = \sfrac{q a_{j}}{\sqrt{a_{c}^{2} a_{j}^{2}}} \).
+This is based on the idea that active neighbors may also increase the activity of a user, due to a boost in their motivation to participate in the network.
+The function \( g \) determines the level of positive peer influence of a neighbor, and is selected to be the algebraic sigmoid function \( g(a_{i}) = \sfrac{q a_{i}}{\sqrt{a_{c}^{2} a_{j}^{2}}} \).
 This function introduces two additional parameter to the model, \( a_{c} > 0 \) controls what level of activity of a neighbor is required such that it influences a user in a significant way, and \( q > 0 \) determines the maximum amount of peer influence activity that a neighbor can transfer to another user.
 
-In their work they perform a linear stability analysis on the system of differential equations and show that stability of the system is determined by the relation between the activity dynamics ratio \( \frac{\lambda}{\mu} \) (with \( \mu = \frac{q}{a_{c}} \)) and the topological structure of the network.
-This means, that to keep the network from becoming or staying inactive, there must either be constant external influences to keep the activity up or the system needs to become unstable by changing the network structure (e.g., removing links) or by manipulating the the three model parameter.
-Furthermore, their apply their activity dynamics model to some real world data sets.
-For instance, different instances of StackExchange collaboration networks, or various Wikis.
+In their work they perform a linear stability analysis on the system of differential equations and show that the stability of the system is determined by the relation between the activity dynamics ratio \( \frac{\lambda}{\mu} \) (with \( \mu = \frac{q}{a_{c}} \)) and the topological structure of the network.
+This means to keep the network from becoming or staying inactive, there must either be constant external influences to keep the activity up or the system needs to become unstable.
+This can be done, for example, by changing the network structure (e.g., removing links) or by manipulating the three model parameter.
+Furthermore, they apply their activity dynamics model to some real world data sets.
+For instance, different instances of StackExchange collaboration networks and various Wikis.
 This is done by first estimating the ratio \( \frac{\lambda}{\mu} \) from the activity in the data sets, and then simulating the activity in the networks.
 However, due to some limitations and approximations in the parameter estimation is a highly accurate prediction of the activity not possible.
 Nevertheless, the model is able to predict trends in the activity of a empirical network by simulating its activity dynamics quite well and, therefore, provide additional confidence in the validity of the model.
 Additionally, two stability measures for social or collaboration networks are introduced in this work.
 First, the system mass is defined as the inverse of the normalized standard deviation of the activity dynamics ratio \( \frac{\lambda}{\mu} \), and indicates the robustness of a system with respect to change of the activity dynamics parameter.
-The second measure is called activity momentum and is defined as product of the system mass and the over some time span averaged last observed activity in the network., and is an improved indicator of the robustness.
-For instance, a system with a large activity momentum value handles the sudden inactivity of a considerable number of users better by keeping most of its activity.
+The second measure is called activity momentum and is defined as product of the system mass and the over some time span averaged last observed activity in the network, and is an improved indicator for the robustness.
+For instance, a system with a large activity momentum value handles the sudden inactivity of a considerable number of users better, since it can retain most of its activity.
 Therefore, much more \enquote{force} is needed to render a network with high activity momentum inactive.
 
-Another interesting question was raised in the work of \citet{Aral2009}.
+Another interesting question in the context of peer influence effects in networks was raised in the work of \citet{Aral2009}.
 They suggested that the behavior of a user in a network may not be entirely driven by the influence of its peers but can be explained in large parts by homophily.
-Homophily (also known as assortativity or assortative mixing) is the effect that user tend to interact with other user that are similar to them self.
+Homophily (also known as assortativity or assortative mixing) is the effect that users tend to interact with other users that are similar to them self.
 They examined a temporal network of instant-message communication between users and studied how the adaption of a new feature in the messaging application could be explained.
 The idea was, that users may not adapt the feature shortly after their friends because of peer-influence, but do it but simply because behave similar to them anyways.
-For instance, users that have the property of being early-adopters are more likely to be early-adopters as well, and therefore, start using the feature at about the same time.
-They proposed a statistical framework in their work, that is able to distinguish between peer influence and homophily, and showed that other methods overestimate the share of influenced adaption by a factor of four to eight, and that at least half of the adaption in their instant-messaging data set is introduced by homophily.
+For instance, users that have the property of being early-adopters are more likely to be friends with early-adopters as well, and therefore, start using the feature at about the same time.
+They proposed a statistical framework in their work, that is able to distinguish between peer influence and homophily, and showed that other methods overestimate the share of influenced adaption by a factor of four to eight, and that at least half of the adaption in their instant-messaging data set was introduced by homophily.
