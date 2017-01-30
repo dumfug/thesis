@@ -297,7 +297,7 @@ This is a very raw form data (i.e., in essence a spreadsheet with three columns)
 Another way to represent time-varying networks are graph sequences.
 The idea here is to generate a static graph that contains all contacts between nodes for a given time step.
 This method has the advantage that all tools that work for static graphs can be applied to each of the graphs in the sequence.
-The problem with this representation is, that the time resolution should be rather low to avoid the creation of graphs with no, or only a few, edges for most time steps.
+The problem with this representation is, that the time resolution should be selected carefully to avoid the creation of graphs with no, or only a few, edges for most time steps.
 \autoref{fig:graph-sequence-example} depicts an example of a graph sequence for a time-varying network with four nodes.
 There are also more visual-focused representation methods.
 One example would be assigning a time series of time stamp of the contacts between two nodes to the corresponding link in the static network (see \autoref{fig:time-stamp-edges-example} for an example).
@@ -422,10 +422,10 @@ There is also the idea, and many approaches, to extend community detection mecha
 %% ========================================================================
 
 
-\section{Network Models}
+\section{Generative Network Models}
 \label{sec:network-models}
 
-This section contains descriptions of different network models.
+This section contains descriptions of different generative network models.
 These models can be used to build graphs that fulfill different properties.
 They are often a useful tool to model some type of real-world network (e.g., a social network) to gain a deeper understanding on the processes that create these networks.
 
@@ -465,7 +465,7 @@ The formation of hubs in networks usually requires a power-law degree distributi
 Other examples for a shortcomings of the model is the inability to generate community structures and inadequate average path lengths.
 
 
-\subsection{The Barabási-Albert model}
+\subsection{The Barabási-Albert Model}
 
 One model that addresses the problem of missing power-law degree distributions is the Barabási-Albert (BA) model~\cite{Barabasi2002}.
 The model is named after its creators Réka Albert and Albert-László Barabási.
@@ -612,13 +612,101 @@ First, and most important, it produces not only activities for a single user, bu
 Additionally, it is a very simple model.
 It only requires a few parameters and the activity potential distribution is governs the dynamical behavior in the network.
 Furthermore, this model can be used to explain the formation heterogeneous structures (i.e., hubs) in networks over longer periods of time.
-This is done by examining the integrated network \(G_{T} = \bigcup_{t=0}^{T} G_{t}\), which the union of all instantaneous networks up to the time stamp \(T\).
+This is done by examining the integrated network \(G_{T} = \bigcup_{t=0}^{T} G_{t}\), which the union of all instantaneous networks up to the time stamp \(T\) (see \autoref{fig:integrated-network-example} for an example).
 It can be shown that the  degree distribution of this integrated network has the form \(p_{T}(k) \sim f(\frac{k}{T m \eta})\).
 Therefore, it is up to a re-scaling factor, the same as the activity potential distribution.
 Hence, the model is able to generate scale-free networks, by drawing the activity potentials from a power-law distribution.
 The resulting hubs are not caused by preferential attachment like in other models, but due to the heterogeneous activity profiles of the nodes.
 The re-scaling factor emerges from the fact that the model does not capture all features of real-world networks.
 For instance, memory effects could allow links, that were formed in earlier instantaneous networks, to be formed later again with higher probability.
+
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=0.1em,inner sep=2pt]}, active/.style={circle,fill=green!70,minimum size=0.1em,inner sep=2pt]}]
+
+        \node[text width=6em, align=center] at (1.05, -0.5)  {\(t=0\)};
+        \node[active] (1) at (0, 1.5) {};
+        \node[node]   (2) at (0.7, 2) {};
+        \node[node]   (3) at (1.4, 2) {};
+        \node[active] (4) at (2.1, 1.5) {};
+        \node[node]   (5) at (1.05, 1.5) {};
+        \node[node]   (6) at (0.7, 1) {};
+        \node[active] (7) at (1.35, 1) {};
+        \node[node]   (8) at (1.05, 0.5) {};
+        \node[node]   (9) at (0.35, 0.25) {};
+        \node[node]   (10) at (1.7, 0.25) {};
+        \node[node]   (11) at (0, 0.75) {};
+        \node[active] (12) at (2.1, 0.75) {};
+        \draw (1) -- (2);
+        \draw (4) -- (5);
+        \draw (4) -- (12);
+        \draw (7) -- (10);
+
+        \node[text width=6em, align=center] at (1.05+1*3.5, -0.5)  {\(t=1\)};
+        \node[node]   (1) at (0+1*3.5, 1.5) {};
+        \node[node]   (2) at (0.7+1*3.5, 2) {};
+        \node[active] (3) at (1.4+1*3.5, 2) {};
+        \node[node]   (4) at (2.1+1*3.5, 1.5) {};
+        \node[node]   (5) at (1.05+1*3.5, 1.5) {};
+        \node[active] (6) at (0.7+1*3.5, 1) {};
+        \node[active] (7) at (1.35+1*3.5, 1) {};
+        \node[node]   (8) at (1.05+1*3.5, 0.5) {};
+        \node[active] (9) at (0.35+1*3.5, 0.25) {};
+        \node[node]   (10) at (1.7+1*3.5, 0.25) {};
+        \node[node]   (11) at (0+1*3.5, 0.75) {};
+        \node[node]   (12) at (2.1+1*3.5, 0.75) {};
+        \draw (2) -- (3);
+        \draw (5) -- (6);
+        \draw (4) -- (7);
+        \draw (9) -- (1);
+
+        \node[text width=6em, align=center] at (1.05+2*3.5, -0.5)  {\(t=2\)};
+        \node[node]   (1) at (0+2*3.5, 1.5) {};
+        \node[node]   (2) at (0.7+2*3.5, 2) {};
+        \node[active] (3) at (1.4+2*3.5, 2) {};
+        \node[node]   (4) at (2.1+2*3.5, 1.5) {};
+        \node[active] (5) at (1.05+2*3.5, 1.5) {};
+        \node[node]   (6) at (0.7+2*3.5, 1) {};
+        \node[node]   (7) at (1.35+2*3.5, 1) {};
+        \node[node]   (8) at (1.05+2*3.5, 0.5) {};
+        \node[active] (9) at (0.35+2*3.5, 0.25) {};
+        \node[node]   (10) at (1.7+2*3.5, 0.25) {};
+        \node[node]   (11) at (0+2*3.5, 0.75) {};
+        \node[node]   (12) at (2.1+2*3.5, 0.75) {};
+        \draw (5) -- (7);
+        \draw (9) -- (6);
+        \draw (2) -- (3);
+
+        \node[text width=6em, align=center] at (1.05+3*3.5, -0.75)  {integrated network};
+        \node[node] (1) at (0+3*3.5, 1.5) {};
+        \node[node] (2) at (0.7+3*3.5, 2) {};
+        \node[node]   (3) at (1.4+3*3.5, 2) {};
+        \node[node] (4) at (2.1+3*3.5, 1.5) {};
+        \node[node] (5) at (1.05+3*3.5, 1.5) {};
+        \node[node]   (6) at (0.7+3*3.5, 1) {};
+        \node[node]   (7) at (1.35+3*3.5, 1) {};
+        \node[node]   (8) at (1.05+3*3.5, 0.5) {};
+        \node[node]   (9) at (0.35+3*3.5, 0.25) {};
+        \node[node]   (10) at (1.7+3*3.5, 0.25) {};
+        \node[node]   (11) at (0+3*3.5, 0.75) {};
+        \node[node] (12) at (2.1+3*3.5, 0.75) {};
+        \draw (1) -- (2);
+        \draw (4) -- (5);
+        \draw (4) -- (12);
+        \draw (2) -- (3);
+        \draw (5) -- (6);
+        \draw (4) -- (7);
+        \draw (9) -- (1);
+        \draw (5) -- (7);
+        \draw (9) -- (6);
+        \draw (7) -- (10);
+
+    \end{tikzpicture}
+    \caption[Integrated network example]{Illustration for the formation of the integrated network in a small example with \( n = 12 \) nodes. The first three graphs show the instantaneous networks for the time steps \( t = 0 \), \( t = 1 \), and \( t = 2 \). In each time step a few nodes get active (green nodes) and establish links to \( m = 1 \) other nodes. The forth graph shows the integrated network up to \( T = 2 \). It contains all links that were established in the instantaneous networks. Parallel links are not allowed. A link is only added once to the integrated network even it is present in multiple time steps (e.g., the link between the top two nodes is present in \( t = 1\) and \( t = 2 \)).}
+    \label{fig:integrated-network-example}
+\end{figure}
+
 
 Regardless of its simplicity, this activity-driven model can help to understand topological patterns and the dynamics of systems (e.g., epidemic spreading processes).
 \citet{Starnini2013} study the topological properties of this model in a more formal way by mapping it onto a hidden variables network model.
@@ -663,7 +751,7 @@ The authors use this new introduced mechanism to study how well link lifetimes a
 Peer influence or peer pressure plays an important role in the field of sociology and psychology.
 There are a lot of studies that investigate how peer influence affects the behavior of people in different settings.
 This is not only done for for real-world social networks (e.g., a social network of students in  as school), but also for online social and collaboration networks, such as Facebook or StackOverflow.
-These studies often investigate peer effects for harmful behavior like smoking or drinking~\cite{Simons2001, Powell2005}.
+These studies often investigate peer effects for harmful behavior like smoking or drinking\footnote{\url{https://xkcd.com/1534/}}~\cite{Simons2001, Powell2005}.
 \citet{Krasnova2008} showed that peer pressure is an important factor for adolescents to participate in online social networks, and \citet{Huang2014} concluded in their work that being exposed to pictures of drinking and smoking friends on social media websites may lead to an adaption of these behaviors.
 However, peer influence in not necessarily a bad thing.
 For example, \citet{Smith1984} showed that the introduction of peer monitors in a kindergarten classroom decreased non-participation and disruptive behavior of the other children.
@@ -697,7 +785,7 @@ Furthermore, every user \( v_{i} \) is assigned a positive real-valued variable 
 The dynamic process is then defined by the following system of coupled non-linear differential equations:
 
 \begin{equation}
-    \frac{\mathrm{d} a_{i}}{\mathrm{d} t} =  \underbrace{f(a_{i})}_{\text{activity decay}} + \underbrace{\sum_{j \in N(i)} g(a_{j})}_{\text{peer influence}}
+    \frac{\mathrm{d} a_{i}}{\mathrm{d} t} =  \underbrace{f(a_{i})}_{\text{activity decay}} + \underbrace{\sum_{j \in N(v_{i})} g(a_{j})}_{\text{peer influence}}
 \end{equation}
 
 Where the first part of the right hand side of the equation represents the intrinsic activity decay of a user, and the function \( f \) defines how fast the loss of activity should occur.

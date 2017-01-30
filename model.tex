@@ -3,7 +3,7 @@
 The proposed user activity model with peer influence effects is in detail described in this chapter.
 It is yet another extension of the activity-driven network framework by \citet{Perra2012a}, that was discussed in \autoref{subsec:time-varying-network-models}.
 However, it is not directly based on it, but on the work of \citet{Laurent2015}, which also relies on the the activity-driven framework.
-This underlying model, which is explained in the first section of this chapter, allows the formation of community structures and the formation of strong an weak ties in the network, which is a crucial condition for the occurrence of peer influenced activity.
+This underlying model, which is explained in the first section of this chapter, allows for the formation of community structures and the development of strong and weak ties in the network, which is a crucial condition for the occurrence of peer influenced activity.
 The additional introduced mechanisms, that allow for peer influenced activity to actually happen in the network, are then discussed in \autoref{sec:peer-influence-model} of this chapter.
 
 
@@ -17,16 +17,16 @@ The additional introduced mechanisms, that allow for peer influenced activity to
 
 \subsection{Description}
 
-Since this model~\cite{Laurent2015} is based on the activity-driven framework by \citet{Perra2012a}, a activity potential \( a_{i} = \eta x_{i}\),  which is drawn from a suitable distribution, is assigned to each node.
+Since this model~\cite{Laurent2015} is based on the activity-driven framework by \citet{Perra2012a}, a activity potential \( a_{i} = \eta x_{i}\),  which is drawn from a suitable distribution, is assigned to each of the \( n \) nodes.
 To reflect the heterogeneous activity patterns of people, a power-law distribution \( f(x) \sim x^{-\gamma}\) is selected.
 The exponent for the activity potential distribution is fixed to \( \gamma = 2.7 \), which is a value that is similar to the exponent observed in real world communication networks.
 The lower bound for the activity potential is set to \( \varepsilon = 10^{-3} \), and the time scaling parameter is set to \( \eta = 1\), so that \( a_{i} = x_{i} \in [\varepsilon, 1] \).
-Furthermore, for the sake of simplicity and without loss of generality are the time window \( \Delta t \), and the number of generated links at each activation \( m \) all set to the value one.
+Furthermore, for the sake of simplicity and without loss of generality are the size of the time window \( \Delta t \), and the number of generated links at each activation \( m \) all fixed to the value one.
 
 The dynamic part of the model is basically identical to the activity-driven framework.
 A node becomes active in every time window with probability equal to its activity potential and selects other nodes to interact with.
 The difference is how the interaction partners are selected once a node becomes active.
-The goal of this model is it to produce adjustable community structures and weight-topological correlations in the integrated network, which can be archived by changing the way the other nodes are selected.
+The goal of this model is it to produce adjustable community structures and weight-topological correlations in the integrated network, which can be archived by changing the way the communication partners are selected.
 More specifically, to archive these more realistic topological properties, the following two additional social mechanisms are introduced:
 
 \begin{enumerate}
@@ -69,7 +69,7 @@ This reinforcement process allows the introduction of dependencies between succe
       \draw (1) -- (4) node [midway, above, sloped] (c) {$w_{i,l} = 2$};
     \end{tikzpicture}
 
-    \caption[Egocentric network example]{Egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes).}
+    \caption[Egocentric network example]{Egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes). In this example is the link-reinforcement increment \( \delta = 1 \). This means that the weights exactly correspond to the number of previous interactions between the nodes. }
     \label{fig:egocentric-network}
 \end{figure}
 
@@ -84,14 +84,14 @@ This reinforcement process allows the introduction of dependencies between succe
 The second mechanism introduces two different closure processes to the model.
 The first one, cyclic closure, assures the formation of triangles (i.e., cliques between three nodes), which were linked to the formation of community structures in the network by \citet{Bianconi2014}.
 They showed that this mechanism is sufficient to generate networks with complex topological structures (e.g., long-tailed degree distributions), where the strength of communities depends on the cyclic closure probability.
-If a node wants to form a new tie, it tries to perform with probability \( p_{\Delta} \) a cyclic closure, by interacting with a randomly selected neighbor of a neighbor.
+If a node wants to form a new tie, it tries to perform a cyclic closure with probability \( p_{\Delta} \), by interacting with a randomly selected neighbor of a neighbor.
 The second closure process, focal closure, tries to emulate the social dynamic that users tend to form ties with other users that are similar to them (e.g., they have common interests).
 This process is performed when a new tie should be created with a probability of \( 1 - p_{\Delta} \) or if there are no suitable candidates for a cyclical closure available.
 This is, for instance, the case if a node becomes active the first time.
 The weight of a new tie is always initialized to a value of one, regardless of the type of closure that was used to establish the new tie.
 The actual implementation of these two closure mechanisms was adapted from the work of \citet{Kumpula2007}, who used the same closure mechanisms to study the formation of community structures in weighted static networks.
 They model cyclic closure as a biased local search (cf. \autoref{fig:cyclic-closure} for details) and focal closure as an unbiased global search, which means selecting a new node uniformly at random from the entire network.
-Furthermore, the introduced a node deletion mechanism in their model, which was adapted here as well.
+Furthermore, they introduced a node deletion mechanism in their model, which was adapted here as well.
 
 
 \begin{figure}
@@ -154,13 +154,13 @@ Furthermore, the introduced a node deletion mechanism in their model, which was 
     \end{subfigure}
     ~
     \begin{subfigure}[t]{0.3\textwidth}
-    \begin{tikzpicture}[active/.style={circle,fill=red!70,minimum size=1em,inner sep=3pt]}, neighbor/.style={circle,fill=blue!70,minimum size=1em,inner sep=3pt]}, selected/.style={circle,fill=green!70,minimum size=1em,inner sep=3pt]}]
+    \begin{tikzpicture}[active/.style={circle,fill=red!70,minimum size=1em,inner sep=3pt]}, neighbor/.style={circle,fill=blue!70,minimum size=1em,inner sep=3pt]}, selected1/.style={circle,fill=green!70,minimum size=1em,inner sep=3pt]}, selected2/.style={circle,fill=orange!70,minimum size=1em,inner sep=3pt]}]
       \node[active]   (1) at (0, 1) {};
       \node[neighbor] (2) at (1, 0) {};
       \node[neighbor] (3) at (1, 2) {};
-      \node[selected] (4) at (2, 1) {};
+      \node[selected1] (4) at (2, 1) {};
       \node[neighbor] (5) at (3, 0) {};
-      \node[selected] (6) at (3, 2) {};
+      \node[selected2] (6) at (3, 2) {};
 
       % dangling edges
       \draw (3) -- (1.3, 2.3);
@@ -182,7 +182,7 @@ Furthermore, the introduced a node deletion mechanism in their model, which was 
     \label{subfig:cyclic-closure-c}
     \end{subfigure}
 
-    \caption[Cyclic closure mechanism example]{This is an illustration of the cyclic closure mechanism in the model. The network depicted in these figures is part of the union of all egocentric networks (i.e., the integrated network). \autoref{subfig:cyclic-closure-a} shows the active node in red. In the first step, this node has to select one of his neighbors. This is done at random with respect to the tie strengths. Therefore, the probabilities for the three neighbors to be selected are \(\sfrac{3}{10}\), \(\sfrac{5}{10}\), and \(\sfrac{2}{10}\) respectively. In this example the neighbor with the highest probability was selected, which is depicted in \autoref{subfig:cyclic-closure-b}. Since the selected neighbor has neighbors himself that do not share a link with the active node yet, the cyclic closure can be completed. This is done once more by selecting one of the candidates at random with respect to the weight of the ties and creating a new tie with unit strength with probability \(p_{\Delta}\). \autoref{subfig:cyclic-closure-c} shows the newly formed triangle in the network.}
+    \caption[Cyclic closure mechanism example]{This is an illustration of the cyclic closure mechanism in the model. The network depicted in these figures is part of the union of all egocentric networks (i.e., the integrated network). \autoref{subfig:cyclic-closure-a} shows the active node in red. In the first step, this node has to select one of his neighbors. This is done at random with respect to the tie strengths. Therefore, the probabilities for the three neighbors to be selected are \(\sfrac{3}{10}\), \(\sfrac{5}{10}\), and \(\sfrac{2}{10}\) respectively. In this example the neighbor with the highest probability was selected, which is depicted in \autoref{subfig:cyclic-closure-b} (green node). Since the selected neighbor has neighbors himself that do not share a link with the active node yet, the cyclic closure can be completed. This is done once more by selecting one of the candidates at random with respect to the weight of the ties and creating a new tie with unit strength with probability \( p_{\Delta} \). \autoref{subfig:cyclic-closure-c} shows they selected node (orange node) and the newly formed triangle in the network.}
     \label{fig:cyclic-closure}
 \end{figure}
 
@@ -214,7 +214,7 @@ Another equivalent way to define the integrated network is the union of all egoc
 
 These newly introduced mechanisms have interesting effects on how the structures on the integrated network evolve over time.
 In the beginning, after nodes form their first ties, they start to close triangles and reinforce the ties in their egocentric network.
-This means that strong community structures are formed early in the model.
+This means that strong community structures are formed early in the process.
 However, after a while more weak ties are introduced and fewer triangles are closed so that the strength of the communities declines and the network reaches its equilibrium state.
 As mentioned earlier, the node deletion probability can be used to control the time until the network converges, but it can also be used to tune the strength of the communities and the average degree in the network.
 A smaller value for \( p_{d} \) decreased the average local clustering coefficient and increases the average degree.
@@ -250,7 +250,7 @@ The assignment is done once for every node when it gets created and does not cha
 A node can become active in an iteration of the model either by himself or by being contacted by another active node.
 The process of becoming active on one's own accord does not depended on whether or not the node was active in previous time steps.
 This corresponds to a memory-less Poisson process and leads necessarily to exponentially distributed times between two consecutive activations of a node (i.e., inter-event times).
-The significance of the inter-event time distribution in human behavior was already discussed in \autoref{sec:user-activity-models}.
+The significance of complex long-tailed inter-event time distributions in human behavior was already discussed in \autoref{sec:user-activity-models}.
 However, it is evident that activations caused by other nodes are not necessarily independent of previous events, due to the memory effects introduced in the model.
 For example, lets assume a node with very low activity potential is part of group of high-activity nodes and already established strong ties.
 The self-activation rate of the low-activity node will be quite low, with a mean value and standard deviation for the inter-event times that is equal to the inverse of its activity probability.
@@ -277,14 +277,14 @@ It denotes the maximal probability for an activation motivated by the neighbors 
 Since the peer influence probability depends on the neighbors that were active in the last round, the information of the last activations of the nodes must be stored.
 This is done by extending the egocentric networks to save the timestamp of the last activation for each node.
 The time of last activation of a node \( v_{i} \) is called \( t_{i} \) and is updated independent of the type of activation (i.e., due to self activation or by being contacted by another active node).
-Furthermore, the peer influence probability should not only depend on how many of a nodes neighbors were active in the round before, but also on the strength of the ties between them.
+Furthermore, the peer influence probability should not only be depended on how many neighbors of a node were active in the round before, but also on the strength of the ties between them.
 A neighbor that shares a strong connection with a node should be more influential than, for example, neighbors that were only recently introduced to the egocentric network.
 This can easily be described by a weighted fraction of the last active neighbors.
 However, to make the model more general and adaptable the following version of the weighted fraction of active neighbors at time \(t - 1\) is used, that transforms the weights beforehand.
 Each weight in the egocentric networks of \( v_{i} \) is transformed and normalized by
 
 \begin{equation}
-    w'_{i,j} = \frac{\exp(\beta w_{i,j})}{\sum_{k \in N(i)} \exp(\beta w_{i,k})},
+    w'_{i,j} = \frac{\exp(\beta w_{i,j})}{\sum_{k \in N(v_{i})} \exp(\beta w_{i,k})},
 \end{equation}
 
 where \( \beta \) is a free parameter.
@@ -295,7 +295,7 @@ Whereas, in a high temperature system all states are nearly equiprobable.
 The free parameter \( \beta \) in the softmax function is called inverse temperature and replicates this behavior.
 It is defined as the reciprocal value of the temperature.
 This softmax function is used in many applications in different fields besides physics as well.
-For instance, it is used in the machine learning area of reinforcement learning, where the actions of agents in some setting are based on the probabilities yielded by the softmax function.
+For instance, it is used in the machine learning area of reinforcement learning, where the actions of agents in some setting are selected with respect to the probabilities yielded by the softmax function.
 \citet{Crites1998} apply this method to control a group of elevators using multiple agents.
 It is also, for example, used in the modeling of the decision making behavior of humans in economic settings~\cite{Ray2008}.
 
@@ -323,19 +323,21 @@ For example, a value of \( \beta = 0 \) (this would correspond to a very high te
 However, it also possible to make \( \beta \) depended on the time (i.e., \( \beta(t) \)), similar to a physical system that is cooling off or heating up.
 For this thesis, the temperature at time \( t \) is set to the average weight in the integrated network \( G_{T} = \sum_{i=0}^{t} G_{i}\) (i.e., \( \beta(t) = (\frac{1}{m} \sum_{(i,j) \in E(G_{T})} w_{i,j})^{-1} \)).
 The average weight, similar to the local clustering coefficient and average degree, converges to a value after some time as well.
+\todo{move these two sentences into the results chapter}
 The normalized weights \( w'_{i,j} \) are also part of the extended egocentric (c.f. \autoref{fig:extended-egocentric-network}) and must be updated at the end of every iteration.
 The fraction of active neighbors \( \alpha_{i}(t) \) of node \(v_{i} \) at time \( t - 1 \) is then given by
 
 \begin{equation}
-    \alpha_{i}(t) = \frac{\sum_{j \in N(i)} \mathbf{1}_{\{t_{j} = t-1\}} \exp(\beta(t) w_{i, j})}{\sum_{j \in N(i)} \exp(\beta(t) w_{i, j})} = \frac{\sum_{j \in N(i)} \mathbf{1}_{\{t_{j} = t-1\}} w'_{i, j}}{\sum_{j \in N(i)} w'_{i, j}},
+    \alpha_{i}(t) = \frac{\sum_{j \in N(v_{i})} \mathbf{1}_{\{t_{j} = t-1\}} \exp(\beta(t) w_{i, j})}{\sum_{j \in N(v_{i})} \exp(\beta(t) w_{i, j})} = \frac{\sum_{j \in N(v_{i})} \mathbf{1}_{\{t_{j} = t-1\}} w'_{i, j}}{\sum_{j \in N(v_{i})} w'_{i, j}},
 \end{equation}
 
 where \( \mathbf{1} \) is the indicator function, which yields the value one every time the predicate is true, otherwise it is zero.
+
 In the next step this weighted fraction of prior active neighbors must be mapped into a peer influence probability in the range \( [0, q] \) using a monotonically increasing function.
 One possibility would be the usage of a linear function \( g(\alpha) = q \alpha \) defined for values \(0 \leq \alpha \leq 1 \).
 However, this function seems to not describe the peer influence mechanism very well.
-One one hand should another active neighbor not be heavily influential when there is already a large portion of neighbors active.
-The peer influence should saturate after some fraction of neighbors is active.
+On one hand should another active neighbor not be heavily influential when there is already a large portion of neighbors active.
+The peer influence should basically saturate after some fraction of neighbors is active.
 On the other hand, should the peer influence for a node become noticeable after some threshold of active neighbors is reached.
 This can be archived using an sigmoid function.
 Similar to~\cite{Walk2016} the following algebraic sigmoid  function \( g \) is used to determine the peer influence for the node \( v_{i} \)
@@ -365,22 +367,24 @@ The simple biased coin flip becomes a more sophisticated two-step random experim
 First, like in the base model, a biased coin is tossed to determine if a node becomes active with probability that corresponds to its activity potential.
 If this first random experiment fails the node gets a second chance to become active by himself.
 This is done by calculating its peer influence probability and tossing another biased coin.
-Therefore, the total probability of a node \( v_{i} \) becoming active can be expressed by
+Therefore, the total probability of a node \( v_{i} \) becoming active at time \( t \) can be expressed by
 
 \begin{equation}
     \prob{v_i \text{ becomes active}} = a_{i} + (1 - a_{i}) p_{i}.
 \end{equation}
 
+This concludes the definition of the peer influence extension of the model.
+\autoref{tbl:all-model-parameter} contains an overview of all model parameter and their origin.
+Note that many of them (e.g., \( \Delta t \), \( \eta \), \ldots) are assigned reasonable default values in the context of this work.
 
-
-\begin{table}[]
+\begin{table}[h]
 \centering
 \begin{tabular}{lp{10cm}}
 \hline
 \textbf{parameter} & \textbf{description} \\ \hline \hline
 \multicolumn{2}{c}{activity-driven framework} \\ \hline
 \( n \) & The number of nodes in the network. \\
-\( f(x) \) & The probability distribution for the activity potentials of the nodes. In this work a power-law distribution is selected \( f(x) \sim x^{-2.7} \). It has a positive probability for values in the range of \( [\varepsilon, 1] \). \\
+\( f(x) \) & The probability distribution for the activity potentials of the nodes. It has a positive probability for values in the range of \( [\varepsilon, 1] \). \\
 \( \varepsilon \) &  The lower bound of the activity potential. It should be \( 0 < \varepsilon \ll 1 \). \\
 \( \Delta t \) &  The length of the time window in each iteration. \\
 \( \eta \) &  A re-scaling factor for the activity potential to adjust the average number of active nodes in each iteration. \\
@@ -390,7 +394,7 @@ Therefore, the total probability of a node \( v_{i} \) becoming active can be ex
 \( p_{\Delta} \) & The probability to form a triangle when establishing a new tie. \\
 \( p_{d} \) & The probability for node to get deleted in a iteration. \\
 \( \delta \) & The constant factor that is added to the tie strength when it is reinforced. \\
-\( c \) &  The memory constant, which influences the probability for a new tie.\\ \hline \hline
+\( c \) &  The memory constant, which influences the probability to form a new tie.\\ \hline \hline
 
 \multicolumn{2}{c}{peer influence extension} \\ \hline
 \( \beta \) & Inverse temperature parameter for the softmax re-scaling of the weights. This parameter may also be time depended. \\
