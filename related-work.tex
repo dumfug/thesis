@@ -1,4 +1,5 @@
 \chapter{Related Work}
+\label{cha:related-work}
 
 
 \section{Graph Theory Basics}
@@ -220,7 +221,8 @@ A \emph{dyad} denotes the linkage between a pair of actors.
 It is a very common research topic to understand the pairwise relationships in social networks.
 A \emph{triad} on the other hand describes triples of actors and the ties between them.
 This concept is especially important for the question of transitivity of certain relationships.
-A example for this would be the question \enquote{is the friend of my friend also my friend?}.
+For instance, \enquote{is the friend of my friend also my friend?}.
+The transitivity of trust, especially in the context of cryptography, is an interesting issue as well~\cite{Christianson1997}.
 Another important concept is the \emph{strength of ties}, which was introduced by \citet{Granovetter1973}.
 The strength of a tie is influenced by factors like the time that two actors spend together, or the intimacy between them.
 Depended on the strength, a tie can either be strong, weak, or absent.
@@ -241,8 +243,8 @@ There is a variety of different methods and approaches to perform this task.
 Examples are approaches based on hierarchical clustering, or edge betweenness (i.e., the number of shortest paths going through an edge)~\cite{Fortunato2010}.
 However, often is it not possible to study the network and its structure on a fully global scale, due to processing limitations.
 One alternative way is to look at single actors and their immediate neighborhood.
-These small sub-networks are called \emph{ego-centered} or \emph{personal} networks~\cite{Newman2010}.
-Often is some number of these ego-centered networks sampled from the complete networks and examined for local properties, such as the degrees or the local clustering coefficient.
+These small sub-networks are called \emph{egocentric} or \emph{personal} networks~\cite{Newman2010}.
+Often are some number of these egocentric networks sampled from the complete networks and examined for local properties, such as the degrees or the local clustering coefficient.
 
 Another attribute that many social networks share is that they are \emph{scale-free networks}~\cite{Barabasi2016}.
 Formally, a network is a scale-free network if its degree distribution is a \emph{power-law distribution} (i.e., \(p(k) \sim k^{-\gamma}\), where \(\gamma\) is the parameter of the distribution that denotes the degree exponent).
