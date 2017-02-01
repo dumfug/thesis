@@ -5,7 +5,18 @@
 \section{Motivation}
 \label{sec:motivation}
 
-
+A lot of problems that arise in the real world can be solved by first abstracting them in a more general form and then solve them by using already established and well-known tools.
+One very famous example for this process is attributed to the Swiss mathematician Leonhard Euler.
+The city Königsberg (now called Kaliningrad) was in the 18\textsuperscript{th} century split into four parts due to the pathway of the river Pregel.
+These four areas of the city were connected by seven bridges.
+The residents of Königsberg had an ongoing challenge to find a way through the city that crosses each bridge exactly once and ends the the starting point.
+This is called the Königsberg problem~\cite{Paoletti2011, Cook2012}.
+Euler tackled this challenge by eliminated irrelevant details (e.g., the length of the brides or the size of the size of the areas) and abstracting the problem to its essence.
+The regions of the city became points and the bridges between two areas became lines that connected the corresponding points.
+This abstracted topological view on the problem allowed Euler to solve the Königsberg problem and show that, in fact, such a tour through the city (also known as an Eulerian cycle) does not exist.
+For it to be possible requires the number of bridges that start/end in each region to be even, which is not the case for the Königsberg, where the number of bridges that start/end in each region is odd.
+This particular way of abstracting real world objects and their connections into points and lines and applying mathematical methods and reasoning to it laid the foundation for the mathematical field of graph theory.
+It is used today in countless applications, from finding efficient ways to manufacture circuit boards~\cite{Cook2012} to calculating effective routes for the data packets in the internet~\cite{Wang1999}.
 
 
 %% ========================================================================
