@@ -3,10 +3,10 @@
 
 
 The proposed user activity model with peer influence effects is in detail described in this chapter.
-It is yet another extension of the activity-driven network framework by \citet{Perra2012a}, that was discussed in \autoref{subsec:time-varying-network-models}.
+It is yet another extension of the activity-driven network framework by \citet{Perra2012a}, that was discussed in \cref{subsec:time-varying-network-models}.
 However, it is not directly based on it, but on the work of \citet{Laurent2015}, which also relies on the the activity-driven framework.
 This underlying model, which is explained in the first section of this chapter, allows for the formation of community structures and the development of strong and weak ties in the network, which is a crucial condition for the occurrence of peer influenced activity.
-The additional introduced mechanisms, that allow for peer influenced activity to actually happen in the network, are then discussed in \autoref{sec:peer-influence-model} of this chapter.
+The additional introduced mechanisms, that allow for peer influenced activity to actually happen in the network, are then discussed in \cref{sec:peer-influence-model} of this chapter.
 
 
 %% ========================================================================
@@ -45,10 +45,10 @@ This counter intuitive result can be explained by the observation that most acti
 The memory of a node is represented by a weighted egocentric network, that includes all other nodes, which were already part of one or more interactions in the past.
 These previous communication partners are also called neighbors.
 The weight represents the number of previous interactions, scaled by the link-reinforcement constant \( \delta \).
-\autoref{fig:egocentric-network} shows an exemplary egocentric network of the node \( v_{i} \) and its neighbors.
+\cref{fig:egocentric-network} shows an exemplary egocentric network of the node \( v_{i} \) and its neighbors.
 The choice of forming a new tie or reinforcing an existing one depends on the number of neighbors of a node.
 This corresponds to the observations of social interaction dynamics, where actors tend to communicate almost exclusively within their social cycle, which has a limited size, due to cognitive capacities of the actors~\cite{Dunbar1992}.
-Let \( k_{i} = d(v_{i}) \) be the degree of the node \( v_{i} \) in its egocentric network, then the probability to form a new tie is \( p(k_{i}) = \frac{c}{k_{i} + c} \), and the probability to interact with an already established tie is \( \bar{p}(k_{i}) = 1 - p(k_{i}) = 1 - \frac{c}{k_{i} + c} = \frac{k_{i}}{k_{i} + c} \), where the constant \(c\) determines how strong the memory of an actor is (cf.  \autoref{fig:reinforcement-process-prob-plot} for details).
+Let \( k_{i} = d(v_{i}) \) be the degree of the node \( v_{i} \) in its egocentric network, then the probability to form a new tie is \( p(k_{i}) = \frac{c}{k_{i} + c} \), and the probability to interact with an already established tie is \( \bar{p}(k_{i}) = 1 - p(k_{i}) = 1 - \frac{c}{k_{i} + c} = \frac{k_{i}}{k_{i} + c} \), where the constant \(c\) determines how strong the memory of an actor is (cf.  \cref{fig:reinforcement-process-prob-plot} for details).
 Therefore, the probability for the formation of a new tie decays very fast with increasing size of the egocentric network.
 The memory strength constant is fixed to \( c = 1 \) in the context of this work.
 If an active node decides to reinforce an existing tie, the neighbor is selected proportional to the current tie strength.
@@ -92,7 +92,7 @@ This process is performed when a new tie should be created with a probability of
 This is, for instance, the case if a node becomes active the first time.
 The weight of a new tie is always initialized to a value of one, regardless of the type of closure that was used to establish the new tie.
 The actual implementation of these two closure mechanisms was adapted from the work of \citet{Kumpula2007}, who used the same closure mechanisms to study the formation of community structures in weighted static networks.
-They model cyclic closure as a biased local search (cf. \autoref{fig:cyclic-closure} for details) and focal closure as an unbiased global search, which means selecting a new node uniformly at random from the entire network.
+They model cyclic closure as a biased local search (cf. \cref{fig:cyclic-closure} for details) and focal closure as an unbiased global search, which means selecting a new node uniformly at random from the entire network.
 Furthermore, they introduced a node deletion mechanism in their model, which was adapted here as well.
 
 
@@ -184,7 +184,7 @@ Furthermore, they introduced a node deletion mechanism in their model, which was
     \label{subfig:cyclic-closure-c}
     \end{subfigure}
 
-    \caption[Cyclic closure mechanism example]{This is an illustration of the cyclic closure mechanism in the model. The network depicted in these figures is part of the union of all egocentric networks (i.e., the integrated network). \autoref{subfig:cyclic-closure-a} shows the active node in red. In the first step, this node has to select one of his neighbors. This is done at random with respect to the tie strengths. Therefore, the probabilities for the three neighbors to be selected are \(\sfrac{3}{10}\), \(\sfrac{5}{10}\), and \(\sfrac{2}{10}\) respectively. In this example the neighbor with the highest probability was selected, which is depicted in \autoref{subfig:cyclic-closure-b} (green node). Since the selected neighbor has neighbors himself that do not share a link with the active node yet, the cyclic closure can be completed. This is done once more by selecting one of the candidates at random with respect to the weight of the ties and creating a new tie with unit strength with probability \( p_{\Delta} \). \autoref{subfig:cyclic-closure-c} shows they selected node (orange node) and the newly formed triangle in the network.}
+    \caption[Cyclic closure mechanism example]{This is an illustration of the cyclic closure mechanism in the model. The network depicted in these figures is part of the union of all egocentric networks (i.e., the integrated network). \cref{subfig:cyclic-closure-a} shows the active node in red. In the first step, this node has to select one of his neighbors. This is done at random with respect to the tie strengths. Therefore, the probabilities for the three neighbors to be selected are \(\sfrac{3}{10}\), \(\sfrac{5}{10}\), and \(\sfrac{2}{10}\) respectively. In this example the neighbor with the highest probability was selected, which is depicted in \cref{subfig:cyclic-closure-b} (green node). Since the selected neighbor has neighbors himself that do not share a link with the active node yet, the cyclic closure can be completed. This is done once more by selecting one of the candidates at random with respect to the weight of the ties and creating a new tie with unit strength with probability \( p_{\Delta} \). \cref{subfig:cyclic-closure-c} shows they selected node (orange node) and the newly formed triangle in the network.}
     \label{fig:cyclic-closure}
 \end{figure}
 
@@ -221,7 +221,7 @@ However, after a while more weak ties are introduced and fewer triangles are clo
 As mentioned earlier, the node deletion probability can be used to control the time until the network converges, but it can also be used to tune the strength of the communities and the average degree in the network.
 A smaller value for \( p_{d} \) decreased the average local clustering coefficient and increases the average degree.
 
-The cyclic closure probability \( p_{\Delta} \) and the reinforcement increment \( \delta \) control the formation of communities as well (see \autoref{fig:community-structures-in-model}).
+The cyclic closure probability \( p_{\Delta} \) and the reinforcement increment \( \delta \) control the formation of communities as well (see \cref{fig:community-structures-in-model}).
 Furthermore, like the node deletion probability, the two parameter have an effect on the average degree of the converged network.
 Higher values for the cyclic closure probability or the tie reinforcement increment result in a smaller average degree.
 However, the two parameter do not influence the actual (heterogeneous) distribution of the degrees in a significant way.
@@ -252,7 +252,7 @@ The assignment is done once for every node when it gets created and does not cha
 A node can become active in an iteration of the model either by himself or by being contacted by another active node.
 The process of becoming active on one's own accord does not depended on whether or not the node was active in previous time steps.
 This corresponds to a memory-less Poisson process and leads necessarily to exponentially distributed times between two consecutive activations of a node (i.e., inter-event times).
-The significance of complex long-tailed inter-event time distributions in human behavior was already discussed in \autoref{sec:user-activity-models}.
+The significance of complex long-tailed inter-event time distributions in human behavior was already discussed in \cref{sec:user-activity-models}.
 However, it is evident that activations caused by other nodes are not necessarily independent of previous events, due to the memory effects introduced in the model.
 For example, lets assume a node with very low activity potential is part of group of high-activity nodes and already established strong ties.
 The self-activation rate of the low-activity node will be quite low, with a mean value and standard deviation for the inter-event times that is equal to the inverse of its activity probability.
@@ -263,7 +263,7 @@ In this section, a extension of the prior discussed base model with memory and c
 
 The ideas for this model were heavily influenced by the work of \citet{Walk2016}.
 They proposed a model that includes peer-influence and its impact on the state of activity in collaboration networks.
-A more detailed description of their work is located in \autoref{sec:peer-influence}.
+A more detailed description of their work is located in \cref{sec:peer-influence}.
 The gist of the here proposed extension to the model is that a node can not only become active on its own based on its activity potential, but also by being motivated to become active by its neighbors, that were active in the previous iteration.
 Another way to look at it would be that active nodes can influence their neighbors to become active as well in the next round.
 Therefore, introducing a more explicit peer influence mechanism to the model.
@@ -326,7 +326,7 @@ However, it also possible to make \( \beta \) depended on the time (i.e., \( \be
 For this thesis, the temperature at time \( t \) is set to the average weight in the integrated network \( G_{T} = \sum_{i=0}^{t} G_{i}\) (i.e., \( \beta(t) = (\frac{1}{m} \sum_{(i,j) \in E(G_{T})} w_{i,j})^{-1} \)).
 The average weight, similar to the local clustering coefficient and average degree, converges to a value after some time as well.
 \todo{move these two sentences into the results chapter}
-The normalized weights \( w'_{i,j} \) are also part of the extended egocentric (c.f. \autoref{fig:extended-egocentric-network}) and must be updated at the end of every iteration.
+The normalized weights \( w'_{i,j} \) are also part of the extended egocentric (c.f. \cref{fig:extended-egocentric-network}) and must be updated at the end of every iteration.
 The fraction of active neighbors \( \alpha_{i}(t) \) of node \(v_{i} \) at time \( t - 1 \) is then given by
 
 \begin{equation}
@@ -354,7 +354,7 @@ The satisfaction of the prior described requirements for the function can be ver
 Sigmoid functions are usually defined for all real values since there are often used to re-scale values to the range of \([-1, 1] \) or \( [0, 1] \).
 However, for this work only input values on the unit interval are relevant and the two parameter \( q \) and \( \theta \) should be selected carefully to archive the desired peer influence behavior.
 For instance, too large values for \( \theta \) may obstruct the peer influence mechanism crtically, since the maximum influence may never be reached, even for \( \alpha = 1 \).
-\autoref{fig:peer-influence-sigmoid} shows the discussed sigmoid function with different values for the critical threshold.
+\cref{fig:peer-influence-sigmoid} shows the discussed sigmoid function with different values for the critical threshold.
 
 
 \myfig{peer-influence-sigmoid}
@@ -376,7 +376,7 @@ Therefore, the total probability of a node \( v_{i} \) becoming active at time \
 \end{equation}
 
 This concludes the definition of the peer influence extension of the model.
-\autoref{tbl:all-model-parameter} contains an overview of all model parameter and their origin.
+\cref{tbl:all-model-parameter} contains an overview of all model parameter and their origin.
 Note that many of them (e.g., \( \Delta t \), \( \eta \), \ldots) are assigned reasonable default values in the context of this work.
 
 \begin{table}[h]
