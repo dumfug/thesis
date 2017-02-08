@@ -189,11 +189,9 @@ Therefore, the value for the average local clustering coefficient maybe larger t
 \section{Social Networks}
 \label{sec:social-networks}
 
-In the real-world it is common to use graphs to model the complex systems that are arising.
-For example, the web can be represented as a graph, where the vertices correspond to websites and the edges are the hyperlinks between them.
-Another use case are large infrastructure networks, such as power grids.
-In a graph that represents such a power grid network vertices represent things like power stations or transformers and edges the power lines between them.
-However, when modeling these large networks it common to use a slightly different terminology~\cite{Barabasi2016}.
+In the real world it is common to use graphs to model the complex systems that are arising.
+For example, the web can be represented as a graph, where vertices correspond to websites and edges to the hyperlinks between them.
+However, when modeling these large networks it common to use a slightly different terminology than in the mathematical field of graph theory~\cite{Barabasi2016}.
 Vertices are often called \emph{nodes} and edges are called \emph{links} in the context of networks.
 
 Social networks~\cite{Newman2010} are another type of network that can benefit from the usage of graph theory methods.
@@ -210,12 +208,12 @@ The network of acquaintances or friends in a school is also considered as a soci
 \myfig{karate_club_network}
       {width=0.6\textwidth,height=0.6\textheight}
       {Zachary's karate club network~\cite{Zachary1977} is a social network that shows the relationship between 34 members of a university-based karate club in the US in the early 1970's.
-      There exists an edge between two members if there were social interactions outside of the normal club activities (i.e., two members are considered as friends).
-      The graph shows a separation into two groups (red and blue nodes) due to a dispute in the club.}
+      There exists an edge between two members if there were social interactions outside of the normal club activities (i.e., two members are considered friends).
+      The graph shows a separation into two communities (red and blue nodes). This was caused by a dispute between the members of the club.}
       {Zachary's karate club network}
       {fig:karate-club-network}
 
-Two fundamental terms in social network analysis are \emph{dyads} and \emph{triads}~\cite{Wasserman1994}.
+Two fundamental terms in the field of social network analysis are \emph{dyads} and \emph{triads}~\cite{Wasserman1994}.
 These two concepts describe the relationship between multiple actors.
 A \emph{dyad} denotes the linkage between a pair of actors.
 It is a very common research topic to understand the pairwise relationships in social networks.
@@ -223,17 +221,17 @@ A \emph{triad} on the other hand describes triples of actors and the ties betwee
 This concept is especially important for the question of transitivity of certain relationships.
 For instance, \enquote{is the friend of my friend also my friend?}.
 The transitivity of trust, especially in the context of cryptography, is an interesting issue as well~\cite{Christianson1997}.
-Another important concept is the \emph{strength of ties}, which was introduced by \citet{Granovetter1973}.
+Another important concept is the strength of ties, which was introduced by \citet{Granovetter1973}.
 The strength of a tie is influenced by factors like the time that two actors spend together, or the intimacy between them.
 Depended on the strength, a tie can either be strong, weak, or absent.
-Absent does not only include non-existing ties, but also ties that are below some threshold of social interactions.
+Absent does not only include non-existing ties, but also ties with a strength that is below a certain threshold.
 This concept of strong and weak ties can be used to explain the formation of triads.
 If there already exists a strong tie between the two actors A and B, and between B and C, then there exists at least a weak tie between A and C.
 This is true, due to the opportunities for the formation of a tie between A and C, that will result from a common strong tie to the actor B.
 Furthermore, it is possible to explain the spreading of information in a social network in a better way by considering the strength of ties.
 Weak ties can help the flow of information by acting as a bridge between sparsely connected parts of the network.
 
-A property of many real-world social networks is a \emph{community structure}~\cite{Girvan2002}.
+A property that many real-world social networks share are \emph{community structures}~\cite{Girvan2002}.
 Communities are groups of actors that are more connected to actors in the same group, than to actors in a different one.
 This basically means that there exists subsets of densely linked nodes in the network with very few links to other subsets.
 The network shown in \cref{fig:karate-club-network} has two known communities characterized by different node colors.
@@ -244,14 +242,24 @@ Examples are approaches based on hierarchical clustering, or edge betweenness (i
 However, often is it not possible to study the network and its structure on a fully global scale, due to processing limitations.
 One alternative way is to look at single actors and their immediate neighborhood.
 These small sub-networks are called \emph{egocentric} or \emph{personal} networks~\cite{Newman2010}.
-Often are some number of these egocentric networks sampled from the complete networks and examined for local properties, such as the degrees or the local clustering coefficient.
+Often is some number of these egocentric networks sampled from the complete network and examined for their local properties, such as the degree distribution or the local clustering coefficients.
 
 Another attribute that many social networks share is that they are \emph{scale-free networks}~\cite{Barabasi2016}.
-Formally, a network is a scale-free network if its degree distribution is a \emph{power-law distribution} (i.e., \(p(k) \sim k^{-\gamma}\), where \(\gamma\) is the parameter of the distribution that denotes the degree exponent).
+Formally, a network is a scale-free network if its degree distribution is a power-law distribution (i.e., \(p(k) \sim k^{-\gamma}\), where \(\gamma\) is the parameter of the distribution that denotes the degree exponent).
 The value for \(\gamma\) for most real-world (social) networks is in the range between 2 and 3.
-A consequence of the power-law distribution is that the distribution of the degrees is right-skewed with a long tail.
+A consequence of the power-law distribution is that the distribution of the degrees is right-skewed and has a long tail.
 This means that there is a large number of nodes in the network that have only a few links (i.e., a small degree) but there is also the chance that there exists a few nodes with a very high degree.
 Such nodes are usually called \emph{hubs} and may correspond in the context of social networks to very influential actors that can play an important role in the network.
+
+A property that many social networks show is that they have a small-world characteristic.
+The idea of small-world networks~\cite{Watts1999} is that even if the network is very large and sparsely connected, the average shortest path between any pair of nodes in it is usually very small.
+For example, the famous experiment by \citet{Milgram1969} showed that it is possible to send a letter to a target by a chain of about six people on average, where each person in the chain is only allowed to forward a letter to acquaintances.
+However, even tough there are some issues with the experimental setup of this study (e.g., a sample selection biases, or the sample size~\cite{Schnettler2009}), there is additional work on in this area that supports the original findings.
+\citet{Leskovec2008} study of an online social network with 180 million nodes and 1.3 billion edges showed that the average path length in this network is 6.6, which is only slightly larger than in the original work, but also that there exits paths up to a length of 29.
+A network with the small-world characteristic does usually exhibit two properties.
+Fist, the average shortest path length is small and only grows at most logarithmically with the size of the network, and second, it is highly clustered.
+Note that the small-world effect does not only occur in social networks but also in many other real-world networks as well.
+For instance, the US power grid network or the collaboration network of actors in movies~\cite{Watts1998}.
 
 
 %% ========================================================================
@@ -265,10 +273,10 @@ This section contains an overview on the concept of time-varying networks~\cite{
 Since this type of network is used in many different scientific fields it also has a variety of names.
 For example, temporal networks, dynamic networks, evolving graphs, or the name that is mainly used in this thesis, time-varying networks.
 As already mentioned in the section about social networks, the structure, or topology, of networks can be used to understand dynamic processes and their behavior.
-However, there are many dynamical processes that are modeled using networks, in which the links are not active all the time.
+However, there are many dynamical processes that are modeled using networks in which links are not active all the time.
 One example would be a communication network, such as the network of phone calls between users.
-Another example would social or collaboration network, where actors do not interact constantly but in irregular intervals.
-These link activation at certain times can, however, be very important to explain the dynamic process and are simply lost when approximated by a static graph.
+Another example would be a social or collaboration network, where actors do not interact constantly but in irregular intervals.
+These link activations at certain times can be very important to explain the dynamic process and are simply lost when approximated by a static graph.
 So the idea of time-varying networks is to introduce another dimension (i.e., time) to the network and move the information of when something happens from the dynamic process to the network itself.
 As a general rule, a time-varying network is applicable when the structure (i.e., the topology) of the system and the temporal process are connected to each other.
 This means that the time scale on which the network itself evolves should be similar to the time scale of the dynamic process that takes place on it.
@@ -389,7 +397,7 @@ However, similar to the last representation methods, this one also only reasonab
        \draw (0, 1) node[left] {(2,4)} to (6.5, 1);
        \draw (0, 0.5) node[left] {(3,4)} to (6.5, 0.5);
 
-       \draw[->, line width=1.5pt] (0, 0) to (7, 0) node[below] {t};
+       \draw[->, line width=1.5pt] (0, 0) to (6.8, 0) node[below] {t};
        \node[below] at (1, 0) {0};
        \node[below] at (3, 0) {1};
        \node[below] at (5, 0) {2};
@@ -427,28 +435,32 @@ There is also the idea, and many approaches, to extend community detection mecha
 \section{Generative Network Models}
 \label{sec:network-models}
 
-This section contains descriptions of different generative network models.
-These models can be used to build graphs that fulfill different properties.
-They are often a useful tool to model some type of real-world network (e.g., a social network) to gain a deeper understanding on the processes that create these networks.
+This section contains descriptions of different generative network models, which can be used to build graphs with certain characteristics.
+They are often a useful tool when studying some type of real-world network (e.g., a social network) and to gain a deeper understanding on the processes that induce them.
+
 
 \subsection{The Erdős-Rényi Model}
+\label{subsec:erdos-reni-model}
 
 The Erdős–Rényi (ER) model~\cite{Erdos1959, Newman2010} was in its first form described by the two famous mathematicians Paul Erdős and Alfréd Rényi in 1959.
 The model generates a random graph with \(n\) nodes and \(m\) links.
 It chooses one of the \(\binom{\binom{n}{2}}{m}\) possible graphs of this size with equal probability at random.
 The idea is that large, complex networks often seem random and can be examined using random graphs and statistical methods~\cite{Barabasi2002}.
-Therefore,this is a very simple, yet powerful, model to explore some effects that take place in real-world systems.
-It is also often called \(G(n, m)\).
-There is another model that is very similar to the \(G(n, m)\) model, called the \(G(n, p)\) model.
-Here is the number of links not fixed beforehand, but determined by \(p\), the probability of the presence of a link between any pair of nodes in the network.
+Therefore, this is a very simple, yet powerful, model to explore some effects that take place in real-world systems.
+It is also often called the \( G(n, m) \) model.
+There is another model that is very similar to it, called the \(G(n, p)\) model, in which the number of links is not fixed beforehand, but determined by \(p\), the probability of the presence of a link between any pair of nodes in the network.
 Hence, the edges of a random network are determined by flipping a biased coin for each of the \(\binom{n}{2}\) possible edges.
 
 The probability for an arbitrary network with exactly \(m\) links under this model is \(p^{m} (1-p)^{\binom{n}{2} - m}\).
 Therefore, the probability that the model will generate a network with \(m\) links is \(\prob{m} = \binom{\binom{n}{2}}{m} p^{m} (1-p)^{\binom{n}{2} - m}\) (i.e., the probability of such network times the number of possible networks).
-This corresponds to  a binomial distribution \(B(\binom{n}{2}, p)\).
-One simple consequence of that is that the expected value for the number of links \(\expval{m} = \sum_{m=0}^{\binom{n}{2}} m \prob{m} = \binom{n}{2} p\).
-The expected value for the average degree of a network generated with this model is deduced in \cref{eq:avg-degree-erdos-model}.
-This value is also often called \(c\).
+This corresponds to the binomial distribution \(B(\binom{n}{2}, p)\).
+One simple consequence of this is that the expected value for the number of links is
+
+\begin{equation}
+    \expval{m} = \sum_{m=0}^{\binom{n}{2}} m \prob{m} = \binom{n}{2} p.
+\end{equation}
+
+The expected value for the average degree of a network, \( c \), generated with this model is deduced in \cref{eq:avg-degree-erdos-model}.
 The probability that an arbitrary node has a degree of exactly \(k\) is given by \(p(k) = \binom{n-1}{k} p^{k} (1-p)^{n-1-k}\) (i.e., \(k\) of its possible \(n-1\) links must exist and there are \(\binom{n-1}{k}\) possible combinations for the \(k\) links).
 Therefore, the degree distribution of this model is a binomial distribution as well.
 However, it is also possible to approximate the degree distribution with an Poisson distribution \(p(k) = \exp(-c) \frac{c^{k}}{k!}\) for large values of \(n\).
@@ -459,15 +471,18 @@ However, it is also possible to approximate the degree distribution with an Pois
 \end{equation}
 
 A nice property of the Erdős–Rényi model is that it can be used to study the formation of giant components in networks.
-A \emph{giant component} is a component that contains a large fraction of the nodes.
-It is interesting that even such a simple model can be used to study a phenomenon that is part of many real-world networks.
-However, there are also quite a few problems with this model.
-The degrees in real-world networks are usually not binomial, respectively Poisson, distributed.
-The formation of hubs in networks usually requires a power-law degree distribution.
-Other examples for a shortcomings of the model is the inability to generate community structures and inadequate average path lengths.
+A giant component of a network is a component that contains a large fraction of the nodes.
+Other work adopt this model to study dynamic processes on it.
+For example, \citet{Wang2003} use it to study the spreading of viruses in networks, or \citet{Crucitti2004} for their research on cascading failures.
+Hence, even such a simple model can be used to study phenomenons that are part of many real-world networks.
+Furthermore, it can be used to replicate the small average shortest path length, which grows logarithmically with the size of the network, and can  also observed in many real-world networks.
+However, there are also quite a few problems with this model as well.
+The degrees in real-world networks are usually not binomial (or Poisson) distributed, but follow a power-law distribution.
+Another example for a shortcoming of the model is the inability to generate community structures or hubs.
 
 
 \subsection{The Barabási-Albert Model}
+\label{subsec:barabasi-alber-model}
 
 One model that addresses the problem of missing power-law degree distributions is the Barabási-Albert (BA) model~\cite{Barabasi2002}.
 The model is named after its creators Réka Albert and Albert-László Barabási.
@@ -475,35 +490,69 @@ It tries to emulate the dynamic process that is responsible for the creation of 
 One of the main differences to the ER model is that the size of the network is not fixed.
 The model starts with an small number of nodes and adds new nodes to the network over time (i.e., the network grows).
 A newly added node then forms links with already existing nodes.
-Which other nodes are chosen depends on how important the other nodes are.
+What nodes are selected depends on how important they are.
 The more important a node is, the more likely it is that the new nodes forms a connection with it.
 This process is called \emph{preferential attachment}.
 It can, for example, be used to explain the evolution of the online encyclopedia Wikipedia~\cite{Caldarelli2006}.
 \citet{Eisenberg2003} showed that preferential attachment is the mechanism behind the evolution of protein networks.
 New websites on the World-Wide-Web follow the same pattern, they tend to link to already popular websites, since they are maybe easier to find~\cite{Barabasi1999}.
-More formally, the model starts with a small number \(m_{0}\) of nodes and the following two steps are repeated in every time step:
+
+More formally, the model starts with a small number \( m_{0} \) of nodes and the following two steps are repeated in every iteration:
 
 \begin{enumerate}
     \item add a new node to the network
-    \item choose \(m \leq m_{0}\) already existing nodes at random proportional to their degree and form a link with them
+    \item choose \( m \leq m_{0} \) already existing nodes at random proportional to their degree and form a link between them and the newly added node
 \end{enumerate}
 
-This means that in this model the degree of a node is a measure of its popularity  and a existing node \(v_{i}\) will be selected with a probability \(\Pi(v_{i})=\frac{d(v_{i})}{\sum_{j} d(v_{j})}\) to form a link.
-The process yields after \(t\) time steps a network that consists of \(m_{0} + t\) nodes and \(mt\) links.
+Therefore, the degree of a node is a measure of its popularity  and a existing node \( v_{i} \) will be selected with a probability \( \Pi(v_{i}) = \sfrac{d(v_{i})}{\sum_{j} d(v_{j})} \).
+The process yields a network that consists of \( m_{0} + t \) nodes and \( mt \) links after \(t\) time steps.
 
-It can be shown, using different methods (e.g., continuum theory, master equations, and numerically), that the node degrees follow a power-law distribution with an degree exponent of \(\gamma = 3\).
+It can be shown using different methods (e.g., continuum theory, master equations, or numerical), that the node degrees follow a power-law distribution with an degree exponent of \(\gamma = 3\).
 Furthermore, asymptotically does \(\gamma\) not depend on \(m\), the number of links that are generated in each iteration.
 The degree distribution is also (asymptotically) independent on the time, and therefore on the size of the network.
 This is also a property of the model and reflects the fact that there exists real-world networks with a power-law degree distribution with different sizes.
 However, like the ER model, the BA model has its shortcomings as well.
 For example, the average path length of generated networks does not comply with real-world networks.
-However, they are more realistic than the path lengths generated by the ER model.
-Another property that cannot be reproduced by this model are the community structures that many real-world, and especially social, networks have~\cite{Reid2011}.
+Another property that cannot be reproduced by this model are the community structures and the with it associated high clustering coefficient that many real-world, and especially social, networks have~\cite{Reid2011}.
 
-Another interesting question regarding the Barabási-Albert model is if both used mechanisms, the network growth and the preferential attachment, are necessary to produce a scale-free network.
-The result of numerical simulations and formal tests of the model with either of the two mechanisms missing is that both are required.
-Missing preferential attachment results in exponentially distributed node degrees and the missing network growth leads to a power-law degree distribution in the beginning, but it changes to a normal distribution over time.
-This indicates that in fact both mechanisms are required to yield a network with the scale-free property.
+Another interesting question regarding the Barabási-Albert model is if both mechanisms, the network growth and the preferential attachment, are necessary to produce scale-free networks.
+The result of numerical simulations and formal tests of the model with either of the two mechanisms missing shows that both are required.
+Missing preferential attachment results in exponentially distributed node degrees and the missing network growth leads to a power-law degree distribution in the beginning, but it shifts to a normal distribution over time~\cite{Barabasi2002}.
+This indicates that in fact both mechanisms are required to yield networks with the scale-free property.
+
+
+\subsection{Watts-Strogatz Model}
+\label{subsec:watts-strogatz-model}
+
+The model proposed by \citet{Watts1998} is able to produce networks with the small-world property.
+The goal of it is to be as simple as possible while being able to replicate the effect~\cite{Watts2004}.
+This is done by starting with a ring lattice graph with \( n \) nodes.
+In such a graph are the nodes arranged uniformly on a ring and are connected to their \( k \) nearest neighbors on it.
+This very regular graph has a high average local clustering coefficient and a high average shortest distance between any pair of nodes that grows linearly with the size of the network.
+Therefore, it does not have the properties of small-world networks yet.
+However, a simple rewiring process can archive this by changing the endpoints of some randomly selected edges.
+This rewiring process depends on the parameter \( p \in [0, 1] \), which determines the probability for an edge to be rewired.
+Note that this parameter is also sometimes refereed to as \( \beta \), since the model is also known as Watts' beta model.
+The rewiring process itself is very simple.
+Each edge is rewired with probability \( p \).
+The new endpoint is selected uniformly at random, but self-loops and parallel edges cannot be introduced in the network.
+
+
+\myfig{watts-model}
+      {width=0.75\textwidth,height=0.6\textheight}
+      {Depiction of networks generated with the Watts-Strogatz model with an increasing value for \( p \). The initial ring lattice network consists of \( n = 20 \) nodes with degree \( k = 4 \). Note that to ensure that the generated network stays connected \( n \) and \( k \) should be selected in such a way that \( n \gg k \gg \ln(n) \gg 1 \), which is not the case for this toy example. Figure borrowed from~\cite{Watts1998}.}
+      {Watts-Strogatz model example}
+      {fig:watts-model}
+
+
+A rewiring probability of \( p = 1 \) changes the endpoint of every edge and produces a random network with properties similar to a network generated with the Erdős-Rényi model.
+It exhibits a small average shortest path length, but also a small average local clustering coefficient.
+However, networks generated with values for the rewiring probability in the range \( 0 < p < 1 \) can show the small-world property.
+The effect of the rewiring process on the average path length in the network is powerful.
+It drops immediately to a low value even if only a few edges get rewired.
+This essentially produces shortcuts in the network by connecting nodes that are usually far apart, which decreases the average distance between any two nodes dramatically while keeping the average local clustering high.
+Therefore, the model is able generate networks with small-world properties.
+However, if values of \( p \) get too large the the average local clustering coefficient decreases significantly and the generated network resembles more and more a random network (c.f., \cref{fig:watts-model} for an illustration).
 
 
 %% ========================================================================
@@ -730,6 +779,7 @@ They show that activists are able to spread messages across the population more 
 
 On the other hand, others try to improve the model by making it more realistic by implement additional mechanisms.
 \citet{Laurent2015} adds additional social mechanisms (e.g., memory) to the model to allow for the formation of communities on the integrated network.
+This model is explained in great detail in \cref{sec:base-model} since it is used as a foundation for this thesis.
 Another extension by \citet{Moinet2015, Moinet2016} solves the problem of inaccurate inter-events times by making the activity potential of each node time depended.
 This model is known as the non-poissonian activity-driven (NoPAD) model and can generate inter-event time distributions that can also be observed in real-world networks.
 \citet{Wang2016} proposed the Activity-Security-Trust (AST) model, which not only considers activity as the explicit driving force behind dynamic processes, but also incorporates the implicit factors security and trust.
@@ -741,6 +791,11 @@ Every time a link is formed it is assigned a lifetime, that is drawn at random f
 This link may then be part of multiple consecutive instantaneous networks
 and is only removed after its lifetime has decayed, in contrast to the simple activity-driven model, where links are meant to be instantaneous and are deleted after every time step.
 The authors use this new introduced mechanism to study how well link lifetimes are suited to model disease spreading processes.
+While \citet{Laurent2015} examines the local effects that are responsible for the formation of complex network structures using the activity-driven framework, takes \citet{Alessandretti2017} work the global effects for the formation of ties into account.
+Each node in the model is not only assigned its activity potential, but also a attractiveness quantity, which determines how popular a node is in the network.
+Nodes that are more popular get selected more often from active nodes.
+This basically corresponds to an preferential attachment process.
+They can not only show that activity and the attractiveness are correlated in real-world social and collaboration networks, but also that this influences dynamical processes on the network in a significant way.
 
 
 %% ========================================================================
@@ -801,7 +856,7 @@ This function introduces two additional parameter to the model, \( a_{c} > 0 \) 
 In their work they perform a linear stability analysis on the system of differential equations and show that the stability of the system is determined by the relation between the activity dynamics ratio \( \frac{\lambda}{\mu} \) (with \( \mu = \frac{q}{a_{c}} \)) and the topological structure of the network.
 This means to keep the network from becoming or staying inactive, there must either be constant external influences to keep the activity up or the system needs to become unstable.
 This can be done, for example, by changing the network structure (e.g., removing links) or by manipulating the three model parameter.
-Furthermore, they apply their activity dynamics model to some real world data sets.
+Furthermore, they apply their activity dynamics model to some real-world data sets.
 For instance, different instances of StackExchange collaboration networks and various Wikis.
 This is done by first estimating the ratio \( \frac{\lambda}{\mu} \) from the activity in the data sets, and then simulating the activity in the networks.
 However, due to some limitations and approximations in the parameter estimation is a highly accurate prediction of the activity not possible.
