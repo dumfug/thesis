@@ -5,7 +5,7 @@ This thesis often refers to power-law probability distributions, especially in t
 However, for the sake of simplicity the exact formula of the distribution is never explicitly stated.
 This appendix contains the derivation for the exact density, distribution function, and the mean value of the probability distribution.
 Additionally, it contains an example and a short description of the inverse transform sampling method used in this thesis.
-This requires a more formal definition of the distribution, so let \(X\) be a continuous random variable with the probability density function \(f(x) \sim x^{-\gamma}\), taking values in the range \(X \in [\epsilon, 1]\), and with \(\gamma > 0\) and \(0 < \varepsilon \leq 1\).
+However, this requires a more formal definition of the distribution, so let \(X\) be a continuous random variable with the probability density function \(f(x) \sim x^{-\gamma}\), taking values in the range \(X \in [\epsilon, 1]\), and with \(\gamma > 0\) and \(0 < \varepsilon \leq 1\).
 
 
 %% ========================================================================
@@ -26,11 +26,11 @@ The probability density function (PDF) of the power-law distributed random varia
 	\label{eq:pdf}
 \end{equation}
 
-The factor \(c\) is a normalizing constant to ensure that the function fulfills the properties of a probability density function (i.e., \(\int_{-\infty}^{\infty} f(x) \, dx = 1\)).
+The factor \(c\) is a normalizing constant to ensure that the function fulfills the properties of a probability density function (i.e., \(\int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = 1\)).
 To calculate the normalizing constant the equation must be solved for \(c\) (see~\cref{eq:normalizing-const}).
 
 \begin{align}
-	& \int_{-\infty}^{\infty} cx^{-\gamma} \, dx = c \int_{\varepsilon}^{1} x^{-\gamma} \, dx = c \, \frac{x^{1-\gamma}}{1-\gamma}  \bigg |_{\varepsilon}^{1} = c \, \frac{1 - \varepsilon^{1-\gamma}}{1-\gamma} = 1 \\
+	& \int_{-\infty}^{\infty} cx^{-\gamma} \, \mathrm{d}x = c \int_{\varepsilon}^{1} x^{-\gamma} \, \mathrm{d}x = c \, \frac{x^{1-\gamma}}{1-\gamma}  \bigg |_{\varepsilon}^{1} = c \, \frac{1 - \varepsilon^{1-\gamma}}{1-\gamma} = 1 \\
 	& \Leftrightarrow \, c = \frac{1-\gamma}{1 - \varepsilon^{1-\gamma}}
 	\label{eq:normalizing-const}
 \end{align}
@@ -43,10 +43,10 @@ To calculate the normalizing constant the equation must be solved for \(c\) (see
 \section{Cumulative Distribution Function}
 \label{sec:cdf}
 
-The cumulative distribution function (CDF) is used to calculate the probability that a random variable, that has a probability distribution \(f\) takes a value less then \(x\) (see \cref{eq:cdf-def} for the definition).
+The cumulative distribution function (CDF) is used to calculate the probability that a random variable with a probability distribution \(f\) takes a value less then \(x\) (see \cref{eq:cdf-def} for the definition).
 
 \begin{equation}
-	F(x) = \int_{-\infty}^{t} f(x) \, dt
+	F(x) = \int_{-\infty}^{x} f(t) \, \mathrm{d}t
 	\label{eq:cdf-def}
 \end{equation}
 
@@ -54,7 +54,7 @@ The derivation of the cumulative distribution function for the power-law distrib
 Note that this only holds for values of \(\gamma \neq 1\).
 
 \begin{equation}
-	F(x) = \int_{-\infty}^{x} ct^{-\gamma} \, dt = c \, \frac{t^{1-\gamma}}{1-\gamma}  \bigg |_{\varepsilon}^{x} = \frac{c}{1-\gamma} \Big( x^{1 - \gamma} - \varepsilon^{1 - \gamma} \Big)
+	F(x) = \int_{-\infty}^{x} ct^{-\gamma} \, \mathrm{d}t = c \, \frac{t^{1-\gamma}}{1-\gamma}  \bigg |_{\varepsilon}^{x} = \frac{c}{1-\gamma} \Big( x^{1 - \gamma} - \varepsilon^{1 - \gamma} \Big)
 	\label{eq:cdf}
 \end{equation}
 
@@ -78,12 +78,12 @@ Due to the range of possible values that can be taken by the probability density
 \section{Expected Value}
 \label{sec:expected-value}
 
-The expected value (i.e., the mean value) for the random variable, which was defined in the beginning, is derived in \cref{eq:exp-val}.
+The expected value for the random variable, which was defined in the beginning, is derived in \cref{eq:exp-val}.
 
 
 \begin{align}
-	\expval{X} & = \int_{-\infty}^{\infty} x f(x) \, dx = \int_{\varepsilon}^{1} x f(x) \, dx = c \int_{\varepsilon}^{1} x x^{-\gamma} \, dx \\
-	    & = c \int_{\varepsilon}^{1} x^{-\gamma+1} \, dx = c \frac{x^{2-\gamma}}{2-\gamma}  \bigg |_{\varepsilon}^{1} = \frac{c}{2-\gamma} \Big(1 - \varepsilon^{2-\gamma}\Big)
+	\expval{X} & = \int_{-\infty}^{\infty} x f(x) \, \mathrm{d}x = \int_{\varepsilon}^{1} x f(x) \, \mathrm{d}x = c \int_{\varepsilon}^{1} x x^{-\gamma} \, \mathrm{d}x \\
+	    & = c \int_{\varepsilon}^{1} x^{-\gamma+1} \, \mathrm{d}x = c \frac{x^{2-\gamma}}{2-\gamma}  \bigg |_{\varepsilon}^{1} = \frac{c}{2-\gamma} \Big(1 - \varepsilon^{2-\gamma}\Big)
 \label{eq:exp-val}
 \end{align}
 
@@ -94,10 +94,10 @@ The expected value (i.e., the mean value) for the random variable, which was def
 \section{Example: \(\gamma = 2.5\) and \(\varepsilon = 10^{-2}\)}
 \label{sec:example}
 
-For this example, the exponent parameter of the distribution is \(\gamma = 2.5\) and the minimum possible value is \(\varepsilon = 0.01\).
+For this example, the exponent parameter of the distribution is set to \(\gamma = 2.5\) and the lower bound is \(\varepsilon = 0.01\).
 These parameters require a normalizing constant of \(c = \frac{1}{666}\).
 Therefore, the density is \(f(x) = \frac{x^{-2.5}}{666}\) and has a expected value of \(0.027\).
-\cref{fig:example-pdf} and \cref{fig:example-cdf} show the plots for the probability distribution function and the cumulative distribution function for this example, respectively.
+\cref{fig:example-pdf} and \cref{fig:example-cdf} show the plots for the probability distribution function and the cumulative distribution function, respectively, for this example.
 
 \myfig{example-pdf}
       {width=0.75\textwidth}
@@ -139,7 +139,13 @@ To draw a sample from a distribution with a cumulative distribution function \(F
 
 However, the inverse transform sampling method requires the inverse of the cumulative distribution function \(F^{-1}\).
 This can, for example, be done by solving \(F(x) = y\) for \(x\).
-The inverse CDF for the power-law distribution is \(F^{-1}(x) = \Big( \frac{x(1-\gamma)}{c} + \varepsilon^{1-\gamma} \Big)^{1/1-\gamma}\) (see \cref{eq:inverese-cdf} for the derivation).
+The inverse CDF for the power-law distribution is
+
+\begin{equation}
+    F^{-1}(x) = \Big( \frac{x(1-\gamma)}{c} + \varepsilon^{1-\gamma} \Big)^{1/1-\gamma}
+\end{equation}
+
+See \cref{eq:inverese-cdf} for the derivation.
 \Cref{fig:example-sampled-pdf} depicts a approximation of a power-law distribution that was generated using the inverse transfom algorithm.
 
 \begin{align}
