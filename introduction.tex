@@ -6,38 +6,38 @@
 \label{sec:motivation}
 
 Plenty of problems that arise in the real world can be solved by first abstracting them in a more general form and solve them by using already established and well-known tools afterwards.
-One very famous example for this process is attributed to the Swiss mathematician Leonhard Euler.
+One famous example for this process is attributed to the Swiss mathematician Leonhard Euler.
 The city Königsberg (now called Kaliningrad) was split into four parts in the 18\textsuperscript{th} century, due to the pathway of the river Pregel.
 These four areas of the city were connected by seven bridges.
 The residents of Königsberg had an ongoing challenge to find a way through the city that crosses each bridge exactly once and ends once more at the starting point of the tour.
 This is known as the Königsberg bridge problem~\cite{Paoletti2011, Cook2012}.
-Euler tackled this challenge by eliminating irrelevant details (e.g., the length of the brides, or the size of the size of the areas) and abstracting the problem to its essence.
+Euler tackled this challenge by eliminating irrelevant details (e.g., the length of the brides, or the size of the areas) and abstracting the problem to its essence.
 The regions of the city became points and the bridges between two areas became line segments that connect the corresponding points.
 This abstracted topological view on the problem allowed Euler to solve the Königsberg problem and show that in fact no such tour through the city (also known as an Eulerian cycle) exists.
 For it to be possible requires the number of bridges that are accessible in each region to be even, which is not the case for the Königsberg problem, where the number is odd in each region.
 
 This particular way of abstracting real world objects and their connections into points and lines and applying mathematical methods and reasoning to it laid the foundation for the mathematical field of graph theory.
-It is used today in countless applications, from finding efficient ways to manufacture circuit boards~\cite{Cook2012} to calculating fast routes for the data packets that are sent over the internet~\cite{Wang1999}.
+It is used today for countless applications, from finding efficient ways to manufacture circuit boards~\cite{Cook2012} to calculating fast routes for the data packets that are sent over the internet~\cite{Wang1999}.
 Graph theory also spawned the field of networks science~\cite{Newman2010}, which deals with large real world systems that can be modeled using graphs.
-For instance, large infrastructure networks, such as power grids can be represented by graphs.
-These graphs can relate parts of the infrastructure, like power stations or transformers, that are connected to each other via power lines~\cite{Watts1998}.
+For instance, large infrastructure networks, such as power grids can be well described by graphs.
+They relate parts of the infrastructure, like power stations or transformers, that are connected to each other via power lines~\cite{Watts1998}.
 Another field that benefits from this as well is sociology, and in particular social network analysis, which investigates the complex behavior of people and groups in the context of social interactions~\cite{Newman2010}.
-Sociological studies are often performed with small sample sizes, since the collection of the required data is time consuming and usually done by hand using methods like questionnaires, interviews, or by simply observing the people that are part of the study~\cite{Wasserman1994}.
-However, ever since the emerge of the web, people can interact with each other more easily.
+Sociological studies are often performed with a small number of participants, since the collection of the required data is time consuming and usually done by hand using methods like questionnaires, interviews, or by simply observing the people that are part of the study~\cite{Wasserman1994}.
+However, ever since the emerge of the web, people are able to interact with each other more easily.
 Websites like online social networks (e.g., Facebook, Twitter, Reddit,\ldots), or collaboration forums (e.g., StackOverflow) seem to be very popular.
 Most of these websites are ranked on top positions on Alexas' list of top 500 visited websites globally~\cite{Alexa2017}.
 \citet{Wellman2001} showed that these websites (and the internet in general) does not increase or decrease the social capital of people (i.e., their relationships with friends and family or their commitment to participate in organizations), but supplements it by providing easier ways to organize and plan real-world activities in an online setting.
 
-This availability of large amounts of data that are generated on these websites can be beneficial in the context of social network analysis.
-For example, StackExchange, a website that maintains a variety of communities in which users can ask and answer questions to different topics (e.g., StackOverflow for programming related questions), provides an easy access\footnote{\url{https://data.stackexchange.com/}} to the user data.
+This availability of large amounts of data that are generated on these websites can also be beneficial in the context of social network analysis.
+For example, StackExchange, a website that maintains a variety of communities in which users can ask and answer questions on different topics (e.g., StackOverflow for programming related questions), provides an easy access\footnote{\url{https://data.stackexchange.com/}} to their data (e.g., questions, answers, users,\ldots).
 This data is used in many studies on a wide range of topics (e.g.,~\cite{Danescu2013,Walk2016, Hasani-Mavriqi2016}).
 A large mobile phone calls (MPC) data set is used in a variety of papers~\cite{Onnela2007, Karsai2014, Murase2015, Laurent2015} as well.
 It was collected by an European mobile phone provider with approximately 20\% market share and consists of over 630 million logged phone calls between more than six million people.
 Another interesting data set was used in the study by \citet{Sekara2016}, in which they propose a framework to describe gatherings of people and their (temporal) properties.
-The data set consists of data from various sources for 1,000 people that was collected over a period of 36 months in short intervals (i.e., with a five minute resolution).
+The data set consists of data from various sources for 1,000 people that was collected over a period of 36 months with a high temporal resolution (i.e., in five minute intervals).
 The data set contains information about the phone calls, text messages, social media activity, geolocation, and the proximity to other study participants for every subject.
 
-All of these large data sets share another crucial feature: they all include temporal information.
+All of these large data sets share a crucial feature: they all include temporal information.
 Every post, tweet, phone call, or text message has a timestamp attached to it.
 This allows to pin these activities to users at specific points in time and to infer a chronological order between them.
 However, not all studies include this additional information into their work.
@@ -51,27 +51,27 @@ This basically means that the connection between objects is only present at cert
 
 An area that definitively requires the incorporation of time information is the modeling of human behavioral patterns.
 It has been shown that activities performed by people (e.g., the writing of e-mails, text messages, tweets,\ldots) are not randomly distributed in time, but follow certain patterns instead~\cite{Barabasi2005}.
-Human activity can usually be described as bursty.
+Human activity can typically be described as bursty.
 For instance, it is evident that people tend to write multiple e-mails in a relatively short period of time.
 This high activity phase is then generally followed by longer periods of inactivity, in which, for example, no e-mails are written at all.
-The best way to describe these patterns is by using a probability distribution of the times between two consecutive activities (i.e., the inter-event time distribution).
-The distribution is characterized by its high probabilities for short inter-event times and its long tail that allows for the longer phases with no activity, which can be modeled using a power-law distribution of the form \( p(\tau) \sim \tau^{-\gamma} \).
+The best way to describe these patterns is by using a probability distribution for the intervals between two consecutive activities (i.e., the inter-event time distribution).
+The distribution is characterized by its high probabilities for short inter-event times and its long tail that allows for the longer phases with no activity.
+Most of the time a power-law distribution of the form \( p(\tau) \sim \tau^{-\gamma} \) is used for it.
 
 Inter-event time distributions are also relevant in the context of time-varying networks.
-\citet{Lambiotte2013} study in their work the effects of the inter-event time distribution of the link activations on dynamic spreading processes in temporal networks.
+For instance, \citet{Lambiotte2013} study the effects of the inter-event time distribution of the link activations on dynamic spreading processes in temporal networks.
 The framework proposed by \citet{Perra2012a} shifts the focus from the activation of the connections to the activations of the objects.
-It is based on the simple idea that each entity in the network can become active based on some inherent activity potential and subsequently connect to others in each time step.
+It is based on the simple idea that each entity in the network can become active based on some inherent activity potential and subsequently connects to others in each time step.
 Therefore, it can, for example, be used to model the activity of users in an entire social network.
-However, this model has some disadvantages and due to its simplicity and unrealistic assumptions.
-For example, it is not able to reproduce inter-event time distributions of the activations and topological properties of the network that have the same characteristics as observed in so many real-world networks.
-Nevertheless, there are a lot of extensions to this basic framework that address these issues (e.g.,~\cite{Laurent2015, Moinet2015, Moinet2016}).
-Overall initiated this activity-driven temporal network model a wide range of followup work in many different areas.
+However, this model has some disadvantages due to its simplicity and unrealistic assumptions.
+For example, it is not able to reproduce inter-event time distributions for the activations and topological properties of the network that can be observed in many real-world networks.
+Nevertheless, there are applications for this basic framework in many different fields (e.g.,~\cite{Rizzo2014, Rizzo2016}), and various extensions to it that are addressing the already mentioned issues (e.g.,~\cite{Laurent2015, Moinet2015, Moinet2016}).
 
-It was the foundation that started this thesis as well.
+It was the foundation on which this thesis is build as well.
 All models that originated from the original paper by \citet{Perra2012a} so far are based on the idea that entities can only become active due to their intrinsic activity potential.
- However, in the real world people are often heavily influenced by their peers and friends~\cite{Walk2016}.
-They are not doing things solely because of their own determination to do so, but also because their friends and the associated peer pressure.
-Therefore, in the context of social and collaboration networks could more active user help to motivate their peers to become active as well.
+However, in the real world people are often heavily influenced by their peers and friends~\cite{Walk2016}.
+They are not doing things solely because of their own determination to do so, but also because their friends are doing it and the with it associated peer pressure.
+Therefore, in the context of social and collaboration networks could more active users help to motivate their peers to become active as well.
 The aim of this work is it to define a model based on the activity-driven time-varying network framework that is able to include peer influence effects in the activation process of entities and to study the implication of this mechanism of the network in general.
 
 
@@ -85,8 +85,8 @@ The aim of this work is it to define a model based on the activity-driven time-v
 The content of this thesis is structured as follows.
 \Cref{cha:related-work} starts with some basic graph-theoretic definitions (\cref{sec:graph-theory-basics}) and a detailed introduction into the topics of social and temporal networks (\cref{sec:social-networks} and \cref{sec:time-varying-networks} respectively).
 Additionally, an overview of some important generative network models and their properties is given in \cref{sec:network-models}.
- \Cref{sec:user-activity-models} discusses related work in the context of user behavioral models.
- It provides a possible explanation for the origin of bursty human behavior with the queuing model and provides an overview of activity models that are based on time-varying networks, with focus on work based on the activity-driven temporal network framework.
+\Cref{sec:user-activity-models} discusses related work in the context of user behavioral models.
+It provides a possible explanation for the origin of bursty human behavior with the queuing model and provides an overview of activity models that are based on time-varying networks, with focus on work based on the activity-driven temporal network framework.
 The last section (\cref{sec:peer-influence}) of this chapter is related to peer influence and its ramifications and applications in different fields.
 
 In \cref{cha:model} the proposed time-varying peer influence network model is discussed in great detail.
@@ -94,5 +94,4 @@ First, the model and the ideas on which it is based are outlined in \cref{sec:ba
 The extension that incorporates peer influence effects into the base model and the idea behind it is described in \cref{sec:peer-influence-model}.
 \Cref{cha:results} contains the evaluation and analysis of the proposed model on synthetic networks.
 
-The last chapter of this document (\cref{cha:conclusion}) includes a summary of the archived results and a conclusion.
-Furthermore, different applications and possible extensions of the peer influence model are discussed in the last section of this thesis.
+The last chapter of this document (\cref{cha:conclusion}) concludes the work and discusses different applications and possible extensions for the peer influence model.
