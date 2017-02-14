@@ -2,7 +2,50 @@
 \label{cha:results}
 
 
-% topological
-% network activity
-% inter event times
-% different beta values
+This chapter contains the results for the analysis of networks that were generated using the proposed peer influence model.
+All results are obtained from synthetic networks that were generated over \( T = 75,000 \) iterations.
+The size of the networks was fixed to \(n = 5,000 \) nodes and, since the model heavily depends on events that happen at random, the reported properties of the time-varying networks are obtained by averaging the results of 40 independent runs.
+The model parameter that are responsible for the formation of the community structures are set to \( p_{\Delta} = 0.90 \) for the triadic closure probability, \( \delta = 1 \) for the link reinforcement constant, and \( p_{d} = \num{5e-05} \) for the node deletion probability for every experiment.
+Furthermore, the critical peer influence threshold was fixed to \( \theta = 0.10 \).
+This reflects the idea that only a relatively small number of active neighbors is sufficient to increase the activity of a node significantly.
+
+The topological properties of the integrated network, which are discussed in \cref{sec:integrated-network-properties}, are measured only for nodes that are part of the temporal network.
+This means that nodes that were removed earlier due to the node deletion process do not influence the properties of the integrated network any more.
+\Cref{sec:network-activity} contains an overview of the overall network activity with respect to different levels of peer influence.
+The effect of the peer influence mechanism on the inter-event time distribution in the network is examined in \cref{sec:inter-event-time-dists}.
+All this experiments are performed for different values for the maximum peer influence probability \( q \).
+However, the last section (\cref{sec:softmax-rescaling}) keeps the peer influence level constant and discusses how different values for \( \beta \), the inverse temperature for the softmax weight re-scaling, change the peer influence effects in the network.
+
+
+%% ========================================================================
+%% ========================================================================
+
+
+\section{Integrated Network Properties}
+\label{sec:integrated-network-properties}
+
+
+%% ========================================================================
+%% ========================================================================
+
+
+\section{Network Activity}
+\label{sec:network-activity}
+
+
+%% ========================================================================
+%% ========================================================================
+
+
+\section{Inter-event Time Distributions}
+\label{sec:inter-event-time-dists}
+% definition burstiness and parameter B is invariant wrt to activity homogeneity in \cite{Goh2008}
+% nice explanation for B in \cite{Masuda2016}
+
+
+%% ========================================================================
+%% ========================================================================
+
+
+\section{Softmax Weight Re-scaling}
+\label{sec:softmax-rescaling}

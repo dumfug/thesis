@@ -124,7 +124,7 @@
 \newcommand{\myworktitle}{Master's Thesis}  %% official type of work like ``Master theses''
 \newcommand{\mygrade}{Diplom-Ingenieur} %% title you are getting with this work like ``Master of ...''
 \newcommand{\mystudy}{Computer Science} %% your study like ``Arts''
-\newcommand{\mydegreeprogramme}{Master's degree programme: \mystudy} %% Master's or PhD degree programme 
+\newcommand{\mydegreeprogramme}{Master's degree programme: \mystudy} %% Master's or PhD degree programme
 \newcommand{\myuniversity}{Graz University of Technology} %% your university/school
 \newcommand{\myinstitute}{Knowledge Technologies Institute} %% affiliation
 \newcommand{\myinstitutehead}{Univ.-Prof.\,Dr.~Stefanie Lindstaedt} %% head of institute
@@ -160,7 +160,8 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage{xfrac}
-%% ... it's OK to put here your own usepackage commands ...
+\usepackage{siunitx}
+\sisetup{output-exponent-marker=\ensuremath{\mathrm{e}}}
 
 
 
@@ -208,7 +209,7 @@
 
 \frontmatter                    %% KOMA: roman page numbers and such; only available in scrbook
 
-\input{colophon} 
+\input{colophon}
 
 %% Choose your desired title page:
 \input{\mytitlepage}            %% include title page
