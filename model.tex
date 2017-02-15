@@ -202,7 +202,7 @@ The probability for a node to be deleted after exactly \( x \) iterations is \( 
 Hence, the expected value for the lifetime of a node is given by \( \expval{x} = \sum_{x=1}^{\infty} x \prob{x} = \sum_{x=1}^{\infty} x \bar{p}_{d}^{x-1} p_{d} = p_{d} \sum_{x=1}^{\infty} x \bar{p}_{d}^{x-1} \).
 This sum is related to the sum of the geometric series \( \sum_{x=0}^{\infty} r^{x} = \frac{1}{1 - r} \), for \(|r| < 1 \), by being its first derivative\footnote{The first derivative of the sum of the geometric series is \( \frac{\mathrm{d} \sum_{x=0}^{\infty} r^{x}}{\mathrm{d} r} = \sum_{x=0}^{\infty} \frac{\mathrm{d} r^{x}}{\mathrm{d} r} = \sum_{x=1}^{\infty} x r^{x-1} = \frac{\mathrm{d} \frac{1}{1-r}}{\mathrm{d} r} = \frac{1}{(1 - r)^{2}} \), for \(|r| < 1\).}.
 Therefore, the expected value for the lifetime of a node is \( \expval{x} = \frac{p_{d}}{(1 - \bar{p}_{d})^{2}} = \frac{1}{p_{d}} \).
-This means that, for example, nodes with a deletion probability of \(p_{d} = 5e-5\) will be on average deleted after 20,000 iterations.
+This means that, for example, nodes with a deletion probability of \( p_{d} = \num{5e-05} \) will be on average deleted after 20,000 iterations.
 
 
 \subsection{Properties}
@@ -245,6 +245,9 @@ For example, weight-topology correlations (i.e., stronger ties within groups) ar
 \section{Peer Influence Extension}
 \label{sec:peer-influence-model}
 
+
+\subsection{Idea}
+
 So far the activity in the temporal network was entirely determined by the activity-potential distribution.
 Each node is assigned an intrinsic probability to become active in each round, which is drawn from this distribution.
 The assignment is done once for every node when it gets created and does not change afterwards.
@@ -268,6 +271,9 @@ Another way to look at it would be that active nodes can influence their neighbo
 Therefore, introducing a more explicit peer influence mechanism to the model.
 This also means that a node now can become active in three different ways.
 First, it can become active by himself either due to its intrinsic fixed activity probability or due to the influence of the nodes in its egocentric network, or it can become active in a passive way by being contact by another active node.
+
+
+\subsection{Description}
 
 The peer influence that a node \(v_{i} \) receives from its neighbors is denoted as \( p_{i} \).
 Like the activity potential, \( p_{i} \) is a probability for an activation as well, but instead of being fixed, it may vary in each iteration based on the number of active neighbors in the last round.
@@ -322,9 +328,7 @@ It is also, for example, used in the modeling of the decision making behavior of
 The usage of the softmax function for this model allows different influence scenarios.
 For example, a value of \( \beta = 0 \) (this would correspond to a very high temperature) would scale every weight to the same value, which means that every active neighbor influences a node equally, regardless of the tie strength.
 However, it also possible to make \( \beta \) depended on the time (i.e., \( \beta(t) \)), similar to a physical system that is cooling off or heating up.
-For this thesis, the temperature at time \( t \) is set to the average weight in the integrated network \( G_{T} = \sum_{i=0}^{t} G_{i}\) (i.e., \( \beta(t) = (\frac{1}{m} \sum_{(i,j) \in E(G_{T})} w_{i,j})^{-1} \)).
-The average weight, similar to the local clustering coefficient and average degree, converges to a value after some time as well.
-\todo{move these two sentences into the results chapter}
+For instance, in this thesis is the temperature at time \( t \) for most experiments set to the average weight in the integrated network \( G_{T} = \sum_{i=0}^{t} G_{i}\) (i.e., \( \beta(t) = (\frac{1}{m} \sum_{(i,j) \in E(G_{T})} w_{i,j})^{-1} \)).
 The normalized weights \( w'_{i,j} \) are also part of the extended egocentric (c.f. \cref{fig:extended-egocentric-network}) and must be updated at the end of every iteration.
 The fraction of active neighbors \( \alpha_{i}(t) \) of node \(v_{i} \) at time \( t - 1 \) is then given by
 
