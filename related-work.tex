@@ -572,11 +572,11 @@ There are various models that try to capture the patterns of human activities ba
 
 \subsection{Stochastic Models}
 
-One of the simplest methods to model user activity is by using a Poisson process to describe the inter-activity times~\cite{Masuda2016, Vazquez2006}.
+One of the simplest methods to model user activity is by using a Poisson process to describe the inter-activity times~\cite{Barabasi2005, Vazquez2006, Masuda2016}.
 This stochastic process is defined by the event rate \( \lambda \), which states how often a event should occur in a given time window.
 Two important properties of the Poisson process are that the inter-activity times are exponentially distributed and independent of each other.
 This leads to the effect that events take place in regular intervals (i.e., at the given rate) and that it is almost impossible to have long periods of time between to consecutive activities.
-However, it has been shown, that human activity patterns (e.g., email communication) cannot be modeled very accurately by a Poisson process due to its assumptions.
+However, it has been shown, that human activity patterns (e.g., email communication) cannot be modeled very accurately by a Poisson process due to its assumptions~\cite{Barabasi2005}.
 Most activities are executed in bursts, followed by longer periods of inactivity.
 For example, a person may have a dedicated time in the day for answering emails.
 This behavior can be much better explained by a power-law distribution of the inter-activity times, since its long tail allows for longer periods of inactivity.
