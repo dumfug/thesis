@@ -392,7 +392,7 @@ Note that many of them (e.g., \( \Delta t \), \( \eta \), \ldots) have reasonabl
 \( f(x) \) & The probability distribution for the activity potentials of the nodes. It has a positive probability for values in the range of \( [\varepsilon, 1] \). \\
 \( \varepsilon \) &  The lower bound of the activity potential. It should be \( 0 < \varepsilon \ll 1 \). \\
 \( \Delta t \) &  The length of the time window in each iteration. \\
-\( \eta \) &  A re-scaling factor for the activity potential to adjust the average number of active nodes in each iteration. \\
+\( \eta \) &  A rescaling factor for the activity potential to adjust the average number of active nodes in each iteration. \\
 \( m \) & The number of contacts a node initiates, once it become active. \\ \hline \hline
 
 \multicolumn{2}{c}{community structure extension} \\ \hline
@@ -402,7 +402,7 @@ Note that many of them (e.g., \( \Delta t \), \( \eta \), \ldots) have reasonabl
 \( c \) &  The memory constant, which influences the probability to form a new tie.\\ \hline \hline
 
 \multicolumn{2}{c}{peer influence extension} \\ \hline
-\( \beta \) & Inverse temperature parameter for the softmax re-scaling of the weights. This parameter may also be time depended. \\
+\( \beta \) & Inverse temperature parameter for the softmax rescaling of the weights. This parameter may also be time depended. \\
 \( q \) & The maximum possible peer influence probability that a node can receive. \\
 \( \theta \) & The critical threshold for the peer influence.  \\ \hline
 \end{tabular}

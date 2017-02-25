@@ -14,8 +14,8 @@ This means that nodes which were removed earlier due to the node deletion proces
 \Cref{sec:network-activity} contains an overview of the overall network activity with respect to different levels of peer influence.
 The effect of the peer influence mechanism on the inter-event time distribution in the network is examined in \cref{sec:inter-event-time-dists}.
 All this experiments are performed for different values for the maximum peer influence probability \( q \).
-However, the analysis performed in the last section (\cref{sec:softmax-rescaling}) uses a fixed value for the peer influence level and discusses how different values for \( \beta \), the inverse temperature for the softmax weight re-scaling, changes the peer influence effects in the network.
-The synthetic networks which are used in the first three sections adopt the average tie strength as temperature for the softmax weight re-scaling.
+However, the analysis performed in the last section (\cref{sec:softmax-rescaling}) uses a fixed value for the peer influence level and discusses how different values for \( \beta \), the inverse temperature for the softmax weight rescaling, changes the peer influence effects in the network.
+The synthetic networks which are used in the first three sections adopt the average tie strength as temperature for the softmax weight rescaling.
 Therefore, \( \beta \) is set to the to the inverse of the average of the weights in the integrated network in each iteration after the first one (i.e., \( \beta = 1 \) in the initial round to avoid division by zero, since no ties have been formed yet).
 
 
@@ -180,27 +180,27 @@ Note that the slightly different convergence behavior of the average tie strengt
 %% ========================================================================
 
 
-\section{Network Activity}
-\label{sec:network-activity}
+%\section{Network Activity}
+%\label{sec:network-activity}
+%
+%
+%\begin{figure}[htbp]
+%\centering
+%\begin{subfigure}[b]{0.485\textwidth}
+%  \includegraphics[width=\textwidth]{figures/percentage-influenced-activity-full}
+% \caption{}
+% \label{fig:percentage-peer-influenced-activity-full}
+%\end{subfigure}
+%~
+%\begin{subfigure}[b]{0.485\textwidth}
+%  \includegraphics[width=\textwidth]{figures/percentage-influenced-activity-beginning}
+%  \caption{}
+%\label{fig:percentage-peer-influenced-activity-beginning}
+%\end{subfigure}
 
-
-\begin{figure}[htbp]
-\centering
-\begin{subfigure}[b]{0.485\textwidth}
-  \includegraphics[width=\textwidth]{figures/percentage-influenced-activity-full}
-  \caption{}
-  \label{fig:percentage-peer-influenced-activity-full}
-\end{subfigure}
-~
-\begin{subfigure}[b]{0.485\textwidth}
-  \includegraphics[width=\textwidth]{figures/percentage-influenced-activity-beginning}
-  \caption{}
-\label{fig:percentage-peer-influenced-activity-beginning}
-\end{subfigure}
-
-\caption[Percentage of peer influenced activity as function of time]{Evolution of the fraction of peer influenced activity \( i(t) = \frac{\#e_{p}(t)}{\#e_{p}(t) + \#e_{a}(t)} \) over time for different levels of peer influence, where \( \#e_{p}(t) \) denotes the number of activations caused by peer influence and \( \#e_{a}(t) \) the number of activations due to the intrinsic activity potential at time \( t \), respectively. (\subref{fig:percentage-peer-influenced-activity-full}) shows the ratio over all 75,000 iterations and (\subref{fig:percentage-peer-influenced-activity-beginning}) highlights the behavior in the beginning. Both functions were smoothed using the rolling mean method to improve the quality of the plot.}
-\label{fig:percentage-peer-influenced-activity}
-\end{figure}
+%\caption[Percentage of peer influenced activity as function of time]{Evolution of the fraction of peer influenced activity \( i(t) = \frac{\#e_{p}(t)}{\#e_{p}(t) + \#e_{a}(t)} \) over time for different levels of peer influence, where \( \#e_{p}(t) \) denotes the number of activations caused by peer influence and \( \#e_{a}(t) \) the number of activations due to the intrinsic activity potential at time \( t \), respectively. (\subref{fig:percentage-peer-influenced-activity-full}) shows the ratio over all 75,000 iterations and (\subref{fig:percentage-peer-influenced-activity-beginning}) highlights the behavior in the beginning. Both functions were smoothed using the rolling mean method to improve the quality of the plot.}
+%\label{fig:percentage-peer-influenced-activity}
+%\end{figure}
 
 
 %% ========================================================================
@@ -209,13 +209,106 @@ Note that the slightly different convergence behavior of the average tie strengt
 
 \section{Inter-event Time Distributions}
 \label{sec:inter-event-time-dists}
-% definition burstiness and parameter B is invariant wrt to activity homogeneity in \cite{Goh2008}
-% nice explanation for B in \cite{Masuda2016}
+
+As already mentioned in the motivation section of this thesis (\cref{sec:motivation}) and while discussing different ways to model user activity (\cref{sec:user-activity-models}), human activity patterns can be fairly complex.
+They can be described as bursts followed by longer phases of inactivity and are usually characterized by the inter-event time distribution \( \varphi(\tau) \), which should reflect these requirements.
+The inter-event times are defined, in the context of this model, as the time between two consecutive activations of a node.
+The type of activation (i.e., activation due to peer influence, activity potential, or contact of another active node) is not taken into account for the here performed analysis, but it is a possible topic for future studies.
+Each node \( v_{i} \) in the network has its own inter-event time distribution \( \varphi_{i} \), which depends on its activity potential and on the influence of its peers.
+However, to get a better overview on how the peer influence mechanism changes the dynamics in the network in general, the union of the inter-event time distributions of all nodes is examined.
+The sequence of inter-event times is determined for every node that was active between the beginning and the end of the simulation separately and then combined into one distribution.
+This distribution can be seen as a mixture of distributions~\cite{Seidel2011} of all nodes, which were at some time present in the network, i.e.,
+
+\begin{equation}
+    \varphi(\tau) = \sum_{i} \pi_{i} \varphi_{i}(\tau),
+\end{equation}
+
+where \( \pi_{i} \) denotes the mixing weights, which must be selected such that \( \sum_{i} \pi_{i} = 1 \) holds.
+Therefore, the mixing weights determine the importance of every individual distribution.
+In this work every distribution is considered equally important and is assigned the same weight, such that the summation constraint is fulfilled.
+
+The burstiness of human behavior is hard to describe and even harder to quantify.
+It is usually done using moments of the inter-event time distribution.
+For instance, the coefficient of variation~\cite{Masuda2016} is defined as the ratio between the standard deviation \( \sigma \) and the mean \( \mu \) of the inter-event time distribution, i.e., \( c_{v} = \sfrac{\sigma}{\mu} \).
+It takes the value \( 0 \) when the events are occurring at a fixed, non-random, rate.
+The coefficient of variation is \( 1 \) for exponentially distributed inter-event times, which is the case for events that are generated by a Poisson process, and it can get arbitrarily large for long-tailed distributions, such as power laws.
+A normalized variant of the coefficient of variation was proposed by \citet{Goh2008}, which is called burstiness parameter and is defined as
+
+\begin{equation}
+    B = \frac{c_{v} - 1}{c_{v} + 1} = \frac{\sigma - \mu}{\sigma + \mu},
+\end{equation}
+
+and takes values in the range \( -1 \leq B \leq 1 \).
+It is \( B = -1 \) for regularly occurring events, \( B = 0 \) for inter-event times that originated from a Poisson process, and \( B = 1 \) for a distribution that was derived from a extremely bursty sequence of events.
+A nice property of this measure is that it can also be applied to mixture distributions that contain the inter-event times of, for example people, with different intrinsic activity levels.
+For instance, the inter-event times of power-users that use a system heavily every day can be combined with those of users that use it only irregularly and the burstiness parameter is able to capture the level of burstiness that is present in the usage of the system regardless.
+Therefore, it is also applicable for the inter-event time distributions derived from the simulations of the peer influence model.
+The burstiness parameter for a network with no peer influence is about \( B = 0.19 \).
+The introduction of peer influence increases this value, however, a drastic increase can only be observed for a maximum peer influence probability of \( q \ge 0.15 \).
+\Cref{tbl:burstiness-parameter} contains the mean, standard derivation and burstiness parameter of the inter-event time distribution for a maximum peer influence probability in the range \( 0 \leq q \leq 0.15 \).
+
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{llllllll}
+\( q \) & 0.00 & 0.01 & 0.025 & 0.05 & 0.075 & 0.10 & 0.15 \\ \hline
+\( \mu \) & 198.71 & 184.59 & 164.26 & 132.80 & 102.43 & 76.28 & 37.23 \\ \hline
+\( \sigma \) & 291.32 & 270.49 & 241.40 & 197.38 & 155.09 & 118.04 & 61.22 \\ \hline
+\( B \) & 0.1890 & 0.1888 & 0.1902 & 0.1956 & 0.2045 & 0.2149 & 0.2437
+\end{tabular}
+
+\caption[Burstiness of inter-event time distributions]{Mean value, standard deviation and the resulting burstiness parameter of the inter-event time distribution for different levels of peer influence.}
+\label{tbl:burstiness-parameter}
+\end{table}
+
+
+This indicates that the peer influence mechanism influences the burstiness of the node activations.
+In a network with no peer influence are two consecutive self-activations independent of each other.
+Therefore, the activations happen at a certain rate that is proportional to the activity potential of a node, which leads to exponentially distributed inter-event times~\cite{Moinet2016}.
+This should lead to a burstiness parameter that is close to \( B = 0 \).
+However, this is not the case for the inter-event times that were generated with the proposed model even though peer influence was disabled (c.f. \cref{tbl:burstiness-parameter}).
+It can be explained by the the memory effects in the model, which allow reoccurring interactions within groups of nodes and by the inclusion of passive activations due to other active nodes in the calculation of the inter-event times.
+A node with a higher intrinsic activity potential will select a node from its local group with high probability.
+Hence, this more active node activates less active nodes regularly, which can lead to a more bursty looking activity pattern for the other nodes and explains (at least partially) the burstiness value of \( B = 0.19 \).
+The peer influence mechanism of this model should amplify this effect even further, since it increases the activity within communities.
+Furthermore, the activation of nodes possibly triggers cascading activations within the communities, which makes bursts more likely as well.
+
+One way to examine how the peer influence mechanism changes the inter-node-activation times in the network is to inspect their distribution visually.
+\Cref{fig:inter-event-time-dist-loglog} depicts the inter-event distributions for a variety of peer influence levels.
+The plot shows the distribution on a log-log graph, where both axis are scaled logarithmically.
+This highlights that longer inter-event times are indeed possible between two consecutive activations.
+The plot also shows that the level of peer influence in the network changes the shape of the distributions.
+Smaller inter-event times become more likely for higher levels of peer influence, which can be seen in the mean value of the distribution as well (c.f. \cref{tbl:burstiness-parameter}).
+The average time between activations decreases from about 200 in a network with no peer influence at all, to 38 in a network with \( q = 0.15 \).
+The change of the distribution is even more noticeably for inter-event times less than ten time steps.
+\Cref{fig:inter-event-time-dist-start} depicts the distributions for this interval of \( \tau \).
+The probability for two successive activations increases drastically from less than 2\% to almost 22\% over the range of possible values for \( q \).
+This change in the probabilities possibly explains the increase of the burstiness of the distributions, since a larger number of events within a small time frame become more probable due to the peer influence mechanism.
+However, the tail of the inter-event time distribution changes for higher levels of peer influence as well.
+Large inter-event times become more and more unlikely for larger values of \( q \), and the length of the tails get shorter as well.
+The values for the standard derivation of the distributions reflect this behavior as well (c.f. \cref{tbl:burstiness-parameter}).
+The standard derivation of the inter-event time in the network with high peer influence effects is only about one fifth of the standard derivation of the network without peer effects.
+This of course prevents longer intervals of inactivity to a certain extend, which is the second crucial requirement for realistic activity patterns.
+
+
+\myfig{inter-event-time-dist-loglog}
+      {width=0.75\textwidth}
+      {Log-log Plot of the inter-event time distribution for different maximum peer influence probabilities \( q = 0, \, 0.01, \, 0.05, \, 0.1, \, 0.15\).}
+      {Log-log plot of the inter-event time distribution}
+      {fig:inter-event-time-dist-loglog}
+
+
+\myfig{inter-event-time-dist-start}
+      {width=0.75\textwidth}
+      {Plot of the bulk of the inter-event time distribution for small inter-event times in the range \( 1 \leq \tau \leq 10 \) for different levels of peer influence.}
+      {Bulk of the inter-event time distribution}
+      {fig:inter-event-time-dist-start}
+
 
 
 %% ========================================================================
 %% ========================================================================
 
 
-\section{Softmax Weight Re-scaling}
+\section{Softmax Weight Rescaling}
 \label{sec:softmax-rescaling}

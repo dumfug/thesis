@@ -640,9 +640,9 @@ The activity potentials of real-world networks can be determined by calculating 
 This usually yields long tailed activity potential probability distributions, which corresponds to typical heterogeneous human activity patterns~\cite{Vazquez2006, Jo2012}.
 Furthermore, the size of the time window, that is used to estimate the probabilities, seems not to effect the resulting distribution in a significant way.
 
-The first step of this activity-driven model is to initialize each node in the network by assigning it a activity/firing rate \(a_{i} = \eta x_{i}\), where the activity potential is drawn from a suitable probability distribution \( f(x) \) and \( \eta \) is a re-scaling factor that is chosen in such a way that the expected number of active node in the time window is \(\eta \expval{x} n\).
+The first step of this activity-driven model is to initialize each node in the network by assigning it a activity/firing rate \(a_{i} = \eta x_{i}\), where the activity potential is drawn from a suitable probability distribution \( f(x) \) and \( \eta \) is a rescaling factor that is chosen in such a way that the expected number of active node in the time window is \(\eta \expval{x} n\).
 The range of possible activity potential values is \(x_{i}\ \in [\varepsilon, 1]\).
-The activity potential has a lower bound \( \varepsilon \) to avoid possible divergences of the distribution for values that are very close to zero.
+The activity potential has a lower bound \( \varepsilon \) to avoid possible divergences of the distribution for values that are very close to zero~\cite{Clauset2009}.
 The time-varying network can be generated after this short setup phase.
 This is done by repeated the following steps for each time step \(t\):
 
@@ -668,10 +668,10 @@ It only requires a few parameters and the activity potential distribution govern
 Moreover, this model can be used to explain the formation heterogeneous structures (i.e., hubs) in networks over longer periods of time.
 This is done by examining the \emph{integrated network} \(G_{T} = \bigcup_{t=0}^{T} G_{t}\), which the union of all instantaneous networks up to the time stamp \(T\) (see \cref{fig:integrated-network-example} for an example).
 It can be shown that the  degree distribution of this integrated network has the form \(p_{T}(k) \sim f(\frac{k}{T m \eta})\).
-Therefore, it is up to a re-scaling factor, the same as the activity potential distribution.
+Therefore, it is up to a rescaling factor, the same as the activity potential distribution.
 Hence, the model is able to generate scale-free networks, by drawing the activity potentials from a power-law distribution.
 The resulting hubs are not caused by preferential attachment like in other models, but due to the heterogeneous activity profiles of the nodes.
-The re-scaling factor emerges from the fact that the model does not capture all features of real-world networks.
+The rescaling factor emerges from the fact that the model does not capture all features of real-world networks.
 For instance, memory effects are not present that could allow links, which were formed in earlier instantaneous networks, to be formed later again with higher probability.
 
 
