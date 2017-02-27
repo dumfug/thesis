@@ -3,9 +3,9 @@
 
 
 This chapter discusses the basic findings of the analysis of the proposed peer influence model.
-All results were obtained from synthetic networks which were generated over \( T = 75,000 \) iterations.
-The size of the networks was fixed to \(n = 5,000 \) nodes and since the model heavily depended on events that happen at random are the reported properties of the time-varying networks obtained by averaging the results of 40 independent runs.
-The model parameter which are responsible for the formation of the community structures are set to \( p_{\Delta} = 0.90 \) for the triadic closure probability, \( \delta = 1 \) for the link reinforcement constant, and \( p_{d} = \num{5e-05} \) for the node deletion probability for every experiment.
+All results were obtained from synthetic networks, with a fixed size of \( n = 5,000 \) nodes, which were generated over \( T = 75,000 \) iterations.
+The here presented properties of the time-varying networks were obtained by averaging the results of 40 independent runs, which is necessary due to the stochastic nature of the model.
+The model parameter responsible for the formation of the community structures are set to \( p_{\Delta} = 0.90 \) for the triadic closure probability, \( \delta = 1 \) for the link reinforcement constant, and \( p_{d} = \num{5e-05} \) for the node deletion probability for every experiment.
 Furthermore, the critical peer influence threshold was fixed to \( \theta = 0.10 \).
 This reflects the idea that only a relatively small number of active neighbors is sufficient to increase the activity of a node in a significant way.
 
@@ -180,27 +180,65 @@ Note that the slightly different convergence behavior of the average tie strengt
 %% ========================================================================
 
 
-%\section{Network Activity}
-%\label{sec:network-activity}
-%
-%
-%\begin{figure}[htbp]
-%\centering
-%\begin{subfigure}[b]{0.485\textwidth}
-%  \includegraphics[width=\textwidth]{figures/percentage-influenced-activity-full}
-% \caption{}
-% \label{fig:percentage-peer-influenced-activity-full}
-%\end{subfigure}
-%~
-%\begin{subfigure}[b]{0.485\textwidth}
-%  \includegraphics[width=\textwidth]{figures/percentage-influenced-activity-beginning}
-%  \caption{}
-%\label{fig:percentage-peer-influenced-activity-beginning}
-%\end{subfigure}
+\section{Network Activity}
+\label{sec:network-activity}
 
-%\caption[Percentage of peer influenced activity as function of time]{Evolution of the fraction of peer influenced activity \( i(t) = \frac{\#e_{p}(t)}{\#e_{p}(t) + \#e_{a}(t)} \) over time for different levels of peer influence, where \( \#e_{p}(t) \) denotes the number of activations caused by peer influence and \( \#e_{a}(t) \) the number of activations due to the intrinsic activity potential at time \( t \), respectively. (\subref{fig:percentage-peer-influenced-activity-full}) shows the ratio over all 75,000 iterations and (\subref{fig:percentage-peer-influenced-activity-beginning}) highlights the behavior in the beginning. Both functions were smoothed using the rolling mean method to improve the quality of the plot.}
-%\label{fig:percentage-peer-influenced-activity}
-%\end{figure}
+
+One obvious implication of the proposed peer influence mechanism is an increase in the activity in the network.
+Nodes can become active by them self not only due to their intrinsic activity potential but also by the influence of their peers.
+The number of nodes that become active in iteration \( t \) by them self is denoted as \( \#e_{a}(t) \), and the number that become active motivated by others is denoted as \( \#e_{p}(t) \).
+Therefore, the total number of contacts per iteration is \( \#e(t) = \#e_{a}(t) + \#e_{p}(t) \).
+The number of peer influenced activations in a networks with \( q = 0 \) is trivially \( \#e_{p}(t) = 0 \), and the number of self-activations can be approximated by \( \#e_{a}(t) \approx n \expval{a_{i}} \).
+For example, the approximated number of activations in a network with no peer influence effects and the prior specified parameters (\( \gamma = 2.7 \), \( \varepsilon = 0.001 \), and \( n = 5,000 \)) is \( \#e_{a}(t) \approx 12.05 \), which matches the observed figures.
+In fact, this number is roughly the same for all levels of peer influence, since the process of node self-activation due to the intrinsic activity potential is independent on the peer influence mechanism.
+
+
+\myfig{number-of-contacts}
+      {width=0.75\textwidth}
+      {Time dependent number of activations \( \#e(t) \) in the network for different levels of peer influence \( q \). The graphs were smoothed using the rolling mean method to improve the visualization.}
+      {Time dependent number of activations}
+      {fig:number-of-contacts}
+
+
+The total number of activations, and therefore the gain in activity due to the peer influence, is depicted in \cref{fig:number-of-contacts}.
+It shows that \( \#e(t) \) reaches a stationary value fast for small levels of peer influence.
+However, the development of the total number of contacts per iterations is more complex for networks with a higher degree of peer influence.
+The first phase can be described as a rapid increase in the number of activations, which stops after approximately 8,000 iterations.
+After that the development of \( \#e(t) \) starts to relax and slow down.
+It even starts to decreases slightly in the network with a maximum peer influence probability of \( q = 0.15 \).
+Finally, the numbers slowly converge to their stationary values, which are reached after about 40,000 iterations.
+This is also supported by the evolution of the fraction of the peer influenced contacts per iterations \( i(t) \), which shows the same general behavior (c.f. \cref{fig:percentage-peer-influenced-activity}).
+This effect on the total activity in the network is possibly related to the development of the community structures and its implications on the peer influence mechanism.
+The stagnation (or even reduction) of the activity begins after the maximum value for the average local clustering coefficient was reached (c.f. \cref{fig:avg-local-cc-full} for details), which is caused by the introduction of weak ties.
+These new ties are possibly responsible for the merging of communities in the network, which in turn could reduce the effects of the peer influence mechanism.
+Inactive nodes in these newly merged communities may have an greater impact on the weighted fraction of active nodes that is required for a significant influence on nodes.
+This is could especially be true for weakly integrated nodes.
+However, a more detailed analysis has to be performed in the future to determine and verify the true effects, which are responsible for the observed behavior in the network activity for higher levels of peer influence. \todo{future work}
+
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.485\textwidth}
+  \includegraphics[width=\textwidth]{figures/percentage-influenced-activity}
+ \caption{}
+ \label{fig:percentage-peer-influenced-activity-full}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.485\textwidth}
+  \includegraphics[width=\textwidth]{figures/cumulative-number-of-contacts}
+  \caption{}
+\label{fig:percentage-peer-influenced-and-cumulative-activity}
+\end{subfigure}
+
+\caption[Percentage of peer influenced activity and cumulative activity as function of time]{Different views on the ramifications of the peer influence mechanism on the activity in the network. (\subref{fig:percentage-peer-influenced-activity-full}) depicts the evolution of the fraction of peer influenced activity \( i(t) = \sfrac{\#e_{p}(t)}{\#e(t)} \) over time for different levels of peer influence and  (\subref{fig:percentage-peer-influenced-and-cumulative-activity}) shows the aggregated number of contacts \( E(t) \) over all 75,000 iterations. The functions were smoothed using the rolling mean method to improve the quality of the plot.}
+\label{fig:percentage-peer-influenced-activity}
+\end{figure}
+
+
+The effects of the peer influence on the activity within the time-varying network can be observed in other ways as well.
+For instance, \cref{fig:percentage-peer-influenced-and-cumulative-activity} depicts the cumulative number of contacts (i.e., \( E(t) = \sum_{i \leq t} \#e(i) \)), which highlights the quantity of additional activity that was caused by different degrees of peer influence mechanism over time.
+The distribution of the number of node activations in a certain time interval is another example.
+There is a shift of the bulk of the distributions observable, which indicates the increased probability for a larger number of activations.
 
 
 %% ========================================================================
