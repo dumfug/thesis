@@ -10,14 +10,14 @@ Furthermore, the critical peer influence threshold was fixed to \( \theta = 0.10
 This reflects the idea that only a relatively small number of active neighbors is sufficient to increase the activity of a node in a significant way.
 
 The time-dependent topological properties of the integrated network, which are discussed in \cref{sec:integrated-network-properties}, are measured only for nodes that are part of the temporal network.
-This means that nodes which were removed earlier due to the node deletion process do not influence the properties of the integrated network any more.
+This means that nodes, which were removed earlier due to the node deletion process do not influence the properties of the integrated network any more.
 \Cref{sec:network-activity} contains an overview of the overall network activity with respect to different levels of peer influence.
 The effect of the peer influence mechanism on the inter-event time distribution in the network is examined in \cref{sec:inter-event-time-dists}.
 Furthermore, the distributions of the node degrees and tie strengths (i.e., the link weights) derived from the integrated networks are the subject of \cref{sec:weight-and-degree-distribution}.
 All these experiments are performed for different values for the maximum peer influence probability \( q \).
 However, the analysis performed in the last section of this chapter (\cref{sec:softmax-rescaling}) uses a fixed value for the peer influence level and discusses how different values for \( \beta \), the inverse temperature for the softmax weight rescaling, changes the peer influence effects in the network.
-The synthetic networks, which are used in the first four sections, adopt the current average tie strength in the network as temperature for the softmax weight rescaling.
-Therefore, \( \beta \) is set to the to the inverse of the average of the weights in the integrated network in each iteration after the first one (i.e., \( \beta = 1 \) in the initial round to avoid division by zero, since no ties have been formed yet).
+The temporal networks, which are used in the experiments of the first four sections of this chapter, adopt the current average tie strength as temperature for the softmax weight rescaling.
+Therefore, \( \beta \) is set to the to the reciprocal value of average weight in the integrated network in each iteration after the first one (i.e., \( \beta = 1 \) in the initial round to avoid division by zero, since no ties have been formed yet).
 
 
 %% ========================================================================
@@ -29,7 +29,7 @@ Therefore, \( \beta \) is set to the to the inverse of the average of the weight
 
 Not only the final integrated network of all 75,000 instantaneous networks and its properties are of great interest, but also how they evolve during the simulation.
 This allows to get a deeper understanding on how the model shapes the community structures in the network and the effects of the peer influence mechanism on it.
-The integrated network build in an iterative fashion to make this possible.
+The integrated network is build in an iterative fashion to make these observations possible.
 A snapshot of the integrated network is taken after the newly formed ties are included and the weights of already established links are updated in every time step.
 Features like the average local clustering coefficient or the average weight of the ties are calculated for each of the 75,000 integrated network snapshots.
 This allows to examine how the topology and other measures change over time.
@@ -44,7 +44,7 @@ This rapid increase is caused by the cyclic closure mechanism of the model.
 Nodes that become active in this early stage first have to introduce some ties with nodes which are selected using the focal closure mechanism.
 This does not increase the average local clustering coefficient in a significant way, however, it establishes the egocentric networks.
 After the first triangles are closed, the first strong ties start to develop.
-These emerging strong ties amplify the biased local search of the triadic closure mechanism and results, on one hand, in in more triangles, and on the other hand, in the reinforcement of already established triangles and the associated strong ties.
+These emerging strong ties amplify the biased local search of the triadic closure mechanism and result, on one hand, in more triangles, and on the other hand, in the reinforcement of already established triangles and the associated strong ties.
 This leads to a high local clustering in the established communities.
 However, weak ties are eventually also introduced to the network, due to the focal closure mechanism.
 They are rarely involved in the formation of new triangles, due to the bias towards strong ties, which contributes to the decrease of the average local clustering coefficient until the network reaches its stationary state.
@@ -62,11 +62,11 @@ The peer influence mechanism seems to influence the development of the local clu
 It shows that the peak of \( C \) is reached faster for networks in which nodes are able to motivate their neighbors to some extend.
 For instance, the network in which nodes are not able to influence their neighbors reaches it peak value for \( C \) after approximately 5,000 iterations, while the network with a maximum peer influence probability of \( q = 0.15 \) is more than 2,000 iterations faster.
 However, the effect only occurs for networks with \( q > 0.05 \) and the actual maximum value of the local clustering coefficient only increases slightly for higher levels of peer influence (c.f. \cref{tbl:max-clustering} for the precise figures).
-Furthermore, it seems to have an positive effect on the development of the topological structures in the network by accelerating the process in the beginning.
+Furthermore, the proposed peer influence mechanism seems to have an positive effect on the development of the topological structures in the network by accelerating the process in the beginning.
 
 The percentage of network activity, which is responsible for the reinforcement of ties in each iteration \( r(t) \) highlights this behavior as well.
-In the beginning most activity is spend on the formation of new ties and therefore building the topological structures of the network, but after a while more and more activity is focused on reinforcing existing ties, which leads to an drastic increase of \( r(t) \).
-This is also emphasized by the time required to reach the point from which more than half of the total activity is spend on reinforcement.
+In the beginning most activity is spend on the formation of new ties and therefore building the topological structures of the network, but after a while more and more activity is focused on reinforcing existing ties, which leads to a drastic increase of \( r(t) \).
+This is also emphasized by the time required to reach the point from which on more than half of the total activity is spend on reinforcement.
 This point is reached for the network with \( q = 0.15 \) after only 109 iterations.
 The network with no peer influence takes with 229 iterations about twice as long, indicating that peer influence may play an important role in the first few iterations that shape the topology of the network.
 
@@ -131,12 +131,12 @@ With other words, the increased local activity overshadows the introduction of r
 \end{figure}
 
 
-The evolution of the average local clustering coefficient does dependent on the node deletion probability \( p_{d} \), since low-active nodes, which are not removed fast enough, introduce additional weak ties in the network~\cite{Laurent2015}.
+The evolution of the average local clustering coefficient does dependent on the node deletion probability \( p_{d} \), since low-activity nodes, which are not removed fast enough, introduce additional weak ties in the network~\cite{Laurent2015}.
 However, as clearly evident in \cref{fig:avg-local-cc-full}, the possible level of peer influence does influence the clustering, and therefore the community structures of the network, as well.
 The more likely an activation due to peer influence gets, the smaller the stationary value for \( C \) becomes.
 \Cref{fig:avg-local-cc-end} highlights this effect well.
 This can possibly be explained in a similar way as the effect caused by the deletion probability.
-However, in this case not the decelerated removal of nodes is responsible for it, but the overall increased activity.
+However, in this case not the decelerated removal of nodes is responsible for it, but the overall increase in the number of contacts between nodes.
 The peer influence mechanism increases the activity in the network, especially in already formed communities (see \cref{sec:network-activity}), since active nodes motivate their neighbors to become active as well.
 The probability for the formation of a new tie is inverse proportional to the size of a nodes' egocentric network.
 Therefore, a active node, which is already fully integrated in its community, will reinforce one of its existing ties, or at least close a triangle, with high probability.
@@ -188,7 +188,7 @@ Note that the slightly different convergence behavior of the average tie strengt
 
 One obvious implication of the proposed peer influence mechanism is an increase in the activity in the network.
 Nodes can become active by them self not only due to their intrinsic activity potential but also by the influence of their peers.
-The number of nodes that become active in iteration \( t \) by entirely them self is denoted as \( \#e_{a}(t) \), and the number that become active motivated by others is denoted as \( \#e_{p}(t) \).
+The number of nodes that become active in iteration \( t \) entirely by them self is denoted as \( \#e_{a}(t) \), and the number that becomes active motivated by others is denoted as \( \#e_{p}(t) \).
 Therefore, the total number of contacts per iteration is \( \#e(t) = \#e_{a}(t) + \#e_{p}(t) \).
 The number of peer influenced activations in a networks with \( q = 0 \) is trivially \( \#e_{p}(t) = 0 \), and the number of self-activations can be approximated by \( \#e_{a}(t) \approx n \expval{a_{i}} \).
 For example, the approximated number of activations in a network with no peer influence effects and the prior specified parameters (\( \gamma = 2.7 \), \( \varepsilon = 0.001 \), and \( n = 5,000 \)) is \( \#e_{a}(t) \approx 12.05 \), which matches the observed figures.
@@ -204,7 +204,7 @@ In fact, this number is roughly the same for all levels of peer influence, since
 
 The total number of activations, and therefore the gain in activity due to the peer influence, is depicted in \cref{fig:number-of-contacts}.
 It shows that \( \#e(t) \) reaches a stationary value fast for small levels of peer influence.
-However, the development of the total number of contacts per iterations is more complex for networks with a higher degree of peer influence.
+However, the development of the total number of contacts per iteration is more complex for networks with a higher degree of peer influence.
 The first phase can be described as a rapid increase in the number of activations, which stops after approximately 8,000 iterations.
 After that the development of \( \#e(t) \) starts to relax and slow down.
 It even starts to decreases slightly in the network with a maximum peer influence probability of \( q = 0.15 \).
@@ -213,7 +213,7 @@ This is also supported by the evolution of the fraction of the peer influenced c
 This effect on the total activity in the network is possibly related to the development of the community structures and its implications on the peer influence mechanism.
 The stagnation (or even reduction) of the activity begins after the maximum value for the average local clustering coefficient was reached (c.f. \cref{fig:avg-local-cc-full} for details), which is caused by the introduction of weak ties.
 These new ties are possibly responsible for the merging of communities in the network, which in turn reduces the effects of the peer influence mechanism.
-Inactive nodes in these newly merged communities may have an greater impact on the weighted fraction of active nodes that is required for a significant influence on nodes.
+Inactive nodes in these newly merged communities may have a greater impact on the weighted fraction of active nodes that is required for a significant influence on nodes.
 This is could especially be true for weakly integrated nodes.
 However, a more detailed analysis has to be performed in the future to determine and verify the true effects, which are responsible for the observed behavior in the network activity for larger magnitudes of peer influence. \todo{future work}
 
@@ -237,10 +237,10 @@ However, a more detailed analysis has to be performed in the future to determine
 \end{figure}
 
 
-The effects of the peer influence on the activity within the time-varying network can be observed in other ways as well.
+The effects of the peer influence mechanism on the activity within the time-varying network can be observed in other ways as well.
 For instance, \cref{fig:percentage-peer-influenced-and-cumulative-activity} depicts the cumulative number of contacts (i.e., \( E(t) = \sum_{i \leq t} \#e(i) \)), which highlights the quantity of additional activity that was caused by different degrees of peer influence mechanism over time.
 The distribution of the number of node activations in a certain time interval is another example.
-There is a shift in the bulk of the distributions observable, which indicates the increased probability for a larger number of activations.
+There is a shift in the bulk of the distributions, which indicates the increased probability for a larger number of activations of a node.
 
 
 %% ========================================================================
@@ -253,8 +253,8 @@ There is a shift in the bulk of the distributions observable, which indicates th
 As already mentioned in the motivation section of this thesis (\cref{sec:motivation}) and while discussing different ways to model user activity (\cref{sec:user-activity-models}), human activity patterns can be fairly complex.
 They can be described as bursts followed by longer phases of inactivity and are usually characterized by the inter-event time distribution \( \varphi(\tau) \), which should reflect these requirements.
 The inter-event times are defined, in the context of this model, as the time between two consecutive activations of a node.
-The type of activation (i.e., activation due to peer influence, activity potential, or contact of another active node) is not taken into account for the here performed analysis, but it is a possible topic for future studies.
-Each node \( v_{i} \) in the network has its own inter-event time distribution \( \varphi_{i} \), which depends on the nodes activity potential and on the influence of its peers.
+The type of activation (i.e., activation due to peer influence, activity potential, or contact of another active node) is not taken into account for the here performed analysis.
+Each node \( v_{i} \) in the network has its own inter-event time distribution \( \varphi_{i} \), which depends on the node's activity potential and on the influence of its peers.
 However, to get a better overview on how the peer influence mechanism changes the dynamics in the network in general, the union of the inter-event time distributions of all nodes is examined.
 The sequence of inter-event times is determined for every node that was active between the beginning and the end of the simulation separately and then combined into one distribution.
 This distribution can be seen as a mixture of distributions~\cite{Seidel2011} of nodes, which were at some time present in the network, i.e.,
@@ -338,7 +338,7 @@ The average time between activations decreases from about 200 in a network with 
 The changes in the distribution is even more noticeably for inter-event times less than ten time steps.
 \Cref{fig:inter-event-time-dist-start} depicts the distributions for this interval of \( \tau \).
 The probability for two successive activations increases drastically from less than 2\% to almost 22\% over the range of possible values for \( q \).
-This development in the probabilities possibly explains the increase of the burstiness of the distributions, since a larger number of events within a small time frame become more probable due to the peer influence mechanism.
+This development of the probabilities possibly explains the increase of the burstiness of the distributions, since a larger number of events within a small time frame becomes more probable due to the peer influence mechanism.
 However, the tail of the inter-event time distribution changes for higher levels of peer influence as well.
 Large inter-event times become more and more unlikely for larger values of \( q \), and the length of the tail decreases as well.
 The values for the standard derivation of the distributions reflect this behavior as well (c.f. \cref{tbl:burstiness-parameter}).
@@ -357,7 +357,7 @@ While \cref{sec:integrated-network-properties} examines the average degree and t
 Both distributions are obtained from the extended version of the integrated network, which contains all nodes that were present in the last iteration of the simulation.
 The degrees and tie strengths of nodes that were deleted in previous iterations are not part of the results.
 The ramifications of the closure mechanisms and the memory process on the distributions were already a subject in the original work by \citet{Laurent2015}.
-They showed that the both the degrees and the tie strengths are heterogeneously distributed.
+They showed that both the degrees and the tie strengths are heterogeneously distributed.
 Furthermore, the shape of the degree distribution is only slightly effected by the triadic closure probability \( p_{\Delta} \) and the tie reinforcement increment \( \delta \).
 However, while not being effected by \( p_{\Delta} \), the tie strength distribution does depended on the memory process of the model.
 For instance, larger values for \( \delta \) increase the length of the tail.
@@ -367,7 +367,7 @@ First and most important, the peer influence mechanism does not effect the heter
 The resulting possibilities for nodes with higher degree indicate the presence of hubs, which may play, depending on the context, various important roles in networks.
 \Cref{fig:degree-dist} depicts the right-skewed degree distributions for networks with different levels of peer influence.
 It shows that not only the average degree in the network is directly effected by the peer influence process, but the distribution itself as well.
-Nodes with small degrees become less probable, while higher degree nodes become more frequent with increasing levels of peer influence.
+Nodes with small degrees become less probable, while higher degree nodes become more frequent with the increasing magnitude of peer influence.
 However, the tail of the distribution does not seem to be significantly effected by the process.
 The change in the shape of the distribution is in line with the already observed increasing average degree and can be explained by the same argument as well.
 The boost in node activations caused by the influence of the neighbors leads to more opportunities for the formation of new ties and consequently to larger egocentric networks.
@@ -399,5 +399,71 @@ This would also explain the more frequent weights in the lower double-digit regi
 %% ========================================================================
 
 
-\section{Softmax Weight Rescaling}
+\section{Tie Strength Rescaling Scenarios}
 \label{sec:softmax-rescaling}
+
+Nodes are only able to influence their peers if they were active in the previous iteration.
+The magnitude of influence does depend on the strength of the ties between nodes.
+This is based on the idea that the activity of a close friend should be more effective to motivate a person to become active as well than the activities of acquaintances.
+The weights (i.e., the strength of the ties) are usually rescaled in such a way that larger weights become even larger to amplify the importance of close neighbors.
+This can be archived using the softmax function, which also allows to control the weight rescaling process even more using the inverse temperature parameter \( \beta \).
+This free parameter can vary in time as well to allow for different rescaling characteristics depending on the progress of the simulation.
+Furthermore, it also allows for various peer influence scenarios, in which nodes get influenced in different extents depending on the situation.
+This section highlights the ramification on the peer influence mechanism for the following three different weight rescaling strategies.
+Note that the results for the scenarios are obtained from synthetic networks with a fixed maximum peer influence probability of \( q = 0.05 \).
+All other model parameter are set to the same values that are used in the other experiments as well.
+
+\myparagraph{\( \beta(t) = \langle w \rangle (t)^{-1} \)}
+The temperature for the softmax rescaling is set to the average tie strength in the snapshot of integrated network at time \( t \).
+This scenario is used for all other previously discussed experiments in this chapter.
+\Cref{sec:integrated-network-properties} shows that the average tie strength does increase over time until it reaches its stationary value.
+Therefore, this effectively introduces a bias towards stronger ties in the early stages of the simulation that decays over time.
+The activity of close neighbors influences nodes in a larger extent in the beginning, which is possibly beneficial for the formation of the community structures.
+
+\myparagraph{\( \beta(t) = 1 \)}
+In this scenario the inverse temperature parameter is fixed to the constant value \( 1 \) for each iteration.
+Therefore, the bias towards strong ties is overall more prominent compared to the previous scenario and does not change during the entire simulation.
+This may lead to situations in which only a very small number of neighbors do actually influence a node once they become active, since weaker ties with other nodes become so insignificant that they do not exercise considerable influence anymore.
+Hence, only one of the highly influential neighbors is possibly enough to influence a node at the maximum possible level.
+
+\myparagraph{\( \beta(t) = 0 \)}
+In the last scenario \( \beta \) is fixed to \( 0 \), which basically disables the softmax weight rescaling entirely and assigns each tie the exact same weight.
+The strength of the tie between any ordered pair of nodes \( (v_{i}, v_{j}) \) in the network is set to \( w'_{i,j} = \sfrac{1}{|N(v_{i})|} \).
+This allows neighbors, which share a weak tie with a node to exercise the same degree of peer influence as strong tied neighbors.
+Therefore, an on average larger number of active neighbors may be required to reach the maximum possible magnitude of peer influence for a node.
+
+It seems reasonable to examine the change in the network activity for the three different rescaling scenarios, since most of the explanations for the effects observed in the other experiments are related to it.
+\Cref{fig:activity-beta-scenarios} shows the number of interactions between nodes and the fraction of peer influenced interactions as function of time for the three different scenarios.
+Compared to the rescaling scenario that adapts to the average tie strength in the network, an overall decrease in the number of interactions is observable in the \( \beta = 1 \) scenario.
+This behavior can be attributed to an excessive bias towards strong ties.
+Nodes only become active by them self due to their intrinsic activity potential or possibly if one or two of their strong tied neighbors were active in the round before.
+This possibly restricts possible cascading activations within groups as well, since weakly tied nodes are node able to propagate activations properly.
+The number of contacts and the fraction of those activations that were peer influenced increase rapidly in the first few hundred iterations in the \( \beta = 1 \) scenario and decreases slightly after they reached their maximum value.
+This small decrease is not observable in the other two scenarios and can possibly be attributed to the weight heterogeneity that starts to emerge at this point in time in the network, which amplifies the effect.
+
+
+\begin{figure}[htbp]
+\centering
+\begin{subfigure}[b]{0.485\textwidth}
+  \includegraphics[width=\textwidth]{figures/number-of-contacts-beta}
+  \caption{}
+  \label{fig:number-of-contacts-beta}
+\end{subfigure}
+~
+\begin{subfigure}[b]{0.485\textwidth}
+  \includegraphics[width=\textwidth]{figures/percentage-influenced-activity-beta}
+  \caption{}
+\label{fig:percentage-influenced-activity-beta}
+\end{subfigure}
+
+\caption[Network activity with different rescaling scenarios]{Depiction of the influence on the activity over time for different values of \( \beta \), the inverse temperature for softmax rescaling. (\subref{fig:number-of-contacts-beta}) shows the number of interactions for each iteration \( \#e(t) \) and (\subref{fig:percentage-influenced-activity-beta}) depicts the fraction of activations that were caused by the peer influence mechanism \( i(t) \). The graphs were smoothed using the rolling mean method to improve the quality of the visualization.}
+\label{fig:activity-beta-scenarios}
+\end{figure}
+
+
+The scenario that disables the softmax weight rescaling using \( \beta = 0 \), however, does increase the number of contacts in the network in each iteration drastically.
+The expected larger number of active neighbors, which is required to motivate a node seems to be archived fairly often.
+This can possibly attributed to the relatively low critical peer influence threshold \( \theta = 0.10 \), which should probably be adjusted for this rescaling scenario.
+Furthermore, the network activity does not convergence in this scenario.
+One possible explanation for the continuous increase in the number of contacts could be attributed to self-enhancing cascading activation effects going through the network.
+However, this requires additional investigation and is a possible topic for future studies. \todo{future work}
