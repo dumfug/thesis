@@ -27,31 +27,15 @@
 %% explanation what a binding correction is and how to measure it.
 
 \newcommand{\myfontsize}{12pt}
-%% e.g., 10pt, 11pt, 12pt
-%% The font size of the main text in pt (points).
 
 \newcommand{\mylinespread}{1.0}
-%% e.g., 1.0, 1.5, 2.0
-%% Line spacing in %/100. For example 1.5 means 150% of the usual line
-%% spacing. Please use with caution: 100% ("1.0") is fine because the
-%% font was designed for it.
 
 \newcommand{\mylanguage}{ngerman,american}
-%% "english,ngerman", "ngerman,english", ...
 %% NOTE: The *last* language is the active one!
 %% See babel documentation for further details.
 
 %% BibLaTeX-settings: (see biblatex reference for further description)
 \newcommand{\mybiblatexstyle}{alphabetic}
-%% e.g., "alphabetic", "authoryear", ...
-%% The biblatex style which is being used for referencing. See
-%% biblatex documentation for further details and more values.
-%%
-%% CAUTION: if you change the style, please check for (in)compatible
-%%          "biblatex" package options in the file
-%%          "template/preamble.tex"! For example: "alphabetic" does
-%%          not have an option "dashed=..." and causes an error if it
-%%          does not get removed from the list of options.
 
 \newcommand{\mybiblatexdashed}{false}  %% "true" or "false"
 %% If true: replace recurring reference authors with a dash.
@@ -77,17 +61,6 @@
 %% Enables or disables colored links (hyperref package).
 
 \newcommand{\mytitlepage}{template/title_Thesis_TU_Graz}
-%% Your own or one of following pre-defined title pages:
-%% "template/title_plain_maketitle": simple maketitle page
-%% "template/title_Diplomarbeit_KF_Uni_Graz.tex": fancy (german) title page for KF Uni Graz
-%% "template/title_Thesis_TU_Graz":
-%%             titlepage for Graz University of Technology (correct
-%%             (old?) Corporate Design) by Karl Voit (2012)
-%% "template/title_Thesis_TU_Graz_-_kazemakase":
-%%             titlepage for Graz University of Technology
-%%             (correct new Corporate Design) by kazemakase (2013):
-%%             see https://github.com/novoid/LaTeX-KOMA-template/issues/5
-%% "template/title_VWA": titlepage for Vorwissenschaftliche Arbeit
 
 \newcommand{\mytodonotesoptions}{}
 %% e.g., "" (empty), "disable", ...
@@ -119,7 +92,7 @@
 \newcommand{\myauthorwithexistingtitles}{\myauthor{}, BSc}  %% including university degree already held
 \newcommand{\mytitle}{Working title}  % possible titile: Introducing peer influence mechanisms to activity-driven network models??%% also used for PDF metadata (hyperref)
 \newcommand{\mysubject}{Master's Thesis}  %% also used for PDF metadata (hyperref)
-\newcommand{\mykeywords}{TODO}  %% also used for PDF metadata (hyperref)
+\newcommand{\mykeywords}{activity-driven model, time-varying networks, peer influence, user activity, network science}  %% also used for PDF metadata (hyperref)
 %% this information is used only for generating the title page:
 \newcommand{\myworktitle}{Master's Thesis}  %% official type of work like ``Master theses''
 \newcommand{\mygrade}{Diplom-Ingenieur} %% title you are getting with this work like ``Master of ...''
@@ -164,8 +137,6 @@
 \sisetup{output-exponent-marker=\ensuremath{\mathrm{e}}}
 
 
-
-
 %% ========================================================================
 %%%% MISC self-defined commands and settings
 %% ========================================================================
@@ -173,34 +144,8 @@
 \newcommand{ \prob}[1]{ \mathbb{P}[{#1}] }
 \newcommand{ \expval}[1]{ \mathbb{E}[{#1}] }
 \DeclareMathOperator*{\argmax}{arg\,max}
-%% ... it's OK to put here your own newcommand/newenvironment-definitions ...
-
-
-
 
 \newcommand{\myLaT}{\LaTeX{}@TUG\xspace} %% LaTeX@TUG text "logo"
-
-\hyphenation{ex-am-ple hy-phen-ate}  %% in order to use German umlauts
-%% here (Ver-\"of-fent-li-chung), you have to check for
-%% activated \usepackage[T1]{fontenc} in the preamble
-
-%% override default language of babel: (be sure to know, what you're
-%% doing here)
-%\selectlanguage{american}
-%\selectlanguage{ngerman}
-
-%% ========================================================================
-%%%% Templates
-%% ========================================================================
-
-%% template for inserting figures:
-% \myfig{}%% filename
-%       {}%% width/height
-%       {}%% caption
-%       {}%% optional (short) caption for list of figures
-%       {fig:}%% label
-
-%% acronyms in small caps: \myacro{UNESCO}
 
 
 \input{template/pdf_settings}  %% should be *last* definitions in preamble!
@@ -213,47 +158,39 @@
 
 \input{colophon}
 
-%% Choose your desired title page:
-\input{\mytitlepage}            %% include title page
-
+\input{\mytitlepage}
 
 \input{template/declaration_TU_Graz}  %% Statutory Declaration
-% \input{thanks}                %% this is a suggestion: you have to create this file on demand
-% \input{foreword}              %% this is a suggestion: you have to create this file on demand
 
 
 %% include the abstract without chapter number but include it on table of contents:
 \cleardoublepage
 \addcontentsline{toc}{chapter}{Abstract}
-\include{abstract}              %% Abstract
+\include{abstract}
 
-
-\tableofcontents                %% this produces the table of contents - you might have guessed :-)
-
+\tableofcontents
 \listoffigures
 \listoftables
 
-%% if myaddlistoftodos is set to "true", the current list of open todos is added:
 \ifthenelse{\boolean{myaddlistoftodos}}{
-  \newpage\listoftodos          %% handy if you are using todonotes with \todo{}
-}{}                             %% with todonotes-package option "disable" you can get rid of any todo in the output
+  \newpage\listoftodos
+}{}
 
 \mainmatter                     %% KOMA: marks main part using arabic page numbers and such; only available in scrbook
 
 %% include tex file chapters:
-\include{introduction}
-\include{related-work}
-\include{model}
-\include{results}
-\include{conclusion}
+%\include{introduction}
+%\include{related-work}
+%\include{model}
+%\include{results}
+%\include{conclusion}
 
-\appendix                       %% closes main document, appendix follows until end; only available in book-classes
-\addpart*{Appendix}             %% adding Appendix to tableofcontents
+%\appendix                       %% closes main document, appendix follows until end; only available in book-classes
+%\addpart*{Appendix}             %% adding Appendix to tableofcontents
 
-\include{power-law-dist}
+%\include{power-law-dist}
 
-\printbibliography              %% remove, if using BibTeX instead of biblatex
-% \include{further_ressources}  %% this is a suggestion: you have to create this file on demand
+\printbibliography
 
 
 %%%% end{document}
