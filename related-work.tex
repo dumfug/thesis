@@ -7,27 +7,33 @@
 
 In this section some graph theory related notation is defined, which is used during this thesis.
 It is for the most part based on~\cite{Thulasiraman1992} and~\cite{Diestel2012}.
+
 A graph is a mathematical construct that can be used to model and explore the relationship between objects.
-More formally, a graph is a ordered pair of finite sets \(G = (V, E)\), whereas \(V\) denotes the set of \emph{vertices} (i.e., the objects) and \(E \subseteq [V]^{2} \) the set of \emph{edges} (i.e., the relationships between the objects).
-It is common to write \(V(G)\) and \(E(G)\) to refer to the set of vertices and the set of edges respectively, that are associated with a graph \(G\).
-An edge \(\{v_1, v_2\} \in E(G)\) is an unordered pair of two vertices.
-Therefore, there is no distinction between the two edges \(\{v_1, v_2 \}\) and \(\{v_2, v_1\}\).
+More formally, a graph is a ordered pair of finite sets \( G = (V, E) \), whereas \( V \) denotes the set of \emph{vertices} (i.e., the objects) and \( E \subseteq [V]^{2} \) the set of \emph{edges} (i.e., the relationships between the objects).
+It is common to write \( V(G) \) and \( E(G) \) to refer to the set of vertices and the set of edges respectively, that are associated with a graph \( G \).
+
+An edge \( \{v_1, v_2\} \in E(G) \) is an unordered pair of two vertices.
+Therefore, there is no distinction between the two edges \( \{v_1, v_2 \} \) and \( \{v_2, v_1\} \).
 A graph with this property is called \emph{undirected}.
 However, it is also possible to define edges as ordered pairs, such that each edge has a defined start and endpoint.
 Such a graph is called \emph{directed}.
-An edge of the form \(\{v_i, v_i\} \in E(G)\) is called a \emph{self-loop} of the vertex \(v_i\).
+
+An edge of the form \( \{v_i, v_i\} \in E(G) \) is called a \emph{self-loop} of the vertex \( v_i \).
 Furthermore, it is possible that two distinct vertices are joined by multiple edges.
 Such edges are referred to as \emph{parallel} edges.
 A graph that has no parallel edges and no self-loops is called \emph{simple}.
 \Cref{fig:example_graphs} depicts an example for a simple graph and for a graph with parallel edges and a self-loop vertex.
+
 It is also possible to assign each edge in a graph a real number, that adds additional information to it~\cite{Cormen2009}.
-This number is usually called \emph{weight} and is determined by the function \(w : E(G) \rightarrow \mathbb{R}\).
+This number is usually called \emph{weight} and is determined by the function \( w : E(G) \rightarrow \mathbb{R} \).
 This type of graph is called \emph{weighted} graph.
 However, all further mentions and definitions for graphs are referring to undirected simple graphs unless stated otherwise.
+
 It is possible to perform operations on graphs.
-For instance, the union of two graphs \(G_{1} = (V_{1}, E_{1})\) and \(G_{2} = (V_{2}, E_{2})\) results in a graph \(G = (V_{1} \cup V_{2}, E_{1} \cup E_{2})\).
+For instance, the union of two graphs \( G_{1} = (V_{1}, E_{1}) \) and \( G_{2} = (V_{2}, E_{2}) \) results in a graph \( G = (V_{1} \cup V_{2}, E_{1} \cup E_{2}) \).
 Other binary operations, such as the intersection of two graphs, can be done analogously.
 Unary operations on graphs are possible as well (e.g., the removal of vertices or edges).
+
 
 \begin{figure}[h]
    \centering
@@ -66,48 +72,52 @@ Unary operations on graphs are possible as well (e.g., the removal of vertices o
    \end{subfigure}
 
    \caption[Examples for graphs]{Graphical representation of two graphs with different properties.
-   The vertices are represented by red dots and the edges are the line segments between them.}
+   The vertices are represented by red dots and the edges are the line segments connecting them.}
 \label{fig:example_graphs}
 \end{figure}
 
-The \emph{order} of a graph is the number its of vertices (i.e., the cardinality of the vertex set) and is denoted as \(n = |V(G)|\), whereas the cardinality of the edge set is usually denoted as \(m = |E(G)|\).
-The neighborhood of a vertex \(v_i\) is defined as \(N(v_i) = \{v_j \in V(G) : \{v_i, v_j \} \in E(G)\}\).
-It is the set of vertices that are adjacent to the vertex \(v_i\).
-The cardinality of this set is called the \emph{degree} of the vertex and is denoted as \(d(v_i) = |N(v_i)|\).
-A vertex without any neighbors (i.e., with a degree of zero) is called isolated.
-It is often very useful to measure degree properties for a graph.
-For example, the minimum degree \(\delta(G) = \min\{d(v_i) : v_i \in V(G)\}\), the maximal degree \(\Delta(G) = \max\{d(v_i) : v_i \in V(G)\}\), or the average degree \(d(G) = \frac{1}{n} \sum_{v_i \in V(G)} d(v_i)\).
-An alternative way for the calculation of the average degree is \(d(G) = \frac{2m}{n}\).
-This works since each edge is counted twice during the summation of the vertex degrees in the original formula.
-These global measures can be used to get an insight of a graph's basic structure.
-Another global property related to the degree is the degree distribution \(p\)~\cite{Barabasi2016} of a graph.
-It yields the probability that that a randomly selected vertex has a degree of \(k\).
-Since it is a probability distribution \(\sum_{k=0}^\infty p(k) = 1\) must hold.
-The degree distribution for a given graph can be calculated by \(p(k) = \frac{|\{v \in V(G) \,:\, d(v) = k\}|}{n}\) for all possible values for \( k \) (i.e., by calculating the normalized degree histogram).
 
-A \emph{path} on a graph can be defined as a finite sequence of vertices \(v_1,v_2,\dots,v_k\), such that between any consecutive pair of vertices exists an edge.
+The \emph{order} of a graph is the number of its vertices (i.e., the cardinality of the vertex set) and is denoted as \( n = |V(G)| \), whereas the cardinality of the edge set is usually denoted as \( m = |E(G)| \).
+The neighborhood of a vertex \( v_i \) is defined as \( N(v_i) = \{v_j \in V(G) : \{v_i, v_j \} \in E(G)\} \).
+It is the set of vertices that are adjacent to the vertex \( v_i \).
+The cardinality of this set is called the \emph{degree} of the vertex and is denoted as \( d(v_i) = |N(v_i)| \).
+A vertex without any neighbors (i.e., with a degree of zero) is called isolated.
+
+It is often very useful to measure degree properties for a graph.
+For example, the minimum degree \( \delta(G) = \min\{d(v_i) : v_i \in V(G)\} \), the maximal degree \( \Delta(G) = \max\{d(v_i) : v_i \in V(G)\} \), or the average degree \( d(G) = \frac{1}{n} \sum_{v_i \in V(G)} d(v_i) \).
+An alternative way for the calculation of the average degree is \( d(G) = \frac{2m}{n} \).
+This works since each edge is counted twice in the summation of the vertex degrees in the original formula.
+These global measures can be used to gain insight into a graph's basic structure.
+
+Another global property related to the degree is the degree distribution \( p \)~\cite{Barabasi2016} of a graph.
+It yields the probability that a randomly selected vertex has a degree of \(k\).
+Since it is a probability distribution \( \sum_{k=0}^\infty p(k) = 1 \) must hold.
+The degree distribution for a given graph can be calculated by \( p(k) = \frac{|\{v \in V(G) \,:\, d(v) = k\}|}{n} \) for all possible values for \( k \) (i.e., by calculating the normalized degree histogram).
+
+A \emph{path} on a graph can be defined as a finite sequence of vertices \( v_1,v_2,\dots,v_k \), such that between any consecutive pair of vertices exists an edge.
 Furthermore, all edges between the vertices and the vertices itself must be distinct.
 The first and the last vertices in the sequence are called the end vertices or terminal vertices of the path.
+
 The \emph{path length} is the number of edges on the path.
 Two vertices are \emph{connected} if it is possible to find a path with these two vertices as end points.
 A vertex is, by definition, connected to itself.
 If there exists a path between all pairs of vertices, then the graph is called connected.
-It is always possible to partition the vertex and edge set of a disconnected graph in such a way that there are no edges between vertices in different partitions.
+It is always possible to partition the vertex and edge set of a disconnected graph in such a way, that there are no edges between vertices in different partitions.
 These partitions are called the \emph{components} of the graph.
 
 The \emph{clustering coefficient} of a vertex is a measure for the cliquishness of its neighborhood, and was introduced by \citet{Watts1998}.
 A \emph{clique} in a graph is a subset of vertices, such that there exists an edge between every pair of vertices in this set.
-The clustering coefficient \(C(v_i)\) is defined as the fraction of possible edges between the neighbors of the vertex \(v_i\).
-There exists at most \(\binom{d(v_i)}{2} = \frac{d(v_i)(d(v_i) - 1)}{2}\)  edges between the vertices in the neighborhood.
+The clustering coefficient \( C(v_i) \) is defined as the fraction of all possible edges between the neighbors of the vertex \( v_i \).
+There exists at most \( \binom{d(v_i)}{2} = \frac{d(v_i)(d(v_i) - 1)}{2} \) edges between the vertices in the neighborhood.
 Therefore, the clustering coefficient can be calculated by
 
 \begin{equation}
  C(v_i) = \frac{2 \, |\{\{v_j, v_k\} \in E(G) : v_j \in N(v_i) \wedge v_k \in N(v_i)\}| }{d(v_i)(d(v_i) - 1)}.
 \end{equation}
 
-This is, of course, a local property of one vertex and is, therefore, sometimes called \emph{local clustering coefficient}.
-However, it is also often useful to consider the average clustering coefficient \(C = \frac{1}{n} \sum_{v(i) \in V(G)} C(v_i)\) of the graph.
-\Cref{fig:clustering-coefficient-examples} shows some examples for neighborhoods with different clustering coefficients.
+This is, of course, a local property of one vertex and is therefore sometimes called \emph{local clustering coefficient}.
+However, it is also often useful to consider the average clustering coefficient \( C = \frac{1}{n} \sum_{v(i) \in V(G)} C(v_i) \) of the graph.
+\Cref{fig:clustering-coefficient-examples} shows some examples for neighborhoods with local different clustering coefficients.
 There is another definition of a \emph{global clustering coefficient}, which is also often called \emph{transitivity}~\cite{Boccaletti2006}.
 It is defined as ratio of triangles (i.e., cliques consisting of exactly three vertices) to the number connected triples in the graph, i.e.,
 
@@ -115,12 +125,6 @@ It is defined as ratio of triangles (i.e., cliques consisting of exactly three v
  T = \frac{3 \times \text{\# of triangles}}{\text{\# of connected triples of vertices}}.
 \end{equation}
 
-A connected triple is made up of three vertices as well, but does only have two edges.
-Hence, a triangle consists of exactly three triples.
-The global clustering coefficient is a measure the extent of transitive connections in the graph (i.e., if there is a edge between vertices A and B, and between B and C, how likely is it that there is also an edge between A and C).
-The two global clustering measures are, however, not equivalent to each other and may yield very different values~\cite{Newman2010}.
-The definition of the local clustering clustering coefficient introduces a bias towards vertices with smaller degree, due to smaller values in the denominator.
-Therefore, the value for the average local clustering coefficient maybe larger than the global clustering coefficient for the same graph, if the number of low-degree vertices is sufficiently large.
 
 \begin{figure}[h]
    \centering
@@ -136,8 +140,8 @@ Therefore, the value for the average local clustering coefficient maybe larger t
 
        \foreach \p in {2,3,4,5}{\draw (\p) -- (1); }
      \end{tikzpicture}
-     \caption{In this example none of the four neighbors shares a edge with any other neighbor of the red vertex.
-     Therefore, the clustering coefficient of the red vertex is \(\frac{0}{6} = 0\).}
+     \caption{In this example none of the four neighbors shares an edge with any other neighbor of the red vertex.
+     Therefore, the clustering coefficient of the red vertex is \( \frac{0}{6} = 0 \).}
    \end{subfigure}
    ~
    \begin{subfigure}[t]{0.31\textwidth}
@@ -155,8 +159,8 @@ Therefore, the value for the average local clustering coefficient maybe larger t
        \draw (3) -- (5);
        \draw (3) -- (2);
      \end{tikzpicture}
-     \caption{Here are half of the possible edges between the neighbors are present.
-     The clustering coefficient of the red vertex is \(\frac{3}{6} = \frac{1}{2}\).}
+     \caption{Here, half of the possible edges between the neighbors are present.
+     The clustering coefficient of the red vertex is \( \frac{3}{6} = \frac{1}{2} \).}
    \end{subfigure}
    ~
    \begin{subfigure}[t]{0.31\textwidth}
@@ -172,14 +176,22 @@ Therefore, the value for the average local clustering coefficient maybe larger t
        \foreach \p in {1,2,3,4,5}{ \foreach \q in {1,2,3,4,5}{\draw (\p) -- (\q); }}
      \end{tikzpicture}
      \caption{The neighbors of the red vertex form a clique.
-     Hence, the clustering coefficient of the red vertex is \(\frac{6}{6} = 1\).}
+     Hence, the clustering coefficient of the red vertex is \( \frac{6}{6} = 1 \).}
    \end{subfigure}
 
    \caption[Clustering coefficient examples]{Examples for the local clustering coefficient of a vertex with a small neighborhood.
    The blue vertices are the neighbors of the red vertex.
-   The possible number of edges between the four neighbors is \(\binom{4}{2} = 6\).}
+   The possible number of edges between the four neighbors is \( \binom{4}{2} = 6 \).}
 \label{fig:clustering-coefficient-examples}
 \end{figure}
+
+
+A connected triple is made up of three vertices as well, but does only have two edges between them.
+Hence, a triangle consists of exactly three triples.
+The global clustering coefficient is a measure for the extent of transitive connections in a graph (i.e., if there is an edge between vertices A and B, and between B and C, how likely is it that there is also an edge between A and C).
+The two global clustering measures are, however, not equivalent to each other and may yield very different values~\cite{Newman2010} for the same graph.
+The definition of the local clustering clustering coefficient introduces a bias towards vertices with smaller degree, due to smaller values in the denominator.
+Therefore, the value for the average local clustering coefficient is possibly larger than the global clustering coefficient for the same graph, if the number of low-degree vertices is sufficiently large.
 
 
 %% ========================================================================
@@ -189,77 +201,83 @@ Therefore, the value for the average local clustering coefficient maybe larger t
 \section{Social Networks}
 \label{sec:social-networks}
 
-It is a common practice to use graphs to model the complex systems that are arising in the real world.
-For example, the web can be represented as a graph, where vertices correspond to websites and edges to the hyperlinks between them.
-However, when modeling these large networks it common to use a slightly different terminology than in the mathematical field of graph theory~\cite{Barabasi2016}.
-Vertices are often called \emph{nodes} and edges are called \emph{links} in the context of networks.
+It is a common practice to use graphs to model the complex systems that arise in the real world.
+For example, the web can be represented as a graph, where vertices correspond to websites and edges to the hyperlinks that connect them.
+However, when modeling these large networks, it is common to use a terminology that is slightly different than the one used in the mathematical field of graph theory~\cite{Barabasi2016}.
+In the context of networks vertices and edges are usually called \emph{nodes} and \emph{links} respectively.
 
 Social networks~\cite{Newman2010} are another type of network that can benefit from the usage of graph theory methods.
 The study of these networks is considered to be a part of the field of sociology and researchers may also use slightly different terminology for the vertices and edges in their work.
-Nodes (or vertices) often represent people in social networks and are also sometimes referred to as \emph{actors}.
+Nodes (or vertices) often represent people in social networks and are sometimes referred to as \emph{actors}.
 However, it is also possible that they depict other entities, such as a departments, companies, or countries (i.e., larger groups of people).
-The links (or edges) between these entities can mean, depending of the context, different things as well and are sometimes also referred to as \emph{ties}.
-For example, links between persons can show social relationships (e.g., friendships), collaborations in projects (e.g., co-authorship of a scientific papers), or other social interactions.
+The links (or edges) between these entities can denote, depending of the context, different things as well, and are sometimes referred to as \emph{ties}.
+For example, links between persons can show social relationships (e.g., friendships), collaborations in projects (e.g., co-authorship of scientific papers), or other social interactions.
 Links between companies could represent trading relationships or the like.
-Often social networks are only mentioned in relation to large online communities, such as Facebook or Twitter, but there is no necessity that a social network must exist in an online form.
-The network of acquaintances or friends in a school is also considered as a social network.
+
+Social networks are often only mentioned in relation with large online communities, such as Facebook or Twitter, but there is no necessity that a social network must exist in an online form.
+For instance, the network of acquaintances or friends in a school is considered a social network as well.
 \Cref{fig:karate-club-network} shows a famous example of a small real-world social network.
+
 
 \myfig{karate_club_network}
       {width=0.6\textwidth,height=0.6\textheight}
       {Zachary's karate club network~\cite{Zachary1977} is a social network that shows the relationship between 34 members of a university-based karate club in the US in the early 1970's.
-      There exists an edge between two members if there were social interactions outside of the normal club activities (i.e., two members are considered friends).
+      There exists an edge between two members if there were social interactions outside of the normal club activities between them (i.e., two members are considered friends).
       The graph shows a separation into two communities (red and blue nodes). This was caused by a dispute between the members of the club that was focused around two key persons.}
       {Zachary's karate club network}
       {fig:karate-club-network}
 
+
 Two fundamental terms in the field of social network analysis are \emph{dyads} and \emph{triads}~\cite{Wasserman1994}.
 These two concepts describe the relationship between multiple actors.
-A dyad denotes the linkage between a pair of actors.
-It is a very common research topic to understand the pairwise relationships in social networks.
+Dyads denote the linkage between pairs of actors and are used to study  pairwise relationships in social networks.
 A triad on the other hand describes triples of actors and the ties between them.
 This concept is especially important for the question of transitivity of certain relationships.
 For instance, \enquote{is the friend of my friend also my friend?}.
 The transitivity of trust, especially in the context of cryptography, is an interesting issue as well~\cite{Christianson1997}.
+
 Another important concept is the strength of ties, which was introduced by \citet{Granovetter1973}.
 The strength of a tie is influenced by factors like the time that two actors spend together, or the intimacy between them.
-Depended on the strength, a tie can either be strong, weak, or absent.
+Depending on the strength, a tie can either be strong, weak, or absent.
 Absent does not only include non-existing ties, but also ties with a strength that is below a certain threshold.
 This concept of strong and weak ties can be used to explain the formation of triads.
 If there already exists a strong tie between the two actors A and B, and between B and C, then there exists at least a weak tie between A and C.
 This is true, due to the opportunities for the formation of a tie between A and C, that will result from a common strong tie to the actor B.
-Furthermore, it is possible to explain the spreading of information in a social network in a better way by considering the strength of ties.
-Weak ties can help the flow of information by acting as a bridge between sparsely connected parts of the network.
+Furthermore, the spreading of information in social networks can be explained more accurately by taking the strength of ties into account.
+Weak ties can help the flow of information by acting as bridges between sparsely connected parts of the network.
 
 A property that many real-world social networks share are \emph{community structures}~\cite{Girvan2002}.
-Communities are groups of actors that are more connected to actors in the same group, than to actors in a different one.
-This basically means that there exists subsets of densely linked nodes in the network with very few links to other subsets.
-The network shown in \cref{fig:karate-club-network} has two known communities characterized by different node colors.
+Communities are groups of actors that are more connected to actors in the same group, than to actors in different ones.
+This basically means that in networks with community structures exist subsets of densely linked nodes and very few link links between the subsets.
+The network shown in \cref{fig:karate-club-network} has two known communities highlighted by different node colors in the graph.
+
 The detection of community structures in networks is a important research topic, since the identified communities may correspond to actual social groupings.
 For example, the detected communities in a social network that models the friendship between students may represent the real corresponding social groups (i.e., the circles of friends).
 There is a variety of different methods and approaches to perform this task.
-Examples are approaches based on hierarchical clustering, or edge betweenness (i.e., the number of shortest paths going through an edge)~\cite{Fortunato2010}.
-However, it is often not possible to study the network and its structure on a fully global scale, due to processing limitations.
-One alternative way is to look at single actors and their immediate neighborhood.
+Examples are algorithms based on hierarchical clustering, or edge betweenness (i.e., the number of shortest paths going through an edge)~\cite{Fortunato2010}.
+
+However, it is often not feasible to study the network and its structure on a full global scale, due to processing limitations.
+One alternative way is to consider single actors and their immediate neighborhood instead.
 These small sub-networks are called \emph{egocentric} or \emph{personal} networks~\cite{Newman2010}.
-Usually some number of these egocentric networks sampled from the complete network and examined for their local properties, such as the degree distribution or the local clustering coefficients.
+Usually some number of these egocentric networks is sampled from the entire network and is examined for their local properties, such as the degree distribution or the local clustering coefficients.
 
 Another attribute that many social networks share is that they are \emph{scale-free networks}~\cite{Barabasi2016}.
-Formally, a network is a scale-free network if its degree distribution is a power-law distribution (i.e., \(p(k) \sim k^{-\gamma}\), where \(\gamma\) is the parameter of the distribution that denotes the degree exponent).
-The value for \(\gamma\) for most real-world (social) networks is in the range between 2 and 3.
-A consequence of the power-law distribution is that the distribution of the degrees is right-skewed and has a long tail.
+Formally, a network is a scale-free network if its degree distribution is a power-law (i.e., \( p(k) \sim k^{-\gamma} \), where \( \gamma \) is the parameter of the distribution that denotes the degree exponent).
+The value for \( \gamma \) for most real-world (social) networks is in the range between 2 and 3.
+A consequence of the power-law is that the distribution of the degrees is right-skewed and long-tailed.
 This means that there is a large number of nodes in the network that have only a few links (i.e., a small degree) but there is also the chance that there exists a few nodes with a very high degree.
 Such nodes are usually called \emph{hubs} and may correspond in the context of social networks to very influential actors that can play an important role in the network.
 
-A property that many social networks show is the small-world characteristic.
-The idea of small-world networks~\cite{Watts1999} is that even if the network is very large and sparsely connected, the average shortest path between any pair of nodes in it is usually very small.
+A property that social networks often show as well is the presence of the small-world effect.
+The characteristic of small-world networks~\cite{Watts1999} is that even if the network is very large and sparsely connected, the average shortest path between any pair of nodes in it is usually very small.
 For example, the famous experiment by \citet{Milgram1969} showed that it is possible to send a letter to a target by a chain of about six people on average, where each person in the chain is only allowed to forward the letter to acquaintances.
 However, even tough there are some issues with the experimental setup of this study (e.g., a sample selection biases, or the sample size~\cite{Schnettler2009}), there is additional work in this area that supports the original findings.
-For example, \citet{Leskovec2008} study of an online social network with 180 million nodes and 1.3 billion edges showed that the average path length in this network is 6.6, which is only slightly larger than in the original work, but also that there exits paths up to a length of 29.
-A network with the small-world characteristic does usually exhibit two properties.
+For example, \citet{Leskovec2008} study of an online social network with 180 million nodes and 1.3 billion edges showed that the average path length in this network is 6.6, which is only slightly larger than in the original work.
+Nonetheless, they showed that there exits paths up to a length of 29 as well.
+A network with the small-world characteristic does usually exhibit two important properties.
 First, the average shortest path length is small and only grows logarithmically with the size of the network, and second, it is highly clustered.
 Note that the small-world effect does not only occur in social networks but also in many other real-world networks as well.
-For instance, the US power grid network or the collaboration network of actors in movies~\cite{Watts1998}.
+Examples are the US power grid network or the collaboration network of actors in movies~\cite{Watts1998}.
 
 
 %% ========================================================================
@@ -272,54 +290,62 @@ For instance, the US power grid network or the collaboration network of actors i
 This section contains an overview on the concept of time-varying networks~\cite{Holme2012, Holme2015}.
 Since this type of network is used in many different scientific fields it also has a variety of names.
 For example, temporal networks, dynamic networks, evolving graphs, or the name that is mainly used in this thesis, time-varying networks.
-As already mentioned in the section about social networks, the structure, or topology, of networks can be used to understand dynamic processes and their behavior.
-However, there are many dynamical processes that are modeled using networks in which links are not active all the time.
+
+As already mentioned in the section about social networks, the structure, or topology, of networks can be used to understand dynamic processes and their underlying behavior.
+However, there are many dynamical processes that are modeled using static networks in which links are not active all the time.
 One example would be a communication network, such as the network of phone calls between users.
 Another example would be a social or collaboration network, where actors do not interact constantly but in irregular intervals.
 These link activations at certain times can be very important to explain the dynamic process and are simply lost when approximated by a static graph.
+
 The idea of time-varying networks is to introduce another dimension (i.e., time) to the network and move the information of when something happens from the dynamic process to the network itself.
 As a general rule, a time-varying network is applicable when the structure (i.e., the topology) of the system and the temporal process are connected to each other.
 This means that the time scale on which the network itself evolves should be similar to the time scale of the dynamic process that takes place on it.
-For example, a time-varying network is not a suitable model for the internet, since the the infrastructure (i.e., the topology) changes very slowly in comparison to the transmission of the packages that are routed through the network (i.e., the dynamic process).
+For example, a time-varying network is not a suitable model for the internet, since the infrastructure (i.e., the topology) changes very slowly in comparison to the transmission of the packages that are routed through the network (i.e., the dynamic process).
 
 The underlying concept of time-varying networks is called \emph{contacts} and can be seen as interactions between two nodes at a certain time.
 The duration of the interaction is negligible and thus assumed to be instantaneous.
-This is true, at least, in context of this thesis, however, it is also possible to include the duration of interactions if necessary.
-Contacts can be interpreted as an extension of links in the static network.
-The unordered pair \(\{v_{i}, v_{j}\}\) becomes an ordered triple \((v_{i}, v_{j}, t)\).
-The order is in this case important, since the third object in the triple must refer to the interaction time \(t\) between the nodes \(v_{i}\) and \(v_{j}\).
+This is true at least in context of this thesis, however it is also possible to include the duration of interactions if necessary.
+Contacts can be interpreted as an extension of links in static networks.
+The unordered pair \( \{v_{i}, v_{j}\} \) becomes an ordered triple \( (v_{i}, v_{j}, t) \).
+The order is in this case important, since the third object in the triple must refer to the time of interaction \(t\) between the nodes \( v_{i} \) and \( v_{j} \).
 
-The usage of static networks in models for dynamic processes, that represents some time-depended sequence of contacts between pairs of nodes, often results in a loss of information, that can be regained using time-varying networks.
-However, these temporal networks also introduce more complexity to the model and one have to weight the gain of information versus the extra effort.
-Especially when the knowledge of how often something between two actors in the network happens is more important than when exactly it did.
-This is a use case for weighted graphs (see \cref{fig:weighted-network-example} for an illustration of a weighted graph).
+The usage of static networks in models for dynamic processes, which represent some time-depended sequences of contacts between pairs of nodes, often results in a loss of information.
+This sacrificed accurateness can possibly be avoided by using time-varying networks instead.
+However, these temporal networks also introduce more complexity to the model, and one have to weight the gain in information versus the extra modeling effort.
+For example, the case in which the information on how often something between two actors happened is way more important than when exactly it did, is a strong indicator for the preferred application of weighted graphs over their temporal counterpart (see \cref{fig:weighted-network-example} for an illustration of a weighted graph).
+
 However, a simple graph without weights can also be used to approximate the interaction sequence of a time-varying network~\cite{Holme2013}.
 The idea is to calculate a total weight for each pair of nodes in the network.
-If the weight exceeds a certain threshold \(\Omega \in \mathbb{R}_{0}^{+}\) then there will be an edge between the two nodes in the static approximation.
-Each contact between two contacts in the sequence \(C\) contributes a part to the total weight.
-However, contributions to the total weight decay exponentially with time.
-Hence, the total weight \(\omega_{i,j}\) between two nodes \(v_{i}\) and \(v_{j}\) is \(\omega_{i,j} = \sum_{(v_{i}, v_{j}, t) \in C} \exp(\sfrac{-t}{\tau})\), where \(\tau\) is an additional parameter that controls the exponential decay.
-For a static approximation that should contain an edge if there was at least one contact between the two nodes can the threshold be set to \(\Omega = 0\).
+If the weight exceeds a certain threshold \( \Omega \in \mathbb{R}_{0}^{+} \) then there will be an edge between the two nodes in the static approximation.
+Each contact between the pair in the sequence of contacts \( C \) contributes to the total weight.
+However, contributions to the total decay exponentially with time.
+Hence, the total weight \( w_{i,j} \) between two nodes \( v_{i} \) and \( v_{j} \) is \( w_{i,j} = \sum_{(v_{i}, v_{j}, t) \in C} \exp(\sfrac{-t}{\tau}) \), where \( \tau \) is an additional parameter that controls the exponential decay.
+For a static approximation, that should contain an edge if there was at least one contact between the two nodes, can the threshold be set to \( \Omega = 0 \).
 Networks that are generated using this approach are called exponential-threshold networks.
 
 There are many different possibilities to represent a temporal network without the loss of information as well.
 The simplest way to to this is by using the actual contact sequences.
 A contact sequence is basically a list that contains all the contact triples.
-This is a very raw form data (i.e., in essence a spreadsheet with three columns) and is therefore very easy to parse and to use in algorithms, but is not very well suited for the analysis of the underlying dynamic process by humans due to the lack of illustrations.
+This is a very raw form data (i.e., in essence a spreadsheet with three columns) and is therefore very easy to parse, and to use in algorithms.
+However, the sequence is not very well suited for the analysis of the underlying dynamic process by humans, due to the lack of illustrations.
+
 Another way to represent time-varying networks are graph sequences.
 The idea here is to generate a static graph that contains all contacts between nodes for a given time step.
 This method has the advantage that all tools that work for static graphs can also be applied to each of the graphs in the sequence.
 The problem with this representation is, that the time resolution should be selected carefully to avoid the creation of graphs with no, or only a few, edges for most time steps.
 \Cref{fig:graph-sequence-example} depicts an example of a graph sequence for a time-varying network with four nodes.
-There are also more visual-focused representation methods.
+
+There exists more visual-focused representation methods as well.
 One example would be the assignment of the series of contacts timestamps between two nodes to the corresponding link in the static network (see \cref{fig:time-stamp-edges-example} for an example).
 This allows the usage of the variety of graph layout algorithms to visualize the network, but does not work very well for large networks due to the lack of space for the timestamps on the links and the large numbers of nodes.
-Another idea is to visualize the time-varying network using a timeline of contacts.
+
+A different idea for the visualization of a time-varying networks are contact timelines.
 The interactions between nodes (i.e., the tuple of nodes that are interacting with each other) are placed on one axis and the time is placed on the other one.
-A marker is placed for each pair that interacts at a certain time.
-This allows the visual detection of interaction patterns.
-However, similar to the last representation methods, this one also only reasonable for small networks.
+A marker is set for each pair that interacts with each other at a certain time.
+This allows for the visual detection of interaction patterns.
+However, similar to the last representation method, this one is only reasonable for small networks as well.
 \Cref{fig:timeline-example} shows an example for this type of representation.
+
 
 \begin{figure}
    \centering
@@ -339,8 +365,7 @@ However, similar to the last representation methods, this one also only reasonab
      \end{tikzpicture}
 
    \caption{Static approximation of the contact sequence as a weighted graph.
-   The width of the lines between the nodes represent the the weight (i.e., the number of interactions) of the edges.
-   The thicker the line the higher the weight.}
+   The width of the lines between the nodes represents the weight (i.e., the total number of interactions between pairs of nodes).}
    \label{fig:weighted-network-example}
    \end{subfigure}
    ~
@@ -366,7 +391,7 @@ However, similar to the last representation methods, this one also only reasonab
      \end{tikzpicture}
 
    \caption{Visualization of the graph sequence representation of the three time steps of a time-varying network.
-   There exists an edge in a graph at time \(t\) if there was a contact between the two nodes at this time step.}
+   There exists an edge at the graph at time \( t \), if there was a contact between the two nodes at this time step.}
    \label{fig:graph-sequence-example}
    \end{subfigure}
 
@@ -415,18 +440,20 @@ However, similar to the last representation methods, this one also only reasonab
 
    \caption{Visualization of the contact sequence as a timeline of contacts.
    The vertical axis shows the interactions that happened between the nodes in the network and the horizontal axis shows the three time steps.
-   There is a marker, depicted as a black rectangle, if there was a contact between the pair at a given time \(t\).}
+   There is a marker (depicted as a black rectangle) if there was a contact between the pair at a given time \( t \).}
    \label{fig:timeline-example}
    \end{subfigure}
 
-   \caption[Graphical representations of time-varying networks]{Figures (\subref{fig:graph-sequence-example})--(\subref{fig:timeline-example}) show different visualizations for the contact sequence \((1, 2, 0), (1, 4, 0), (3, 4, 0), (1, 2, 1), (2, 4, 1), (1, 2, 2), (1, 4, 2)\). Figure (\subref{fig:weighted-network-example}) shows a static network of the same contact sequence, where the number of contacts between two nodes is reflected by the edge weights.}
+   \caption[Graphical representations of time-varying networks]{(\subref{fig:graph-sequence-example})--(\subref{fig:timeline-example}) shows different representations for the contact sequence \( C = (1, 2, 0), (1, 4, 0), (3, 4, 0), (1, 2, 1), (2, 4, 1), (1, 2, 2), (1, 4, 2) \). (\subref{fig:weighted-network-example}) shows a static network of the same contact sequence, where the number of contacts between two nodes is reflected by the edge weights.}
 \end{figure}
 
-It is also noteworthy that most of the introduced measures for networks do not apply for temporal networks or must be redefined or extended.
-For example, the concept of degree distributions does not exists in this context.
-But there are new measures like the \emph{inter-contact time distributions}, which describe the frequency of the time between contacts between either a specific pair of nodes or any two nodes.
-Paths also cannot be used in temporal networks and are replaced by measures like \emph{latency} (i.e., how long since the last contact between two nodes) or \emph{temporal distance} (i.e., how long does it take to get from one node to another while taking the contacts into account).
-There is also the idea, and many approaches, to extend community detection mechanisms for the usage in time-varying networks by running community detection algorithms for a static approximation of the network at time \(t\) and then including community information from previous time steps.
+
+It is also noteworthy that most of the introduced measures for networks do not apply for temporal networks.
+They must be redefined or extended.
+For example, the concept of degree distributions does not exists in the context of time-varying networks.
+But there are new measures like the \emph{inter-contact time distributions}, which describes the frequency of the time between contacts between either a specific pair or any two nodes.
+Paths cannot be used in temporal networks as well, and are replaced by measures like \emph{latency} (i.e., how long since the last contact between two nodes) or \emph{temporal distance} (i.e., how long does it take to get from one node to another while taking the contacts into account).
+There is also the idea, and many approaches, to extend community detection mechanisms for the usage in time-varying networks by running community detection algorithms for a static approximation of a network at time \( t \) and then refine the result by including community information from previous time steps.
 
 
 %% ========================================================================
@@ -553,7 +580,7 @@ The effect of the rewiring process on the average path length in the network is 
 It drops immediately to a low value even if only a few edges get rewired.
 This essentially produces shortcuts in the network by connecting nodes that are usually far apart, which decreases the average distance between any two nodes dramatically while keeping the average local clustering high.
 Therefore, the model is able generate networks with small-world properties.
-However, if values of \( p \) get too large the the average local clustering coefficient decreases significantly and the generated network resembles more and more a random network (c.f., \cref{fig:watts-model} for an illustration).
+However, if values of \( p \) get too large the average local clustering coefficient decreases significantly and the generated network resembles more and more a random network (c.f., \cref{fig:watts-model} for an illustration).
 
 
 %% ========================================================================
@@ -830,7 +857,7 @@ An independent voter adapts a political view proportionally to the presence of t
 It can be used to determine the optimal set of nodes in the network of independent voters, that should be controlled and influenced by zealots of one party to obtain the maximum number of voters.
 In another work by \citet{Estrada2013} the effect of peer influence on reaching consensus in social groups is examined.
 They model the influence between two user as their social distance, which is a function of the length of the shortest path between them in the social network.
-This allows for a node to receive indirect peer pressure from other nodes that are not directly connected to it (i.e., do not share a edge) as well.
+This allows for a node to receive indirect peer pressure from other nodes that are not directly connected to it (i.e., do not share an edge) as well.
 They showed that this indirect peer influence is not only important for reaching consensus in social groups, but also for social group leaders to emerge, which affects the opinions in the entire network and helps to reduce the time until consensus is reached.
 
 Another interesting application for the usage of peer influence are network models that incorporate peer effects on the activity of nodes.

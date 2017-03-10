@@ -307,7 +307,7 @@ In a network with no peer influence are two consecutive self-activations indepen
 Therefore, the activations happen at a certain rate that is proportional to the activity potential of a node, which leads to exponentially distributed inter-event times~\cite{Moinet2016}.
 This should lead to a burstiness parameter that is close to \( B = 0 \).
 However, this is not the case for the inter-event times that were generated with the proposed model even though peer influence was disabled (c.f. \cref{tbl:burstiness-parameter}).
-It can be explained by the the memory effects in the model, which allow reoccurring interactions within groups of nodes and by the inclusion of passive activations due to other active nodes in the calculation of the inter-event times.
+It can be explained by the memory effects in the model, which allow reoccurring interactions within groups of nodes and by the inclusion of passive activations due to other active nodes in the calculation of the inter-event times.
 A node with a higher intrinsic activity potential will select a node from its local group with high probability.
 Hence, this more active node activates less active nodes regularly, which can lead to a more bursty looking activity pattern for the other nodes and explains (at least partially) the burstiness value of \( B = 0.19 \).
 The peer influence mechanism of this model should amplify this effect even further, since it increases the activity within communities.
