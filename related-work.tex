@@ -464,49 +464,52 @@ There is also the idea, and many approaches, to extend community detection mecha
 \label{sec:network-models}
 
 This section contains descriptions of different generative network models, which can be used to build graphs with certain characteristics.
-They are often a useful tool when studying some type of real-world network (e.g., a social network) and to gain a deeper understanding on the processes that creates them.
+They are often a useful tool when studying real-world networks (e.g., social networks) to gain a deeper understanding on the processes that creates them.
 
 
 \subsection{The Erdős-Rényi Model}
 \label{subsec:erdos-reni-model}
 
 The Erdős–Rényi (ER) model~\cite{Erdos1959, Newman2010} was in its first form described by the two famous mathematicians Paul Erdős and Alfréd Rényi in 1959.
-The model generates a random graph with \(n\) nodes and \(m\) links.
-It chooses one of the \(\binom{\binom{n}{2}}{m}\) possible graphs of this size with equal probability at random.
-The idea is that large and complex networks often seem random and can be examined using random graphs and statistical methods~\cite{Barabasi2002}.
-Therefore, this is a very simple, yet powerful, model to explore some effects that take place in real-world systems.
-It is also often called the \( G(n, m) \) model.
-However, there is another model that is very similar to it, called the \(G(n, p)\) model, in which the number of links is not fixed beforehand, but determined by \(p\), the probability of the presence of a link between any pair of nodes in the network.
-Hence, the edges of a random network are determined by flipping a biased coin for each of the \(\binom{n}{2}\) possible edges.
+The model generates a random graph with \( n \) nodes and \( m \) links by choosing one of the \( \binom{\binom{n}{2}}{m} \) possible graphs of this size with equal probability at random.
+It is sometimes also denoted as the \( G(n, m) \) model.
 
-The probability for an arbitrary network with exactly \(m\) links under this model is \(p^{m} (1-p)^{\binom{n}{2} - m}\).
-Therefore, the probability that the model will generate a network with \(m\) links is \(\prob{m} = \binom{\binom{n}{2}}{m} p^{m} (1-p)^{\binom{n}{2} - m}\) (i.e., the probability of such network times the number of possible networks).
-This corresponds to the binomial distribution \(B(\binom{n}{2}, p)\).
-One simple consequence of this is that the expected value for the number of links is
+The basic idea behind this model is that large and complex networks often seem random and can be examined by using random graphs and statistical methods~\cite{Barabasi2002}.
+Therefore, this very simple, yet powerful, model can be utilized to explore effects that take place in real-world systems.
+
+There is another very similar model, the \( G(n, p) \) model, in which the number of links is not fixed beforehand.
+The link quantity is determined by \( p \), the probability of the presence of a link between any pair of nodes in the network.
+Hence, the edges of a random network are determined by flipping a biased coin for each of the \( \binom{n}{2} \) possible edges.
+
+The probability for an arbitrary network with exactly \( m \) links under the \( G(n, p) \) model is \( p^{m} (1-p)^{\binom{n}{2} - m} \).
+Therefore, the probability that the model will generate a network with \( m \) links is \( \prob{m} = \binom{\binom{n}{2}}{m} p^{m} (1-p)^{\binom{n}{2} - m} \) (i.e., the probability of such a network times the number of possible networks).
+This corresponds to the binomial distribution \( B(\binom{n}{2}, p) \).
+Hence, the expected value for the number of links is
 
 \begin{equation}
     \expval{m} = \sum_{m=0}^{\binom{n}{2}} m \prob{m} = \binom{n}{2} p.
 \end{equation}
 
 The expected value for the average degree \( c \) of a network generated with this model is deduced in \cref{eq:avg-degree-erdos-model}.
-The probability that an arbitrary node has a degree of exactly \(k\) is given by \(p(k) = \binom{n-1}{k} p^{k} (1-p)^{n-1-k}\) (i.e., \(k\) of its possible \(n-1\) links must exist and there are \(\binom{n-1}{k}\) possible combinations for the \(k\) links).
+The probability that an arbitrary node has a degree of exactly \( k \) is given by \( p(k) = \binom{n-1}{k} p^{k} (1-p)^{n-1-k} \) (i.e., \( k \) of its possible \( n-1 \) links must exist and there are \( \binom{n-1}{k} \) possible combinations for the \( k \) links).
 Therefore, the degree distribution of this model is a binomial distribution as well.
-However, it is also possible to approximate the degree distribution with an Poisson distribution \(p(k) = \exp(-c) \frac{c^{k}}{k!}\) for large values of \(n\).
+However, it is also possible to approximate the degree distribution with a Poisson distribution \( p(k) = \exp(-c) \frac{c^{k}}{k!} \) for large values of \( n \).
 
 \begin{equation}
   c = \expval{d(G)} = \sum_{m=0}^{\binom{n}{2}} \frac{2m}{n} \prob{m} = \frac{2}{n} \sum_{m=0}^{\binom{n}{2}} m \prob{m} = \frac{2}{n} \binom{n}{2} p = (n-1) p
   \label{eq:avg-degree-erdos-model}
 \end{equation}
 
-A nice property of the Erdős–Rényi model is that it can be used to study the formation of giant components in networks.
-A giant component of a network is a component that contains a large fraction of the nodes.
+A nice property of the Erdős–Rényi model is that it can be used to study the formation of giant components.
+The giant component of a network is a component that contains a large fraction of the nodes.
 Others have adopted this model to study dynamic processes on it.
-For example, \citet{Wang2003} use it to study the spreading of viruses in networks, or \citet{Crucitti2004} for their research on cascading failures.
-Hence, even such a simple model can be used to study phenomenons that are part of many real-world networks.
+For example, \citet{Wang2003} are using it to study the spreading of viruses in networks, and \citet{Crucitti2004} for their research on cascading failures.
+Hence, even such a simple model can be applied to study phenomenons that are part of many real-world networks.
 Furthermore, it can be used to replicate the small average shortest path length, which grows logarithmically with the size of the network, and can  also observed in many real-world networks.
+
 However, there are quite a few problems with this model as well.
 The degrees in real-world networks are usually not binomial (or Poisson) distributed, but follow a power-law distribution.
-Other examples for shortcomings of the model are the inability to generate community structures or hubs.
+Other examples for shortcomings of the model are the inability to generate community structures and hubs.
 
 
 \subsection{The Barabási-Albert Model}
@@ -515,38 +518,40 @@ Other examples for shortcomings of the model are the inability to generate commu
 One model that addresses the problem of missing power-law degree distributions is the Barabási-Albert (BA) model~\cite{Barabasi2002}.
 The model is named after its creators Réka Albert and Albert-László Barabási.
 It tries to emulate the dynamic process that is responsible for the creation of scale-free degree distributions and yields a the generated network as result.
+
 One of the main differences to the ER model is that the size of the network is not fixed.
-The model starts with an small number of nodes and adds new nodes to the network over time.
+The model starts with an small number of nodes and adds new ones to the network over time.
 A newly added node forms links with already existing nodes.
 What nodes are selected depends on how important they are.
 The more important a node is, the more likely it is that the new nodes form connections with it.
 This process is called \emph{preferential attachment}.
 It can, for example, be used to explain the evolution of the online encyclopedia Wikipedia~\cite{Caldarelli2006}.
 \citet{Eisenberg2003} showed that preferential attachment is the mechanism behind the evolution of protein networks.
-Furthermore, new websites on the World-Wide-Web follow the same pattern, they tend to link to already popular websites, since they are easier to find~\cite{Barabasi1999}.
+Furthermore, new websites on the World-Wide-Web follow the same pattern, by linking already popular website more often~\cite{Barabasi1999}.
 
-More formally, the model starts with a small number \( m_{0} \) of nodes and the following two steps are repeated in every iteration:
+More formally, the model starts with a small number \( m_{0} \) of nodes and the following two steps are executed in every iteration:
 
 \begin{enumerate}
     \item add a new node to the network
     \item choose \( m \leq m_{0} \) already existing nodes at random proportional to their degree and form a link between them and the newly added node
 \end{enumerate}
 
-Therefore, the degree of a node is a measure of its popularity  and a existing node \( v_{i} \) will be selected with a probability \( \Pi(v_{i}) = \sfrac{d(v_{i})}{\sum_{j} d(v_{j})} \).
-The process yields a network that consists of \( m_{0} + t \) nodes and \( mt \) links after \(t\) time steps.
+Therefore, the degree of a node is a measure of its popularity and an existing node \( v_{i} \) will be selected with a probability \( \Pi(v_{i}) = \sfrac{d(v_{i})}{\sum_{j} d(v_{j})} \).
+The process yields a network that consists of \( m_{0} + t \) nodes and \( m t \) links after \( t \) time steps.
 
-It can be shown using different methods (e.g., continuum theory, master equations, or numerical), that the node degrees follow a power-law distribution with a degree exponent of \(\gamma = 3\).
-Furthermore, asymptotically does \(\gamma\) not depend on \(m\), the number of links that are generated in each iteration.
+It can be shown using different methods (e.g., continuum theory, master equations, or numerical), that the node degrees follow a power-law distribution with a degree exponent of \( \gamma = 3 \).
+Furthermore, asymptotically does \( \gamma \) not depend on \( m \), the number of links that are generated in each iteration.
 The degree distribution is also (asymptotically) independent on the time, and therefore on the size of the network.
 This property of the model reflects the fact that there exists real-world networks of different sizes with power-law degree distributions.
+
 However, like the ER model, the BA model has its shortcomings as well.
 For example, the average path length of generated networks does not comply with real-world networks.
 Another property that cannot be reproduced by this model are the community structures and the with it associated high clustering coefficient that many real-world, and especially social, networks have~\cite{Reid2011}.
 
 Another interesting question regarding the Barabási-Albert model is if both mechanisms, the network growth and the preferential attachment, are necessary to produce scale-free networks.
-The result of numerical simulations and formal tests of the model with either of the two mechanisms missing shows that both are required.
-Missing preferential attachment results in exponentially distributed node degrees and the missing network growth leads to a power-law degree distribution in the beginning, but it shifts to a normal distribution over time~\cite{Barabasi2002}.
-This indicates that in fact both mechanisms are required to yield networks with the scale-free property.
+The result of numerical simulations and formal tests of the model with one of the two mechanisms missing shows that both are indeed required.
+Missing preferential attachment results in exponentially distributed node degrees, and while the absence of the network growth mechanism leads to a power-law degree distribution in the beginning, a shift to a normal distribution occurs over time~\cite{Barabasi2002}.
+This indicates that, in fact, both mechanisms are required to yield networks with the scale-free property.
 
 
 \subsection{Watts-Strogatz Model}
@@ -558,29 +563,34 @@ This is done by starting with a ring lattice graph with \( n \) nodes.
 In such a graph are the nodes arranged uniformly on a ring and are connected to their \( k \) nearest neighbors on it.
 This very regular graph has a high average local clustering coefficient and a high average shortest distance between any pair of nodes that grows linearly with the size of the network.
 Therefore, it does not have the properties of small-world networks yet.
-However, a simple rewiring process can archive this by changing the endpoints of some randomly selected edges.
+
+However, a simple rewiring process can introduce the small-world effect by changing the endpoints of some randomly selected edges.
 This rewiring process depends on the parameter \( p \in [0, 1] \), which determines the probability for an edge to be rewired.
-Note that this parameter is also sometimes refereed to as \( \beta \), since the model is also known as Watts' beta model.
+Note that this parameter is also sometimes refereed to as \( \beta \), since the model is known as Watts' beta model as well.
+
 The rewiring process itself is very simple.
 Each edge is rewired with probability \( p \).
-The new endpoint is selected uniformly at random, but self-loops and parallel edges cannot be introduced in the network.
+The new endpoint of an edge is selected uniformly at random, but self-loops and parallel edges cannot be introduced in the network.
 
 
 \myfig{watts-model}
       {width=0.75\textwidth,height=0.6\textheight}
-      {Depiction of networks generated with the Watts-Strogatz model with an increasing value for \( p \). The initial ring lattice network consists of \( n = 20 \) nodes with degree \( k = 4 \). Note that to ensure that the generated network stays connected \( n \) and \( k \) should be selected in such a way that \( n \gg k \gg \ln(n) \gg 1 \), which is not the case for this toy example. Figure borrowed from~\cite{Watts1998}.}
+      {Depiction of networks generated with the Watts-Strogatz model with an increasing value for \( p \). The initial ring lattice network consists of \( n = 20 \) nodes each with degree \( k = 4 \). Note that to ensure that the generated network stays connected \( n \) and \( k \) should be selected in such a way that \( n \gg k \gg \ln(n) \gg 1 \), which is not the case for this toy example. Figure borrowed from~\cite{Watts1998}.}
       {Watts-Strogatz model example}
       {fig:watts-model}
 
 
 A rewiring probability of \( p = 1 \) changes the endpoint of every edge and produces a random network with properties similar to a network generated with the Erdős-Rényi model.
 It exhibits a small average shortest path length, but also a small average local clustering coefficient.
+
 However, networks generated with values for the rewiring probability in the range \( 0 < p < 1 \) can show the small-world property.
 The effect of the rewiring process on the average path length in the network is substantial.
 It drops immediately to a low value even if only a few edges get rewired.
 This essentially produces shortcuts in the network by connecting nodes that are usually far apart, which decreases the average distance between any two nodes dramatically while keeping the average local clustering high.
 Therefore, the model is able generate networks with small-world properties.
-However, if values of \( p \) get too large the average local clustering coefficient decreases significantly and the generated network resembles more and more a random network (c.f., \cref{fig:watts-model} for an illustration).
+
+Nevertheless, if values of \( p \) get too large the average local clustering coefficient decreases significantly and the generated network resembles more and more a random network.
+\Cref{fig:watts-model} illustrates the transformation of the network for increasing values of the rewiring probability.
 
 
 %% ========================================================================
@@ -593,61 +603,73 @@ However, if values of \( p \) get too large the average local clustering coeffic
 The modeling of the activity of users in complex systems (e.g., in social networks) can be a challenging task.
 Usually the specific activities, such as writing of e-mails, posts on  Facebook, or tweets, are not of particular interest.
 More relevant is how these events or activities laid out in time and what the distribution of intervals between two consecutive events is (i.e., the inter-event time distribution).
+
 More formally, the sequence of timestamps of events for user \( i \) is written as \(t_{i,0}, t_{i,1}, t_{i,2}, \ldots \) with \( t_{i,j} \in \mathbb{N}_0 \), which is ordered in the sense that if \( t_{i,l} \ge  t_{i,k} \) then \( l \ge k \) and vice versa.
 The inter-event times for the user \( i \) are defined as \( \tau_{i,j} = t_{i,j} - t_{i,j-1} \), for \(j = 1, 2, \ldots \) and their distribution is denoted as \( \varphi_{i} \).
+
 There are various models that try to capture the patterns of human activities based on different approaches and some are discussed in this section.
 
+
 \subsection{Stochastic Models}
+\label{subsec:stochastic-models}
 
 One of the simplest methods to model user activity is by using a Poisson process to describe the inter-activity times~\cite{Barabasi2005, Vazquez2006, Masuda2016}.
 This stochastic process is defined by the event rate \( \lambda \), which states how often a event should occur in a given time window.
 Two important properties of the Poisson process are that the inter-activity times are exponentially distributed and independent of each other.
 This leads to the effect that events take place in regular intervals (i.e., at the given rate) and that it is almost impossible to have long periods of time between to consecutive activities.
+
 However, it has been shown, that human activity patterns (e.g., email communication) cannot be modeled very accurately by a Poisson process due to its assumptions~\cite{Barabasi2005}.
 Most activities are executed in bursts, followed by longer periods of inactivity.
 For example, a person may have a dedicated time in the day for answering emails.
 This behavior can be much better explained by a power-law distribution of the inter-activity times, since its long tail allows for longer periods of inactivity.
+
 There are, however, approaches that try to tackle this problem by using extensions of Poisson processes.
 For example, \citet{Malmgren2008} use a mixture of homogeneous and non-homogeneous Poisson processes to model user e-mail activity more precisely.
 The rate of a non-homogeneous Poisson process does depend on the time, whereas the rate of a homogeneous process is constant.
 
-A approach that does not only generate power-law distributed inter-event times, but also captures other patterns of human behavior, such as periodic spikes (e.g., higher activity every 24 hours) or a bimodal distribution of inter-event times (e.g., phases of high activity that are separated by phases of rest) was proposed by \citet{Costa2015}.
+An approach that does not only generate power-law distributed inter-event times, but also captures other patterns of human behavior, such as periodic spikes (e.g., higher activity every 24 hours) or a bimodal distribution of inter-event times (e.g., phases of high activity that are separated by phases of rest) was proposed by \citet{Costa2015}.
 Their Rest-Sleep-and-Comment (RSC) model is based on the idea that a user can be in one of multiple states.
-In the active state, a user generates events with a certain probability at some rate, which depends on how much time has passed since the last event.
+In the active state, a user generates events with a certain probability at a given rate, which depends on how much time has passed since the last event.
 The rest and sleep states are used to model the inactivity of a user.
-The difference is that the rest state produces null-events (i.e., it only increments the time) at a certain rate, whereas the sleep state is used to increment it only once, but by a larger amount.
-A active user can become inactive (i.e., go to the rest state) or stay active.
+The difference between the two states is that the rest state produces null-events (i.e., it only increments the time) at a certain rate, whereas the sleep state is used to increment the time only once, but by a larger extent.
+An active user can become inactive (i.e., go to the rest state) or stay active.
 A user in the rest state can either become active, stay inactive, or go to the sleep state.
-The user can not stay in the sleep state, only go into the rest state again.
+The user cannot stay in the sleep state, only go into the rest state again.
 The state transition probabilities are parameters of the model.
-This model was the foundation for a classifier, that is able to detect whether a activity sequence was generated by a bot or by a human with very high accuracy.
+This model was the foundation for a classifier, that is able to detect whether an activity sequence was generated by a bot or by a human with very high accuracy.
 
 Another possibility to model the user activity in social networks is by using coupled Hidden Markov Models (CHMMs)~\cite{Raghavan2013}.
 The Markov model has two hidden states that describe the user activity (active or inactive) and yields inter-activity times with respect to the current state.
-The CHMM model takes the social network influence of other users into account by explicitly coupling the stochastic processes of groups of people.
+The CHMM model takes the social network influence of other users into account as well, by explicitly coupling the stochastic processes of groups of people.
 This is done by letting the transition probabilities between the states of the HMM for a single user be dependent on the activity of other users, that are in the circle of friends of the user (i.e., neighbors in the social network).
-If the activity of the neighbors exceeds a certain threshold the probability that a user becomes active gets larger.
-The results show that this model is able to learn the complex human activity patterns and allows predictions with high accuracy compared to other methods.
+If the activity of the neighbors exceeds a certain threshold the probability for a user to become active gets larger.
+The evaluation of this approach shows that this model is able to learn the complex human activity patterns and allows for highly accurate predictions.
+
 
 \subsection{Queuing Models}
+\label{subsec:queuing-models}
 
-One approach that successfully generates human activity patterns that follow a power-law distribution are queuing models~\cite{Vazquez2006}.
-The idea here is to think of the user as a queue that is constantly filled with new tasks (e.g., answer a email, go shopping, do the dishes,\ldots).
+One approach, which successfully generates human activity patterns that follow a power-law distribution, are queuing models~\cite{Vazquez2006}.
+The idea behind them is to think of a user as a queue that is constantly filled with new tasks (e.g., answer a email, go shopping, do the dishes,\ldots).
 Each task takes a certain amount of time to finish and is prioritized by the user on arrival.
-Furthermore, the queue is usually bounded in size, since the user can only keep track of a certain amount of tasks at a time.
+Furthermore, the queue is usually bounded in size, since people typically can only keep track of a certain amount of tasks at a time.
 At each time step the user selects the task with the highest priority from the queue and executes it.
+
 It can be shown that the time it takes for a task to be handled (i.e., the waiting time) follows a power-law distribution.
-There is evidence that the waiting time distribution of the queuing model is responsible for the inter-activity time power-law distribution of a specific activity, due to the fact that persons tend to group tasks in categories and reinserting them into the queue with a lower priority after they are done.
-For example, a person does not keep track of every unanswered email in the queue, but has a \enquote{answer email} task that contains all emails that need to be replied-to.
-Therefore, answering multiple emails in a short period of time, followed by a longer period of no email correspondence due to other tasks with higher priority.
+There is evidence that the waiting-time distribution of the queuing model is responsible for the inter-activity time power-law distribution of a specific activity.
+This can possibly be explained by the observation that people tend to group tasks in categories and reinserting them into the queue with a lower priority after they are done.
+For example, a person does not keep track of every unanswered email in the queue, but has an \enquote{answer email} task that contains all emails that need to be replied-to.
+Therefore, this may lead to the answering of multiple emails in a short period of time, followed by a longer period of no email correspondence, due to the presence of other tasks with higher priority.
+
 
 \subsection{Time-varying Network Models}
 \label{subsec:time-varying-network-models}
 
-The prior discussed user activity models are designed to solely describe the activity profile of a single user, or require at least a separate stochastic process for each one.
-However, there are models that allow the description of the activities for multiple users at once using time-varying networks.
+The prior discussed user activity models are designed to solely describe the activity profile of a single person, or require at least a separate stochastic process for each one.
+However, there are models that allow the description of the activities for multiple people at once using time-varying networks.
+
 The difference between models for temporal networks and static network models (as described in~\cref{sec:network-models}) is, that the latter are purely connectivity driven~\cite{Perra2012a}.
-This means that they are laid out to generate specific topological properties in the networks (e.g., the formation of community structures, or short average path lengths), but do not consider the dynamic processes, which are responsible for these structures.
+This means that they are designed to generate specific topological properties in the networks (e.g., the formation of community structures, or short average path lengths), but do not consider the dynamic processes, which are responsible for these structures.
 
 One of the simplest methods to generate a time-varying network of user activity was proposed by \citet{Holme2013}.
 The idea is to generate a static network and assign each link a (possibly empty) set of timestamps, that represents the contact sequence between the two nodes.
@@ -657,49 +679,56 @@ This number represents the number of \enquote{half edges} of the node.
 These \enquote{half edges} can be seen as dangling edges that will be connected at random to other \enquote{half edges} of different nodes.
 Therefore, this number corresponds to the degree of the node.
 Self-loops and parallel edges are avoided during the matching process to generate a simple static network.
-In the next step, each link in network is assigned a time window at random in which contacts are possible (i.e., the activity interval).
+Next, each link in network is assigned a time window at random, in which contacts are possible (i.e., the activity interval).
 In the last step of this approach, a time series of events is generated by drawing inter-event times from a power-law distribution.
 This time series is then split into parts and mapped onto the activity windows of the nodes, thus, generating the contact sequences.
 
 A different approach by~\citet{Perra2012a} is based on the idea of \emph{activity potentials}.
-Each node \(v_{i}\) in the network of size \( n \) is assigned a quantity called the activity potential \(x_{i}\), which denotes the probability that the node will be active in a time window \(\Delta t\).
-The activity potentials of real-world networks can be determined by calculating the ratio of the number of interactions of a user to the total number of interactions in a time window for every user.
-This usually yields long tailed activity potential probability distributions, which corresponds to typical heterogeneous human activity patterns~\cite{Vazquez2006, Jo2012}.
-Furthermore, the size of the time window, that is used to estimate the probabilities, seems not to effect the resulting distribution in a significant way.
+Each node \( v_{i} \) in the network of size \( n \) is assigned a quantity called the activity potential \( x_{i} \), which denotes the probability that the node will be active in a time window \( \Delta t \).
+The activity potential for a user in real-world network can be determined by calculating the ratio of the number of interactions of this user to the total number of interactions in a time window.
+The measuring of the activity potentials for multiple users usually yields long-tailed distributions of the quantity, which corresponds to typical heterogeneous human activity patterns~\cite{Vazquez2006, Jo2012}.
+Furthermore, the size of the time window, which is used to estimate the probabilities, seems not to effect the resulting distribution in a significant way.
 
-The first step of this activity-driven model is to initialize each node in the network by assigning it a activity/firing rate \(a_{i} = \eta x_{i}\), where the activity potential is drawn from a suitable probability distribution \( f(x) \) and \( \eta \) is a rescaling factor that is chosen in such a way that the expected number of active node in the time window is \(\eta \expval{x} n\).
-The range of possible activity potential values is \(x_{i}\ \in [\varepsilon, 1]\).
-The activity potential has a lower bound \( \varepsilon \) to avoid possible divergences of the distribution for values that are very close to zero~\cite{Clauset2009}.
-The time-varying network can be generated after this short setup phase.
-This is done by repeated the following steps for each time step \(t\):
+The first step of this activity-driven model is to initialize each node in the network by assigning it a activity/firing rate \( a_{i} = \eta x_{i} \), where the activity potential is drawn from a suitable probability distribution \( f(x) \) and \( \eta \) is a rescaling factor that is chosen in such a way that the expected number of active nodes in the time window is \( \eta \expval{x} n \).
+The range of possible activity potential values is \( x_{i}\ \in [\varepsilon, 1] \).
+This lower bound \( \varepsilon \) of the activity potential is necessary to avoid possible divergences of the distribution for values that are very close to zero~\cite{Clauset2009}.
+
+The time-varying network can be generated after this short initial setup phase by repeating the following instructions for each time step \( t \):
 
 \begin{enumerate}
-    \item Create a new network \(G_{t}\), that contains all \( n \) nodes but has no links yet.
-    \item Every node \(v_{i}\) becomes active with probability \(a_{i} \Delta t\). Active nodes choose \(m\) distinct other nodes uniformly at random and form a link with them.
-    \item Increment the current time \(t \rightarrow t + \Delta t\).
+    \item Create a new network \( G_{t} \), that contains all \( n \) nodes but has no links yet.
+    \item Every node \( v_{i} \) becomes active with probability \( a_{i} \Delta t \). Active nodes choose \( m \) distinct other nodes uniformly at random and form links with them.
+    \item Increment the current time \( t \rightarrow t + \Delta t \).
 \end{enumerate}
 
-Therefore, in this model the time-varying networks are represented as a sequence of graphs (see \cref{sec:time-varying-networks}), which are called \emph{instantaneous networks} in the context of this model.
+Therefore, in this model the time-varying networks are represented as sequences of graphs (see \cref{sec:time-varying-networks}), which are called \emph{instantaneous networks} in the context of this model.
 
-The cardinality of the edge set is given by \(|E_{t}| = m \eta \expval{x} n\), since every active node creates exactly \(m\) links.
-Therefore, the average degree of the instantaneous network at time \(t\) is \(d(G_{t}) = \frac{2|E_{t}|}{n} = \frac{2 m \eta \expval{x} n}{n} = 2 m \eta \expval{x}\).
-The probability that a node becomes active does not change over time and is, therefore, also independent of previous activities.
+The cardinality of the edge set after time \( t \) is given by \( |E_{t}| = m \eta \expval{x} n \), since every active node creates exactly \( m \) links.
+Therefore, the average degree of the instantaneous network at time \( t \) is
+
+\begin{equation}
+    d(G_{t}) = \frac{2|E_{t}|}{n} = \frac{2 m \eta \expval{x} n}{n} = 2 m \eta \expval{x}.
+\end{equation}
+
+The probability for a node to become active does not change over time and is, therefore, also independent of previous activities.
 This resembles the problem already encountered with models based on Poisson processes.
 The inter-event times for a node \(v_{i}\) will eventually be exponential distributed \(\varphi_{i}(\tau) = a_{i} \exp(-a_{i} \tau)\)~\cite{Moinet2016}.
 Additionally, the model lacks of realism in the sense that every node selects its neighbors in each iteration uniformly at random, which leads to networks with a random structure.
-Typically are users prone to repeat previous communication~\cite{Karsai2014}.
+Typically users are prone to repeat previous communication~\cite{Karsai2014}.
+
 Nevertheless, this model possesses a few considerable advantages.
 First, and most important, it produces not only activities for a single user, but generates snapshots of the total user activities in the network in each time window.
 Furthermore, it is a very simple model.
 It only requires a few parameters and the activity potential distribution governs the dynamical behavior in the network.
+
 Moreover, this model can be used to explain the formation heterogeneous structures (i.e., hubs) in networks over longer periods of time.
-This is done by examining the \emph{integrated network} \(G_{T} = \bigcup_{t=0}^{T} G_{t}\), which the union of all instantaneous networks up to the time stamp \(T\) (see \cref{fig:integrated-network-example} for an example).
+This is done by examining the \emph{integrated network} \(G_{T} = \bigcup_{t=0}^{T} G_{t}\), which is defined as the union of all instantaneous networks up to the time stamp \(T\) (see \cref{fig:integrated-network-example} for an example).
 It can be shown that the  degree distribution of this integrated network has the form \(p_{T}(k) \sim f(\frac{k}{T m \eta})\).
-Therefore, it is up to a rescaling factor, the same as the activity potential distribution.
-Hence, the model is able to generate scale-free networks, by drawing the activity potentials from a power-law distribution.
+Therefore, it is up to a rescaling factor the same as the activity potential distribution.
+Hence, the model is able to generate scale-free networks by drawing the activity potentials from a power-law distribution.
 The resulting hubs are not caused by preferential attachment like in other models, but due to the heterogeneous activity profiles of the nodes.
 The rescaling factor emerges from the fact that the model does not capture all features of real-world networks.
-For instance, memory effects are not present that could allow links, which were formed in earlier instantaneous networks, to be formed later again with higher probability.
+For instance, memory effects are not present that would allow links, which were formed in earlier instantaneous networks, to be formed later again with higher probability.
 
 
 \begin{figure}
@@ -784,7 +813,7 @@ For instance, memory effects are not present that could allow links, which were 
         \draw (7) -- (10);
 
     \end{tikzpicture}
-    \caption[Integrated network example]{Illustration for the formation of the integrated network in a small example with \( n = 12 \) nodes. The first three graphs show the instantaneous networks for the time steps \( t = 0 \), \( t = 1 \), and \( t = 2 \). In each time step a few nodes get active (green nodes) and establish links to \( m = 1 \) other nodes. The forth graph shows the integrated network up to \( T = 2 \). It contains all links that were established in the instantaneous networks. Parallel links are not allowed. A link is only added once to the integrated network even it is present in multiple time steps (e.g., the link between the top two nodes is present in \( t = 1\) and \( t = 2 \)).}
+    \caption[Integrated network example]{Illustration for the formation of the integrated network for a small example with \( n = 12 \) nodes. The first three graphs show the instantaneous networks for the time steps \( t = 0 \), \( t = 1 \), and \( t = 2 \). In each time step a few nodes get active (green nodes) and establish links to \( m = 1 \) other nodes. The forth graph shows the integrated network up to \( T = 2 \). It contains all links that were established in the instantaneous networks. Parallel links are not allowed (i.e. a link is only added once to the integrated network even if it is present in multiple time steps).}
     \label{fig:integrated-network-example}
 \end{figure}
 
@@ -802,14 +831,14 @@ They also propose to use the hidden-variable approach to study possible extensio
 The activity-driven model is also a fundamental framework for many other studies that use it as start point for their work.
 For example, \citet{Perra2012b} use this model to study random walks on temporal networks, or \citet{Rizzo2016} are applying it for their research on the spreading of the infectious Ebola disease in Liberia.
 Another paper by \citet{Rizzo2014} uses the activity-driven network framework to study how an epidemic effects the behavior of persons.
-They show that a reduction of the activity potential of persons, due to the fact that they are already ill or because they are trying to protect them self from the disease, may help the slow down the spreading process.
+They showed that a reduction of the activity potential of persons, due to the fact that they are already ill or because they are trying to protect them self from the disease, may help the slow down the spreading process.
 A paper on a similar topic by \citet{Liu2014} proposes a framework to develop strategies on how to contain the spreading of diseases.
 \citet{Mistry2015} use the model to explore the spreading of opinions in social networks.
-They show that activists are able to spread messages across the population more effectively and can help to reduce the cost of campaigns.
+They showed that activists are able to spread messages across the population more effectively and can help to reduce the cost of campaigns.
 
-On the other hand, others try to improve the model by making it more realistic by implementing additional mechanisms.
-\citet{Laurent2015} add additional social mechanisms (e.g., memory) to the model to allow for the formation of communities on the integrated network.
-This model is explained in great detail in \cref{sec:base-model} since it is used as a foundation for this thesis.
+On the other hand, others try to improve the model by making it more realistic by introducing additional mechanisms.
+\citet{Laurent2015} add additional social mechanisms (e.g., memory) to the model to allow for the formation of communities in the integrated network.
+This model is explained in great detail in \cref{sec:base-model}, since it is used as a foundation for our work presented in this thesis.
 Another extension by \citet{Moinet2015, Moinet2016} solves the problem of inaccurate inter-events times by making the activity potential of each node time depended.
 This model is known as the non-poissonian activity-driven (NoPAD) model and can generate inter-event time distributions that can also be observed in real-world networks.
 \citet{Wang2016} proposed the Activity-Security-Trust (AST) model, which not only considers activity as the explicit driving force behind dynamic processes, but also incorporates the implicit factors security and trust.
@@ -822,10 +851,10 @@ This link may then be part of multiple consecutive instantaneous networks
 and is only removed after its lifetime has decayed, in contrast to the simple activity-driven model, where links are meant to be instantaneous and are deleted after every time step.
 The authors use this new introduced mechanism to study how well link lifetimes are suited to model disease spreading processes.
 While \citet{Laurent2015} examine the local effects that are responsible for the formation of complex network structures using the activity-driven framework, takes \citet{Alessandretti2017} work also the global effects for the formation of links into account.
-Each node in the model is not only assigned a activity potential, but also a attractiveness quantity, which determines how popular a node is in the network.
+Each node in the model is not only assigned an activity potential, but also a attractiveness quantity, which determines how popular a node is in the network.
 Nodes that are more popular get selected more often from active nodes.
 This basically corresponds to an preferential attachment process.
-They can not only show that activity and the attractiveness are correlated in real-world social and collaboration networks, but also that this influences dynamical processes on the network in a significant way.
+They not only show in their work that activity and the attractiveness are correlated in real-world social and collaboration networks, but also that this influences dynamical processes on the network in a significant way.
 
 
 %% ========================================================================
@@ -838,24 +867,28 @@ They can not only show that activity and the attractiveness are correlated in re
 Peer influence or peer pressure plays an important role in the field of sociology and psychology.
 There are a lot of studies that investigate how peer influence affects the behavior of people in different settings.
 This is not only done for for real-world social networks (e.g., a social network of students in a school), but also for online social and collaboration networks, such as Facebook or StackOverflow.
+
 These studies often investigate peer effects for harmful behavior like smoking or drinking\footnote{\url{https://xkcd.com/1534/}}~\cite{Simons2001, Powell2005}.
 \citet{Krasnova2008} showed that peer pressure is an important factor for adolescents to participate in online social networks, and \citet{Huang2014} concluded in their work that being exposed to pictures of drinking and smoking friends on social media websites may lead to an adaption of these behaviors.
+
 However, peer influence is not necessarily a bad thing.
 For example, \citet{Smith1984} showed that the introduction of peer monitors in a kindergarten classroom decreased non-participation and disruptive behavior of the other children.
-Another example would be the study conducted by \citet{Christakis2008}.
+Another example is the study conducted by \citet{Christakis2008}.
 They examined a relatively large social network of approximately 12,000 people over more than 30 years and evaluated the spreading of smoking in the network.
 The results of this study  not only showed that the number of smokers declined over the years, but also that clusters of smokers in the network seem to disappear at roughly the same time.
 This indicates that people that quit smoking may trigger a cascading cessation effect in their social circle.
-For instance, they showed that in their data set the smoking cessation of a spouse reduces the probability for the other to smoke by 67\%.
+For instance, they showed that in their data set the smoking cessation of a spouse reduces the probability for the other one to smoke by 67\%.
 
 Peer influence plays an important role in opinion dynamics models as well.
 The formation and diffusion of opinions in complex networks is examined in these models.
 Opinions can be trivial things like taste in food and entertainment, or more sophisticated issues like political views, and are usually heavily influenced by others~\cite{Acemoglu2011}.
+
 One popular use case for these types of models are voter models, which try to maximize the number of voters for a political party in a election (i.e., the opinion) with a minimum amount of cost that is associated with winning voters over.
 For instance, the voter model by \citet{Masuda2015} considers two different types of voters, the partisan voters (often also referred to as zealots), which do not change their opinion, and independent voters, which can.
 An independent voter adapts a political view proportionally to the presence of this view in its neighborhood and with respect to zealots that influence him or her.
 It can be used to determine the optimal set of nodes in the network of independent voters, that should be controlled and influenced by zealots of one party to obtain the maximum number of voters.
-In another work by \citet{Estrada2013} the effect of peer influence on reaching consensus in social groups is examined.
+
+In another work by \citet{Estrada2013} is the effect of peer influence on reaching consensus in social groups examined.
 They model the influence between two user as their social distance, which is a function of the length of the shortest path between them in the social network.
 This allows for a node to receive indirect peer pressure from other nodes that are not directly connected to it (i.e., do not share an edge) as well.
 They showed that this indirect peer influence is not only important for reaching consensus in social groups, but also for social group leaders to emerge, which affects the opinions in the entire network and helps to reduce the time until consensus is reached.
@@ -864,9 +897,11 @@ Another interesting application for the usage of peer influence are network mode
 For instance, \citet{Walk2016} proposed a model that helps to study how the activity in large collaboration and social networks develops over longer time spans and what effects the micro-behavior of users (i.e., their intrinsic activity and the influence on their neighbors) has on the macro-behavior of the system.
 The macro-behavior of the system can be interpreted as the overall activity in the network.
 This helps to understand how some systems can archive a state in which the can become self-sustaining, in the sense that no external influences or stimuli are needed to keep the network permanently active, while others become non-active very quickly, even after lots of activity in the early stages of the network.
+
 Their model is based on the idea that each user has an intrinsic activity, which declines over time.
 This can be interpreted as the growing loss of interest of users in the system.
 But there is also an opposite force, the peer influence of others, that motivates the user to contribute.
+
 More formally, the model is defined as a dynamic process that takes place on a network, were users are represented as nodes and there exists a link between two users if they interacted or collaborated at some point.
 Furthermore, every user \( v_{i} \) is assigned a positive real-valued variable \( a_{i} \), which represents the activity of the user.
 The dynamic process is then defined by the following system of coupled non-linear differential equations:
@@ -875,7 +910,7 @@ The dynamic process is then defined by the following system of coupled non-linea
     \frac{\mathrm{d} a_{i}}{\mathrm{d} t} =  \underbrace{f(a_{i})}_{\text{activity decay}} + \underbrace{\sum_{j \in N(v_{i})} g(a_{j})}_{\text{peer influence}} \,\, \text{ for } i = 1,2,\ldots,n
 \end{equation}
 
-Where the first part of the right hand side of the equation represents the intrinsic activity decay of a user, and the function \( f \) defines how fast the loss of activity should occur.
+The first part of the right hand side of the equation represents the intrinsic activity decay of a user, and the function \( f \) defines how fast the loss of activity should occur.
 In their work a linear function \( f(a_{i}) = -\lambda a_{i} \) is used, where \( \lambda > 0 \) denotes the rate on which the activity decays.
 This leads to an exponential decay of the user activity.
 The second part of the equation denotes the positive peer influence of the users neighbors.
@@ -884,23 +919,25 @@ The function \( g \) determines the level of positive peer influence of a neighb
 This function introduces two additional parameter to the model, \( a_{c} > 0 \) controls what level of activity of a neighbor is required such that it influences a user in a significant way, and \( q > 0 \) determines the maximum amount of peer influence activity that a neighbor can transfer to another user.
 
 In their work they perform a linear stability analysis on the system of differential equations and show that the stability of the system is determined by the relation between the activity dynamics ratio \( \frac{\lambda}{\mu} \) (with \( \mu = \frac{q}{a_{c}} \)) and the topological structure of the network.
-This means to keep the network from becoming or staying inactive, there must either be constant external influences to keep the activity up or the system needs to become unstable.
+This means to prevent the network from becoming or staying inactive, there must either be constant external influences to keep the activity up or the system needs to become unstable.
 This can be done, for example, by changing the network structure (e.g., removing links) or by manipulating the three model parameter.
+
 Furthermore, they apply their activity dynamics model to some real-world data sets.
 For instance, different instances of StackExchange collaboration networks and various wikis.
 This is done by first estimating the ratio \( \frac{\lambda}{\mu} \) from the activity in the data sets, and then simulating the activity in the networks.
 However, due to some limitations and approximations in the parameter estimation is a highly accurate prediction of the activity not possible.
 Nevertheless, the model is able to predict trends in the activity of a empirical network by simulating its activity dynamics quite well and, therefore, provide additional confidence in the validity of the model.
+
 Additionally, two stability measures for social or collaboration networks are introduced in this work.
-First, the system mass is defined as the inverse of the normalized standard deviation of the activity dynamics ratio \( \frac{\lambda}{\mu} \), and indicates the robustness of a system with respect to change of the activity dynamics parameter.
+First, the system mass is defined as the inverse of the normalized standard deviation of the activity dynamics ratio, and indicates the robustness of a system with respect to change of the activity dynamics parameter.
 The second measure is called activity momentum and is defined as product of the system mass and the over some time span averaged last observed activity in the network, and is an improved indicator for the robustness.
 For instance, a system with a large activity momentum value handles the sudden inactivity of a considerable number of users better, since it can retain most of its activity.
 Therefore, much more \enquote{force} is needed to render a network with high activity momentum inactive.
 
 Another interesting question in the context of peer influence effects in networks was raised in the work of \citet{Aral2009}.
-They suggested that the behavior of a user in a network may not be entirely driven by the influence of its peers but can be explained in large parts by homophily.
+They suggested that the behavior of a user in a network may not be entirely driven by the influence of its peers, but can be explained in large parts by homophily.
 Homophily (also known as assortativity or assortative mixing) is the effect that users tend to interact with other users that are similar to them self.
 They examined a temporal network of instant-message communication between users and studied how the adaption of a new feature in the messaging application could be explained.
-The idea was that users may not adapt the feature shortly after their friends because of peer influence, but do it but simply because they behave similar to them anyway.
+The idea behind their work is that users may not adapt the feature shortly after their friends because of peer influence, but do it simply because they behave similar to them anyway.
 For instance, users that have the property of being early-adopters are more likely to be friends with early-adopters as well, and therefore, start using the feature at about the same time.
-They proposed a statistical framework in their work that is able to distinguish between peer influence and homophily, and showed that other methods overestimate the share of influenced adaption by a factor of four to eight, and that at least half of the adaption in their instant-messaging data set was introduced by homophily.
+They proposed a statistical framework that is able to distinguish between peer influence and homophily, and showed that other methods overestimate the share of influenced adaption by a factor of four to eight, and that at least half of the adaption in their instant-messaging data set was introduced by homophily.

@@ -19,7 +19,7 @@ The additionally introduced mechanisms that allow for peer influenced activity t
 
 \subsection{Description}
 
-Since this model~\cite{Laurent2015} is based on the activity-driven framework by \citet{Perra2012a}, a activity potential \( a_{i} = \eta x_{i}\),  which is drawn from a suitable distribution, is assigned to each of the \( n \) nodes.
+Since this model~\cite{Laurent2015} is based on the activity-driven framework by \citet{Perra2012a}, an activity potential \( a_{i} = \eta x_{i}\),  which is drawn from a suitable distribution, is assigned to each of the \( n \) nodes.
 To reflect the heterogeneous activity patterns of people, a power-law distribution \( f(x) \sim x^{-\gamma}\) is selected.
 The exponent for the activity potential distribution is fixed to \( \gamma = 2.7 \), which is a value that is similar to the exponent observed in real world communication networks.
 The lower bound for the activity potential is set to \( \varepsilon = 10^{-3} \), and the time scaling parameter is fixed to \( \eta = 1\), so that \( a_{i} = x_{i} \in [\varepsilon, 1] \).
@@ -266,7 +266,7 @@ In this section, a extension of the prior discussed base model with memory and c
 The ideas for this model were heavily influenced by the work of \citet{Walk2016}.
 They proposed a model that includes peer-influence and its impact on the state of activity in collaboration networks.
 A more detailed description of their work is located in \cref{sec:peer-influence}.
-The gist of the here proposed extension to the model is that a node can not only become active on its own based on its activity potential, but also by being motivated to become active by its neighbors, that were active in the previous iteration.
+The gist of the here proposed extension to the model is that a node cannot only become active on its own based on its activity potential, but also by being motivated to become active by its neighbors, that were active in the previous iteration.
 Another way to look at it would be that active nodes can influence their neighbors to become active as well in the next round.
 Therefore, introducing a more explicit peer influence mechanism to the model.
 This also means that a node now can become active in three different ways.
