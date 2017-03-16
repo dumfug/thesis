@@ -159,7 +159,7 @@ It is defined as ratio of triangles (i.e., cliques consisting of exactly three v
        \draw (3) -- (5);
        \draw (3) -- (2);
      \end{tikzpicture}
-     \caption{Here, half of the possible edges between the neighbors are present.
+     \caption{In this case, half of the possible edges between the neighbors are present.
      The clustering coefficient of the red vertex is \( \frac{3}{6} = \frac{1}{2} \).}
    \end{subfigure}
    ~
@@ -330,7 +330,7 @@ This is a very raw form data (i.e., in essence a spreadsheet with three columns)
 However, the sequence is not very well suited for the analysis of the underlying dynamic process by humans, due to the lack of illustrations.
 
 Another way to represent time-varying networks are graph sequences.
-The idea here is to generate a static graph that contains all contacts between nodes for a given time step.
+The idea behind them is to generate a static graph that contains all contacts between nodes in a given time window.
 This method has the advantage that all tools that work for static graphs can also be applied to each of the graphs in the sequence.
 The problem with this representation is, that the time resolution should be selected carefully to avoid the creation of graphs with no, or only a few, edges for most time steps.
 \Cref{fig:graph-sequence-example} depicts an example of a graph sequence for a time-varying network with four nodes.
@@ -838,7 +838,7 @@ They showed that activists are able to spread messages across the population mor
 
 On the other hand, others try to improve the model by making it more realistic by introducing additional mechanisms.
 \citet{Laurent2015} add additional social mechanisms (e.g., memory) to the model to allow for the formation of communities in the integrated network.
-This model is explained in great detail in \cref{sec:base-model}, since it is used as a foundation for our work presented in this thesis.
+This model is explained in great detail in \cref{sec:underlying-model}, since it is used as a foundation for our work presented in this thesis.
 Another extension by \citet{Moinet2015, Moinet2016} solves the problem of inaccurate inter-events times by making the activity potential of each node time depended.
 This model is known as the non-poissonian activity-driven (NoPAD) model and can generate inter-event time distributions that can also be observed in real-world networks.
 \citet{Wang2016} proposed the Activity-Security-Trust (AST) model, which not only considers activity as the explicit driving force behind dynamic processes, but also incorporates the implicit factors security and trust.
