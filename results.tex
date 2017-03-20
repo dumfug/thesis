@@ -66,7 +66,7 @@ The by us introduced peer influence mechanism seems to influence the development
 It shows that the peak of \( C \) is reached faster for networks in which nodes are able to motivate their neighbors to a a larger extent.
 
 For instance, the network in which nodes are not able to influence their neighbors reaches it peak value for \( C \) after approximately 5,000 iterations, while the network with a maximum peer influence probability of \( q = 0.15 \) is more than 2,000 iterations faster.
-However, the effect only occurs for networks with \( q > 0.05 \) and the actual maximum value of the local clustering coefficient only increases slightly for higher levels of peer influence (c.f. \cref{tbl:max-clustering} for the precise figures).
+However, the effect only occurs for networks with \( q > 0.05 \) and the actual maximum value of the local clustering coefficient only increases slightly for higher levels of peer influence (cf. \cref{tbl:max-clustering} for the precise figures).
 Nevertheless, the proposed peer influence mechanism seems to have a positive effect on the development of the topological structures in the network by accelerating the process in the beginning.
 
 The percentage of network activity, which is responsible for the reinforcement of ties in each iteration \( r(t) \), highlights the observed behavior as well.
@@ -220,7 +220,7 @@ The first phase can be described as a rapid increase in the number of activation
 After that, the development of \( E(t) \) starts to relax and slow down.
 The activity level even starts to decreases slightly in the network with a maximum peer influence probability of \( q = 0.15 \).
 Finally, the numbers slowly converge to their stationary values, which are reached after about 40,000 iterations.
-This is also supported by the evolution of the fraction of the peer influenced contacts per iterations \( i(t) \), which shows the same general behavior (c.f. \cref{fig:percentage-peer-influenced-activity}).
+This is also supported by the evolution of the fraction of the peer influenced contacts per iterations \( i(t) \), which shows the same general behavior (cf. \cref{fig:percentage-peer-influenced-activity}).
 
 This effect on the total activity in the network is possibly related to the development of the community structures and its implications on the peer influence mechanism.
 The stagnation (or even reduction) of the activity begins after a maximum value for the average local clustering coefficient was reached (cf. \cref{fig:avg-local-cc-full} for details), which is caused by the introduction of weak ties.
@@ -262,42 +262,43 @@ There is a shift in the bulk of the distributions observable, which indicates an
 \section{Inter-event Time Distributions}
 \label{sec:inter-event-time-dists}
 
-As already mentioned in the motivation section of this thesis (\cref{sec:temporal-data}) and while discussing different ways to model user activity (\cref{sec:user-activity-models}), human activity patterns can be fairly complex.
+As already mentioned in the motivational section of this thesis (\cref{sec:temporal-data}) and while discussing different ways to model user activity (\cref{sec:user-activity-models}), human activity patterns can be fairly complex.
 They can be described as bursts followed by longer phases of inactivity and are usually characterized by the inter-event time distribution \( \varphi(\tau) \), which should reflect these requirements.
-The inter-event times are defined, in the context of this model, as the time between two consecutive activations of a node.
-The type of activation (i.e., activation due to peer influence, activity potential, or contact of another active node) is not taken into account for the here performed analysis.
+
+The inter-event times are defined, in the context of our model, as the time between two consecutive activations of a node.
+The type of activation (i.e., activation due to peer influence, activity potential, or contact by another active node) is not taken into account for the by us performed analysis.
 Each node \( v_{i} \) in the network has its own inter-event time distribution \( \varphi_{i} \), which depends on the node's activity potential and on the influence of its peers.
+
 However, to get a better overview on how the peer influence mechanism changes the dynamics in the network in general, the union of the inter-event time distributions of all nodes is examined.
-The sequence of inter-event times is determined for every node that was active between the beginning and the end of the simulation separately and then combined into one distribution.
-This distribution can be seen as a mixture of distributions~\cite{Seidel2011} of nodes, which were at some time present in the network, i.e.,
+The sequence of inter-event times is determined for every node, that was active between the beginning and the end of the simulation, separately and then combined into one distribution.
+This distribution can be seen as a mixture of distributions~\cite{Seidel2011} of nodes that were at some time present in the network, i.e.,
 
 \begin{equation}
     \varphi(\tau) = \sum_{i} \pi_{i} \varphi_{i}(\tau),
 \end{equation}
 
 where \( \pi_{i} \) denotes the mixing weights, which must be selected such that \( \sum_{i} \pi_{i} = 1 \) holds.
-Therefore, the mixing weights determine the importance of every individual distribution.
-In this work every distribution is considered equally important and is assigned the same weight, such that the summation constraint is fulfilled.
+Therefore, the mixing weights determine the relative importance of the individual distributions.
+For our experiments every distribution is considered equally important and is assigned the same weight, such that the summation constraint is fulfilled.
 
 The burstiness of human behavior is difficult to describe and even more difficult to quantify.
-It is usually done using moments of the inter-event time distribution.
+It is usually determined by certain moments of the inter-event time distribution.
 For instance, the coefficient of variation~\cite{Masuda2016} is defined as the ratio between the standard deviation \( \sigma \) and the mean \( \mu \) of the inter-event time distribution, i.e., \( c_{v} = \sfrac{\sigma}{\mu} \).
 It takes the value \( 0 \) when the events are occurring at a fixed non-random rate.
-The coefficient of variation is \( 1 \) for exponentially distributed inter-event times, which is the case for events that are generated by a Poisson process, and it can get arbitrarily large for long-tailed distributions, such as power laws.
+The coefficient of variation is \( 1 \) for exponentially distributed inter-event times, which is the case for events that are generated by a Poisson process, and \( c_{v} \) can get arbitrarily large for long-tailed distributions, such as power laws.
+
 A normalized variant of the coefficient of variation was proposed by \citet{Goh2008}, which is called burstiness parameter and is defined as
 
 \begin{equation}
     B = \frac{c_{v} - 1}{c_{v} + 1} = \frac{\sigma - \mu}{\sigma + \mu},
 \end{equation}
 
-and takes values in the range \( -1 \leq B \leq 1 \).
-It is \( B = -1 \) for regularly occurring events, \( B = 0 \) for inter-event times that originated from a Poisson process, and \( B = 1 \) for a distribution that was derived from a extremely bursty sequence of events.
-A nice property of this measure is that it can also be applied to mixture distributions that contain the inter-event times of, for example people, with different intrinsic activity levels.
-For instance, the inter-event times of power-users that use a system heavily every day can be combined with those of users that use it only irregularly and the burstiness parameter is able to capture the level of burstiness that is present in the usage of the system regardless.
+and takes values in the range \( B \in [-1, 1] \).
+The burstiness parameter is \( -1 \) for regularly occurring events, \( 0 \) for inter-event times that originated from a Poisson process, and \( 1 \) for a distribution that was derived from an extremely bursty sequence of events.
+
+A nice property of this burstiness measure is that it can also be applied to mixture distributions that contain the inter-event times of, for example people, with different intrinsic activity levels.
+For instance, the inter-event times of power-users that use a system heavily every day can be combined with those of users that use it only irregularly and the burstiness parameter is able to capture the level of burstiness, that is present in the usage of the system, regardless.
 Therefore, it is also applicable for the inter-event time distributions derived from the simulations of the peer influence model.
-The burstiness parameter for a network with no peer influence is about \( B = 0.19 \).
-The introduction of peer influence increases this value, however, a drastic increase can only be observed for a maximum peer influence probability of \( q \ge 0.15 \).
-\Cref{tbl:burstiness-parameter} contains the mean, standard derivation and burstiness parameter of the inter-event time distribution for a maximum peer influence probability in the range \( 0 \leq q \leq 0.15 \).
 
 
 \begin{table}
@@ -317,15 +318,20 @@ The introduction of peer influence increases this value, however, a drastic incr
 \end{table}
 
 
-This indicates that the peer influence mechanism influences the burstiness of the node activations.
+The burstiness parameter for generated networks with no peer influence is approximately \( B = 0.19 \).
+The introduction of peer influence increases this value, however, a drastic increase can only be observed for larger values for the maximum peer influence probability \( q \).
+\Cref{tbl:burstiness-parameter} contains the mean, standard derivation and burstiness parameter of the inter-event time distribution for a maximum peer influence probability in the range \( 0 \leq q \leq 0.15 \).
+
+This change in \( B \) indicates that the peer influence mechanism affects the burstiness of the node activations.
 In a network with no peer influence are two consecutive self-activations independent of each other.
 Therefore, the activations happen at a certain rate that is proportional to the activity potential of a node, which leads to exponentially distributed inter-event times~\cite{Moinet2016}.
-This should lead to a burstiness parameter that is close to \( B = 0 \).
-However, this is not the case for the inter-event times that were generated with the proposed model even though peer influence was disabled (c.f. \cref{tbl:burstiness-parameter}).
-It can be explained by the memory effects in the model, which allow reoccurring interactions within groups of nodes and by the inclusion of passive activations due to other active nodes in the calculation of the inter-event times.
+This should results in a burstiness parameter that is close to \( B = 0 \).
+However, this is not the case for the inter-event times that were generated with the proposed model, even though peer influence was disabled (cf. \cref{tbl:burstiness-parameter}).
+
+The observed value for \( B \) can possibly be explained by the memory effects in the model, which allow for reoccurring interactions within groups of nodes and by the inclusion of passive activations due to other active nodes in the calculation of the inter-event times.
 A node with a higher intrinsic activity potential will select a node from its local group with high probability.
 Hence, this more active node activates less active nodes regularly, which can lead to a more bursty looking activity pattern for the other nodes and explains (at least partially) the burstiness value of \( B = 0.19 \).
-The peer influence mechanism of this model should amplify this effect even further, since it increases the activity within communities.
+The peer influence mechanism of this model should amplify this effect even more, since it increases the activity within communities.
 Furthermore, the activation of nodes possibly triggers cascading activations within the communities, which makes bursts more likely as well.
 
 
@@ -338,7 +344,7 @@ Furthermore, the activation of nodes possibly triggers cascading activations wit
 
 \myfig{inter-event-time-dist-start}
       {width=0.75\textwidth}
-      {Plot of the bulk of the inter-event time distribution for small inter-event times in the range \( 1 \leq \tau \leq 10 \) for different levels of peer influence.}
+      {Plot of the bulk of the inter-event time distribution for small inter-event times in the range \( 1 \leq \tau \leq 10 \) and different levels of peer influence.}
       {Bulk of the inter-event time distribution}
       {fig:inter-event-time-dist-start}
 
@@ -346,17 +352,19 @@ Furthermore, the activation of nodes possibly triggers cascading activations wit
 One way to examine how the peer influence mechanism changes the inter-node-activation times in the network is to inspect their distribution visually.
 \Cref{fig:inter-event-time-dist-loglog} depicts the inter-event distributions for a variety of peer influence levels.
 The plot shows the distribution on a log-log graph, where both axis are scaled logarithmically.
-This highlights that longer inter-event times are indeed possible between two consecutive activations.
+This highlights the possibilities for longer inter-event times between two consecutive activations well.
 The plot also shows that the level of peer influence in the network changes the shape of the distribution.
-Smaller inter-event times become more likely for higher levels of peer influence, which can also be seen in the change in the mean of the distributions (c.f. \cref{tbl:burstiness-parameter}).
+Smaller inter-event times become more likely for higher levels of peer influence, which can also be seen in the change in the means of the distributions (cf. \cref{tbl:burstiness-parameter}).
+
 The average time between activations decreases from about 200 in a network with no peer influence at all, to 38 in a network with \( q = 0.15 \).
-The changes in the distribution is even more noticeably for inter-event times less than ten time steps.
-\Cref{fig:inter-event-time-dist-start} depicts the distributions for this interval of \( \tau \).
+The changes in the distributions are even more noticeable for inter-event times less than ten time steps.
+\Cref{fig:inter-event-time-dist-start} depicts the distributions in this interval of \( \tau \).
 The probability for two successive activations increases drastically from less than 2\% to almost 22\% over the range of possible values for \( q \).
 This development of the probabilities possibly explains the increase of the burstiness of the distributions, since a larger number of events within a small time frame becomes more probable due to the peer influence mechanism.
+
 However, the tail of the inter-event time distribution changes for higher levels of peer influence as well.
 Large inter-event times become more and more unlikely for larger values of \( q \), and the length of the tail decreases as well.
-The values for the standard derivation of the distributions reflect this behavior as well (c.f. \cref{tbl:burstiness-parameter}).
+The values for the standard derivation of the distributions reflect this behavior as well (cf. \cref{tbl:burstiness-parameter}).
 The standard derivation of the inter-event times in the network with high peer influence effects is only about one fifth of the standard derivation in the network without peer effects.
 This, of course, prevents longer intervals of inactivity to a certain extend, which is the second crucial requirement for realistic activity patterns.
 
@@ -368,22 +376,23 @@ This, of course, prevents longer intervals of inactivity to a certain extend, wh
 \section{Degree and Tie Strength Distribution}
 \label{sec:weight-and-degree-distribution}
 
-While \cref{sec:integrated-network-properties} examines the average degree and tie strength as a function of time, are the distributions of these two properties the topic of discussion in this section.
+While \cref{sec:integrated-network-properties} examines the average degree and tie strength as functions of time, are the distributions of these two properties the topic of discussion in this section.
 Both distributions are obtained from the extended version of the integrated network, which contains all nodes that were present in the last iteration of the simulation.
 The degrees and tie strengths of nodes that were deleted in previous iterations are not part of the results.
-The ramifications of the closure mechanisms and the memory process on the distributions were already a subject in the original work by \citet{Laurent2015}.
-They showed that both the degrees and the tie strengths are heterogeneously distributed.
-Furthermore, the shape of the degree distribution is only slightly effected by the triadic closure probability \( p_{\Delta} \) and the tie reinforcement increment \( \delta \).
-However, while not being effected by \( p_{\Delta} \), the tie strength distribution does dependent on the memory process of the model.
-For instance, larger values for \( \delta \) increase the length of the tail.
-Nevertheless, a more important issue are the effects on the degree and tie strength distributions by the proposed peer influence mechanism.
 
+The ramifications of the memory process and the closure mechanisms on the distributions were already a subject in the original work by \citet{Laurent2015}.
+They showed that both the degrees and the tie strengths are heterogeneously distributed.
+Furthermore, the shape of the degree distribution is only slightly affected by the triadic closure probability \( p_{\Delta} \) and the tie reinforcement increment \( \delta \).
+However, while not being effected by \( p_{\Delta} \), the tie strength distribution does depend on the memory process of the model.
+For instance, larger values for \( \delta \) increase the length of the tail.
+
+Nevertheless, a more important issue are the effects on the degree and tie strength distributions caused by the proposed peer influence mechanism.
 First and most important, the peer influence mechanism does not effect the heterogeneous nature of both distributions, which is an often observed property in many real world networks~\cite{Barabasi2002, Karsai2014}.
 The resulting possibilities for nodes with higher degree indicate the presence of hubs, which may play, depending on the context, various important roles in networks.
 \Cref{fig:degree-dist} depicts the right-skewed degree distributions for networks with different levels of peer influence.
 It shows that not only the average degree in the network is directly effected by the peer influence process, but the distribution itself as well.
 Nodes with small degrees become less probable, while higher degree nodes become more frequent with the increasing magnitude of peer influence.
-However, the tail of the distribution does not seem to be significantly effected by the process.
+Furthermore, the tail of the distribution does not seem to be significantly effected by the process.
 The change in the shape of the distribution is in line with the already observed increasing average degree and can be explained by the same argument as well.
 The boost in node activations caused by the influence of the neighbors leads to more opportunities for the formation of new ties and consequently to larger egocentric networks.
 
@@ -401,12 +410,12 @@ The boost in node activations caused by the influence of the neighbors leads to 
       {Tie strength distribution}
       {fig:weights-dist}
 
-The memory process is primary responsible for the heterogeneous tie strength distribution and the introduction of the peer influence mechanism does in fact not change the distribution in a significant way.
+The memory process is primarily responsible for the heterogeneous tie strength distribution and the introduction of the peer influence mechanism does, in fact, not change the distribution in a significant way.
 \Cref{fig:weights-dist} shows the distributions for different values for the maximum peer influence probability.
-It could be expected that the increased activity within the temporal network would extend the tail of the distribution, however, this is not the case.
-A possible explanation of this effect is related to the increased average size of the egocentric networks.
-More neighbors imply a larger number of strong ties as well, which require frequent contacts to develop.
-Therefore, the additional activations caused by the peer influence mechanism are spend on the development of the additional strong ties and not reinforcing the existing ones, which would enlarge the tail.
+One might expect that the increased activity within the temporal network would extend the tail of the distribution in a significant way.
+However, this is not the case, and a possible explanation for this effect is related to the increased average size of the egocentric networks.
+More neighbors imply a larger number of strong ties, which require frequent contacts to develop.
+Therefore, the additional activations caused by the peer influence mechanism are spent on the development of the additional strong ties and not on reinforcing the existing ones, which would presumably enlarge the tail.
 This would also explain the more frequent weights in the lower double-digit region, which is a consequence of the on average increased tie strength for networks with peer effects.
 
 
@@ -419,42 +428,45 @@ This would also explain the more frequent weights in the lower double-digit regi
 
 Nodes are only able to influence their peers if they were active in the previous iteration.
 The magnitude of influence does depend on the strength of the ties between nodes.
-This is based on the idea that the activity of a close friend should be more effective to motivate a person to become active as well than the activities of acquaintances.
+This is based on the idea that the activity of a close friend should be more effective in motivating a person to become active as well, than the activities of acquaintances.
+
 The weights (i.e., the strength of the ties) are usually rescaled in such a way that larger weights become even larger to amplify the importance of close neighbors.
-This can be archived using the softmax function, which also allows to control the weight rescaling process even more using the inverse temperature parameter \( \beta \).
+This can be archived by using the softmax function, which also allows to control the weight rescaling process even more using the inverse temperature parameter \( \beta \).
 This free parameter can vary in time as well to allow for different rescaling characteristics depending on the progress of the simulation.
 Furthermore, it also allows for various peer influence scenarios, in which nodes get influenced in different extents depending on the situation.
+
 This section highlights the ramification on the peer influence mechanism for the following three different weight rescaling strategies.
 Note that the results for the scenarios are obtained from synthetic networks with a fixed maximum peer influence probability of \( q = 0.05 \).
 All other model parameter are set to the same values that are used in the other experiments as well.
 
 \myparagraph{\( \beta(t) = \langle w \rangle {(t)}^{-1} \)}
 The temperature for the softmax rescaling is set to the average tie strength in the snapshot of integrated network at time \( t \).
-This scenario is used for all other previously discussed experiments in this chapter.
+This scenario is used in all other previously discussed experiments in this chapter.
 \Cref{sec:integrated-network-properties} shows that the average tie strength does increase over time until it reaches its stationary value.
 Therefore, this effectively introduces a bias towards stronger ties in the early stages of the simulation that decays over time.
-The activity of close neighbors influences nodes in a larger extent in the beginning, which is possibly beneficial for the formation of the community structures.
+The activity of close neighbors influences nodes to a greater extent in the beginning, which is possibly beneficial for the formation of the community structures.
 
 \myparagraph{\( \beta(t) = 1 \)}
 In this scenario the inverse temperature parameter is fixed to the constant value \( 1 \) for each iteration.
-Therefore, the bias towards strong ties is overall more prominent compared to the previous scenario and does not change during the entire simulation.
-This may lead to situations in which only a very small number of neighbors do actually influence a node once they become active, since weaker ties with other nodes become so insignificant that they do not exercise considerable influence anymore.
+Therefore, the bias towards strong ties is overall more prominent compared to the previous scenario, and does not change during the entire simulation.
+This may lead to situations in which only a very small number of neighbors do actually influence a node once they become active, since weaker ties become so insignificant that they do not exercise considerable influence anymore.
 Hence, only one of the highly influential neighbors is possibly enough to influence a node at the maximum possible level.
 
 \myparagraph{\( \beta(t) = 0 \)}
 In the last scenario \( \beta \) is fixed to \( 0 \), which basically disables the softmax weight rescaling entirely and assigns each tie the exact same weight.
-The strength of the tie between any ordered pair of nodes \( (v_{i}, v_{j}) \) in the network is set to \( w'_{i,j} = \sfrac{1}{|N(v_{i})|} \).
-This allows neighbors, which share a weak tie with a node to exercise the same degree of peer influence as strong tied neighbors.
+The strength of the tie between any ordered pair of nodes \( (v_{i}, v_{j}) \) in the network is rescaled to \( w'_{i,j} = \sfrac{1}{|N(v_{i})|} \).
+This allows neighbors, which share a weak tie with a node, to exercise the same degree of peer influence as strong tied neighbors.
 Therefore, an on average larger number of active neighbors may be required to reach the maximum possible magnitude of peer influence for a node.
 
 It seems reasonable to examine the change in the network activity for the three different rescaling scenarios, since most of the explanations for the effects observed in the other experiments are related to it.
-\Cref{fig:activity-beta-scenarios} shows the number of interactions between nodes and the fraction of peer influenced interactions as function of time for the three different scenarios.
+\Cref{fig:activity-beta-scenarios} shows the number of interactions between nodes and the fraction of peer influenced interactions as functions of time for the three different scenarios.
+
 Compared to the rescaling scenario that adapts to the average tie strength in the network, an overall decrease in the number of interactions is observable in the \( \beta = 1 \) scenario.
 This behavior can be attributed to an excessive bias towards strong ties.
 Nodes only become active by them self due to their intrinsic activity potential or possibly if one or two of their strong tied neighbors were active in the round before.
-This possibly restricts possible cascading activations within groups as well, since weakly tied nodes are node able to propagate activations properly.
-The number of contacts and the fraction of those activations that were peer influenced increase rapidly in the first few hundred iterations in the \( \beta = 1 \) scenario and decreases slightly after they reached their maximum value.
-This small decrease is not observable in the other two scenarios and can possibly be attributed to the weight heterogeneity that starts to emerge at this point in time in the network, which amplifies the effect.
+This probably restricts cascading activations within groups as well, since weakly tied nodes are not able to propagate activations properly.
+The number of contacts and the fraction of those activations that were caused by peer influence increase rapidly in the first few hundred iterations in the \( \beta = 1 \) scenario, and decreases slightly after they reached their maximum value.
+This small decrease is not observable in the other two scenarios and can possibly be attributed to the weight heterogeneities that starts to emerge at this point in time in the network, which amplifies the effect.
 
 
 \begin{figure}[htbp]
@@ -471,14 +483,14 @@ This small decrease is not observable in the other two scenarios and can possibl
 \label{fig:percentage-influenced-activity-beta}
 \end{subfigure}
 
-\caption[Network activity with different rescaling scenarios]{Depiction of the influence on the activity over time for different values of \( \beta \), the inverse temperature for softmax rescaling. (\subref{fig:number-of-contacts-beta}) shows the number of interactions for each iteration \( \#e(t) \) and (\subref{fig:percentage-influenced-activity-beta}) depicts the fraction of activations that were caused by the peer influence mechanism \( i(t) \). The graphs were smoothed using the rolling mean method to improve the quality of the visualization.}
+\caption[Network activity in different rescaling scenarios]{Depiction of the influence on the activity over time for different values of \( \beta \), the inverse temperature for softmax rescaling. (\subref{fig:number-of-contacts-beta}) shows the number of interactions for each iteration \( E(t) \) and (\subref{fig:percentage-influenced-activity-beta}) depicts the fraction of activations that were caused by the peer influence mechanism \( i(t) \). The graphs were smoothed using the rolling mean method to improve the quality of the visualization.}
 \label{fig:activity-beta-scenarios}
 \end{figure}
 
 
 The scenario that disables the softmax weight rescaling using \( \beta = 0 \), however, does increase the number of contacts in the network in each iteration drastically.
 The expected larger number of active neighbors, which is required to motivate a node seems to be archived fairly often.
-This can possibly attributed to the relatively low critical peer influence threshold \( \theta = 0.10 \), which should probably be adjusted for this rescaling scenario.
+This can possibly be attributed to the relatively low critical peer influence threshold \( \theta = 0.10 \), which should probably be adjusted for this rescaling scenario.
 Furthermore, the network activity does not convergence in this scenario.
 One possible explanation for the continuous increase in the number of contacts could be attributed to self-enhancing cascading activation effects going through the network.
-However, this requires additional investigation and is a possible topic for future studies. \todo{future work}
+However, this requires additional investigation and is a possible topic for future studies.

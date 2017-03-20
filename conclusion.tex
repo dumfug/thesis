@@ -4,7 +4,7 @@
 This last chapter of the thesis not only presents a review on the achieved results, but also includes a short summary of the preceding chapters.
 It contains a discussion of possible limitations of the proposed peer influence model and the methods that were used for its evaluation.
 The chapter concludes with suggestions for possible future studies.
-These suggestion include improvements for the model itself and potential interesting experiments on synthetic and real-world networks.
+These suggestion include improvements for the model itself, and potential interesting experiments on synthetic and real-world networks.
 
 
 %% ========================================================================
@@ -14,35 +14,35 @@ These suggestion include improvements for the model itself and potential interes
 \section{Recap}
 \label{sec:recap}
 
-The thesis starts with a short motivational section, which sequentially leads to the incentive for the proposal of an extension to the activity-driven time-varying network framework~\cite{Perra2012a}, which incorporates peer influence effects.
-The key idea behind the proposal is that people do not solely perform actions as a result of their intrinsic motivation, but also because of the influence of their peers.
-This stands in contrast to the activity-driven network model in which nodes can become active only by them self based on their activity potential.
+We start our work with a brief motivational section, which sequentially leads to the incentive for the proposal of an extension to the activity-driven time-varying network framework~\cite{Perra2012a}, which incorporates peer influence effects.
+The key idea behind the proposal is that people do not solely perform actions based on their intrinsic motivation, but also because of the influence of their peers.
+This idea stands in contrast to the activity-driven network model, in which nodes can become active only by them self based on their activity potential.
 Therefore, it provides an ideal foundation to implement a model with a peer influence mechanism on top of it.
 
 Moreover, preliminaries on the basic topics of graph theory, various types of networks and related generative models, and time-varying networks are discussed.
 These are essential for the subsequent definition and evaluation of the proposed model.
 A detailed review on the activity-driven framework itself, the properties of the temporal networks it generates, and on the latest related literature that either adapts or extents it, is performed as well.
-Furthermore, an overview on sociological peer influence studies and network models, which utilize different types of peer influence mechanisms, is also an element of this thesis.
-This additionally highlights the rationale behind the presented model.
+Furthermore, an overview on sociological peer influence studies and network models, which utilize different types of peer influence mechanisms, is also an element of our work, to highlight the rationale behind the proposed model.
 
 The presence of peer influence effects requires social structures, such as tie strength heterogeneities and community structures, to exist in the network and while the basic activity-driven framework is capable of generating rich topological structures, it is not able to provide these preconditions.
 To overcome this issue, an extension of the framework by \citet{Laurent2015} is utilized as actual foundation for the proposed model.
 It introduces memory effects and closure processes to allow for the formation of communities and weight-topological correlations in the temporal network.
 The mechanisms and properties of this model are discussed in detail as well, followed by the comprehensive definition of the peer influence extension, which was heavily influenced by the work of \citet{Walk2016}.
+
 The actual specification of the peer influence mechanism resolves various important issues such as,
 
-\begin{itemize}
+\begin{itemize}[\itemsep=\parsep]
     \item how to quantify the influence of neighbors in the egocentric network of a node,
     \item how to determine the relative influence of individual neighbors based on the tie strengths, or
     \item what additional components must be included into the model to store the for the peer influence mechanism relevant information.
 \end{itemize}
 
-After the model was fully specified it was evaluated on synthetic networks.
+After the model\footnote{An open-source implementation of the proposed model can be found at \url{https://github.com/dumfug/PIModel}} was fully specified, we evaluated it on synthetic networks.
 This included an examination of the effects on the topological structures of the network, which showed that the peer influence mechanism does accelerate the formation of the community structures and influences their strength.
-Additional investigation on the increased activity within the network and its implications was conducted as well.
-It revealed not only the complex behavior of the activations per iteration over time for larger magnitudes of peer influence, but also the impact on the activation patterns of nodes.
+Additional investigations on the increased activity within the network and its implications was conducted as well.
+They revealed not only the complex behavior of the activations per iteration over time for larger magnitudes of peer influence, but also the impact on the activation patterns of nodes.
 The distribution of time intervals between two consecutive activations changed in a way that allows for increased burstiness, which is a property that is observable in human activity patterns.
-Finally, there was an evaluation of three different scenarios that vary the relative influence of the tie strengths between nodes and their effects on the overall network activity.
+Finally, we performed an evaluation of three different scenarios that vary the relative influence of the tie strengths between nodes and their effects on the overall network activity.
 This revealed interesting consequences, especially in the case in which the influence of nodes was set to be independent of the actual tie strengths, which resulted in diverging levels of activity in the network.
 
 
