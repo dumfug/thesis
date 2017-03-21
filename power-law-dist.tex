@@ -1,11 +1,11 @@
 \chapter{Power-law Probability Distribution}
 
 
-This thesis often refers to power-law probability distributions, especially in the context of activity-driven models.
+In this thesis we often refer to power-law probability distributions, especially in the context of activity-driven models.
 However, for the sake of simplicity the exact formula of the distribution is never explicitly stated.
 This appendix contains the derivation for the exact density, distribution function, and the mean value of the probability distribution.
-Additionally, it contains an example and a short description of the inverse transform sampling method used in this thesis.
-However, this requires a more formal definition of the distribution, so let \(X\) be a continuous random variable with the probability density function \(f(x) \sim x^{-\gamma}\), taking values in the range \(X \in [\epsilon, 1]\), and with \(\gamma > 0\) and \(0 < \varepsilon \leq 1\).
+Additionally, it contains an example and a short description of the inverse transform sampling method, which is used in the implementation of the model.
+However, all this requires a more formal definition of the distribution, so let \( X \) be a continuous random variable with the probability density function \( f(x) \sim x^{-\gamma} \), taking values in the range \( X \in [\epsilon, 1] \), with \( \gamma > 0 \) and \( 0 < \varepsilon \leq 1 \).
 
 
 %% ========================================================================
@@ -23,16 +23,18 @@ The probability density function (PDF) of the power-law distributed random varia
 		c x^{-\gamma} & \varepsilon \leq x \leq 1 \\
 		0             & \text{otherwise.}
 	\end{cases}
-	\label{eq:pdf}
+\label{eq:pdf}
 \end{equation}
 
-The factor \(c\) is a normalizing constant to ensure that the function fulfills the properties of a probability density function (i.e., \(\int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = 1\)).
-To calculate the normalizing constant the equation must be solved for \(c\) (see~\cref{eq:normalizing-const}).
+The factor \( c \) denotes a normalizing constant, which ensures that the function fulfills the properties of a probability density function (i.e., \( \int_{-\infty}^{\infty} f(x) \, \mathrm{d}x = 1 \)).
+To calculate the normalizing constant, \cref{eq:pdf} must be solved for \( c \), i.e.,
 
 \begin{align}
+\begin{split}
 	& \int_{-\infty}^{\infty} cx^{-\gamma} \, \mathrm{d}x = c \int_{\varepsilon}^{1} x^{-\gamma} \, \mathrm{d}x = c \, \frac{x^{1-\gamma}}{1-\gamma}  \bigg |_{\varepsilon}^{1} = c \, \frac{1 - \varepsilon^{1-\gamma}}{1-\gamma} = 1 \\
-	& \Leftrightarrow \, c = \frac{1-\gamma}{1 - \varepsilon^{1-\gamma}}
-	\label{eq:normalizing-const}
+	& \Leftrightarrow \, c = \frac{1-\gamma}{1 - \varepsilon^{1-\gamma}}.
+\end{split}
+\label{eq:normalizing-const}
 \end{align}
 
 
@@ -43,31 +45,31 @@ To calculate the normalizing constant the equation must be solved for \(c\) (see
 \section{Cumulative Distribution Function}
 \label{sec:cdf}
 
-The cumulative distribution function (CDF) is used to calculate the probability that a random variable with a probability distribution \(f\) takes a value less then \(x\) (see \cref{eq:cdf-def} for the definition).
+The cumulative distribution function (CDF) is used to calculate the probability that a random variable with a probability distribution \( f \) takes a value less than \( x \), i.e.,
 
 \begin{equation}
-	F(x) = \int_{-\infty}^{x} f(t) \, \mathrm{d}t
-	\label{eq:cdf-def}
+	\prob{X \leq x} = F(x) = \int_{-\infty}^{x} f(t) \, \mathrm{d}t.
+\label{eq:cdf-def}
 \end{equation}
 
 The derivation of the cumulative distribution function for the power-law distribution defined above is done in \cref{eq:cdf}.
-Note that this only holds for values of \(\gamma \neq 1\).
+Note that this result only holds for values of \( \gamma \neq 1 \).
 
 \begin{equation}
 	F(x) = \int_{-\infty}^{x} ct^{-\gamma} \, \mathrm{d}t = c \, \frac{t^{1-\gamma}}{1-\gamma}  \bigg |_{\varepsilon}^{x} = \frac{c}{1-\gamma} \Big( x^{1 - \gamma} - \varepsilon^{1 - \gamma} \Big)
-	\label{eq:cdf}
+\label{eq:cdf}
 \end{equation}
 
-Due to the range of possible values that can be taken by the probability density with positive probability, the CDF can be written as a piece-wise function (\cref{eq:cdf-pieces}).
+Due to the range of possible values that can be taken by the probability density with positive probability, the CDF can be rewritten as a piece-wise function, i.e.,
 
 \begin{equation}
 	F(x) =
 	\begin{cases}
-		0                                                                        & x < \varepsilon        \\
+		0 & x < \varepsilon \\
 		\frac{c}{1-\gamma} \Big( x^{1 - \gamma} - \varepsilon^{1 - \gamma} \Big) & \varepsilon \leq x < 1 \\
-		1                                                                        & x \geq 1
+		1 & x \geq 1
 	\end{cases}
-	\label{eq:cdf-pieces}
+\label{eq:cdf-pieces}
 \end{equation}
 
 
@@ -78,36 +80,38 @@ Due to the range of possible values that can be taken by the probability density
 \section{Expected Value}
 \label{sec:expected-value}
 
-The expected value for the random variable, which was defined in the beginning, is derived in \cref{eq:exp-val}.
-
+The expected value of the random variable \( X \), which was defined in the beginning, is derived as follows,
 
 \begin{align}
+\begin{split}
 	\expval{X} & = \int_{-\infty}^{\infty} x f(x) \, \mathrm{d}x = \int_{\varepsilon}^{1} x f(x) \, \mathrm{d}x = c \int_{\varepsilon}^{1} x x^{-\gamma} \, \mathrm{d}x \\
 	    & = c \int_{\varepsilon}^{1} x^{-\gamma+1} \, \mathrm{d}x = c \frac{x^{2-\gamma}}{2-\gamma}  \bigg |_{\varepsilon}^{1} = \frac{c}{2-\gamma} \Big(1 - \varepsilon^{2-\gamma}\Big)
+\end{split}
 \label{eq:exp-val}
 \end{align}
 
+
 %% ========================================================================
 %% ========================================================================
 
 
-\section{Example: \(\gamma = 2.5\) and \(\varepsilon = 10^{-2}\)}
+\section{Example: \( \gamma = 2.5 \) and \( \varepsilon = 10^{-2} \)}
 \label{sec:example}
 
-For this example, the exponent parameter of the distribution is set to \(\gamma = 2.5\) and the lower bound is \(\varepsilon = 0.01\).
-These parameters require a normalizing constant of \(c = \frac{1}{666}\).
-Therefore, the density is \(f(x) = \frac{x^{-2.5}}{666}\) and has a expected value of \(0.027\).
-\cref{fig:example-pdf} and \cref{fig:example-cdf} show the plots for the probability distribution function and the cumulative distribution function, respectively, for this example.
+For this example, the exponent parameter of the distribution is set to \( \gamma = 2.5 \) and the lower bound is fixed to \( \varepsilon = 0.01 \).
+These parameter require a normalizing constant of \( c = \sfrac{1}{666} \).
+Therefore, the density is \( f(x) = \sfrac{x^{-2.5}}{666} \) and has a expected value of \( 0.027 \).
+\Cref{fig:example-pdf} and \cref{fig:example-cdf} show the plots for the probability distribution function and the cumulative distribution function for this example, respectively.
 
 \myfig{example-pdf}
       {width=0.75\textwidth}
-      {Log-log plot of the probability density function \(f(x) = \frac{x^{-2.5}}{666}\) taking values in the range \([0.01, 1]\).}
+      {Log-log plot of the probability density function \( f(x) = \frac{x^{-2.5}}{666 }\) taking values in the range \( [0.01, 1] \).}
       {Example probability density function of a power-law distribution.}
       {fig:example-pdf}
 
 \myfig{example-cdf}
       {width=0.75\textwidth}
-      {Plot if the cumulative distribution function of the power-law distribution described by the PDF \(f(x) = \frac{x^{-2.5}}{666}\) taking values in the range \([0.01, 1]\).}
+      {Plot of the cumulative distribution function of the power-law distribution described by the PDF \( f(x) = \frac{x^{-2.5}}{666} \) taking values in the range \( [0.01, 1] \).}
       {Example cumulative distribution function of a power-law distribution.}
       {fig:example-cdf}
 
@@ -119,42 +123,45 @@ Therefore, the density is \(f(x) = \frac{x^{-2.5}}{666}\) and has a expected val
 \section{Inverse Transform Sampling}
 \label{sec:inverse-transform-sampling}
 
-To generate samples from the prior defined power-law distribution the inverse transform sampling method is used in this thesis.
+To generate samples from the prior defined power-law distribution, the inverse transform sampling method is used in the context of this thesis.
 This algorithm is based on the inversion principle~\cite{Devroye1986}.
-It states that, if \(U\) is a uniform random variable on the unit interval (i.e., \(U \sim \mathcal{U}(0,1)\)), then the random variable \(Y = F^{-1}(U)\) has the probability distribution function \(F\), where \(F^{-1}\) is the inverse distribution function.
-The proof for this theorem is very short (see \cref{eq:proof-inversion-principle}) and uses the fact that \(\prob{U \leq x} = x\) for a random variable \(U \sim \mathcal{U}(0,1)\).
+It states that if \( U \) is a uniform random variable on the unit interval (i.e., \( U \sim \mathcal{U}(0,1) \)), then the random variable \( Y = F^{-1}(U) \) has the probability distribution function \( F \), where \( F^{-1} \) is the inverse distribution function.
+The proof of this theorem is very short (cf. \cref{eq:proof-inversion-principle}) and exploits the fact that \( \prob{U \leq x} = x \) for a random variable \( U \sim \mathcal{U}(0,1) \).
 
 \begin{equation}
-    \prob{F^{-1}(U) \leq x} = \prob{U \leq F(x)} = F(x)
-    \label{eq:proof-inversion-principle}
+    \prob{Y \leq x} = \prob{F^{-1}(U) \leq x} = \prob{U \leq F(x)} = F(x)
+\label{eq:proof-inversion-principle}
 \end{equation}
 
-The actual algorithm is also very short and simple.
-To draw a sample from a distribution with a cumulative distribution function \(F\), simply execute the following two steps:
+The actual algorithm is very short and simple as well.
+To draw a sample from a distribution with a cumulative distribution function \( F \), execute the following two steps:
 
 \begin{enumerate}
-    \item draw a number \(r\) uniformly at random from the unit interval \([0, 1]\)
-    \item calculate \(F^{-1}(r)\) to obtain the sample
+    \item Draw a number \( r \) uniformly at random from the unit interval \( [0, 1] \).
+    \item Calculate \( F^{-1}(r) \) to obtain the sample.
 \end{enumerate}
 
-However, the inverse transform sampling method requires the inverse of the cumulative distribution function \(F^{-1}\).
-This can, for example, be done by solving \(F(x) = y\) for \(x\).
+However, the inverse transform sampling method requires the inverse of the cumulative distribution function \( F^{-1} \).
+This can, for example, be done by solving \( F(x) = y \) for \( x \).
 The inverse CDF for the power-law distribution is
 
 \begin{equation}
-    F^{-1}(x) = \Big( \frac{x(1-\gamma)}{c} + \varepsilon^{1-\gamma} \Big)^{1/1-\gamma}
+    F^{-1}(x) = \Big( \frac{x(1-\gamma)}{c} + \varepsilon^{1-\gamma} \Big)^{1/1-\gamma}.
 \end{equation}
 
 See \cref{eq:inverese-cdf} for the derivation.
-\Cref{fig:example-sampled-pdf} depicts a approximation of a power-law distribution that was generated using the inverse transfom algorithm.
+\Cref{fig:example-sampled-pdf} depicts an approximation of a power-law distribution that was generated using the inverse transform sampling algorithm.
 
 \begin{align}
+\begin{split}
 	\frac{c}{1-\gamma} \Big( x^{1 - \gamma} - \varepsilon^{1 - \gamma} \Big) & = y \\
     x^{1-\gamma} - \varepsilon^{1-\gamma} & = \frac{y(1-\gamma)}{c} \\
     x^{1-\gamma} & = \frac{y(1-\gamma)}{c} + \varepsilon^{1-\gamma} \\
     x & = \Big( \frac{y(1-\gamma)}{c} + \varepsilon^{1-\gamma} \Big)^{1/1-\gamma}
+\end{split}
 \label{eq:inverese-cdf}
 \end{align}
+
 
 \myfig{example-sampled-pdf}
       {width=0.75\textwidth}

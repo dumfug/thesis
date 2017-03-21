@@ -1,9 +1,9 @@
 \chapter{Conclusion}
 \label{cha:conclusion}
 
-This last chapter of the thesis not only presents a review on the achieved results, but also includes a short summary of the preceding chapters.
-It contains a discussion of possible limitations of the proposed peer influence model and the methods that were used for its evaluation.
-The chapter concludes with suggestions for possible future studies.
+In the final chapter of this thesis we not only present a review on the achieved results, but also include a short summary of the preceding chapters.
+Furthermore, we discuss possible limitations of the proposed peer influence model and the methods that were used for its evaluation.
+Finally, we conclude the thesis with suggestions for possible future studies.
 These suggestion include improvements for the model itself, and potential interesting experiments on synthetic and real-world networks.
 
 
@@ -14,33 +14,33 @@ These suggestion include improvements for the model itself, and potential intere
 \section{Recap}
 \label{sec:recap}
 
-We start our work with a brief motivational section, which sequentially leads to the incentive for the proposal of an extension to the activity-driven time-varying network framework~\cite{Perra2012a}, which incorporates peer influence effects.
+We started our work with a brief motivational section, which sequentially led to the incentive for the proposal of an extension to the activity-driven time-varying network framework~\cite{Perra2012a}, which incorporates peer influence effects.
 The key idea behind the proposal is that people do not solely perform actions based on their intrinsic motivation, but also because of the influence of their peers.
 This idea stands in contrast to the activity-driven network model, in which nodes can become active only by them self based on their activity potential.
 Therefore, it provides an ideal foundation to implement a model with a peer influence mechanism on top of it.
 
-Moreover, preliminaries on the basic topics of graph theory, various types of networks and related generative models, and time-varying networks are discussed.
+Moreover, preliminaries on the basic topics of graph theory, various types of networks and related generative models, and time-varying networks were discussed.
 These are essential for the subsequent definition and evaluation of the proposed model.
-A detailed review on the activity-driven framework itself, the properties of the temporal networks it generates, and on the latest related literature that either adapts or extents it, is performed as well.
-Furthermore, an overview on sociological peer influence studies and network models, which utilize different types of peer influence mechanisms, is also an element of our work, to highlight the rationale behind the proposed model.
+A detailed review on the activity-driven framework itself, the properties of the temporal networks it generates, and on the latest related literature that either adapts or extents it, was performed as well.
+Furthermore, an overview on sociological peer influence studies and network models, which utilize different types of peer influence mechanisms, is also an element of our work, to highlight the rationale behind the proposed model even more.
 
-The presence of peer influence effects requires social structures, such as tie strength heterogeneities and community structures, to exist in the network and while the basic activity-driven framework is capable of generating rich topological structures, it is not able to provide these preconditions.
-To overcome this issue, an extension of the framework by \citet{Laurent2015} is utilized as actual foundation for the proposed model.
-It introduces memory effects and closure processes to allow for the formation of communities and weight-topological correlations in the temporal network.
-The mechanisms and properties of this model are discussed in detail as well, followed by the comprehensive definition of the peer influence extension, which was heavily influenced by the work of \citet{Walk2016}.
+The presence of peer influence effects requires social structures, such as tie strength heterogeneities and community structures, to exist in the network, and while the basic activity-driven framework is capable of generating rich topological structures, it is not able to provide these preconditions.
+To overcome this issue, an extension of the framework by \citet{Laurent2015} was utilized as actual foundation for the proposed model.
+It introduces memory effects and closure processes to allow for the formation of communities and weight-topological correlations in the networks.
+The mechanisms and properties of this model were discussed in detail as well, followed by the comprehensive definition of the peer influence extension, which was heavily influenced by the work of \citet{Walk2016}.
 
-The actual specification of the peer influence mechanism resolves various important issues such as,
+The actual specification of the peer influence mechanism resolves various important issues, such as,
 
-\begin{itemize}[\itemsep=\parsep]
+\begin{itemize}
     \item how to quantify the influence of neighbors in the egocentric network of a node,
     \item how to determine the relative influence of individual neighbors based on the tie strengths, or
     \item what additional components must be included into the model to store the for the peer influence mechanism relevant information.
 \end{itemize}
 
-After the model\footnote{An open-source implementation of the proposed model can be found at \url{https://github.com/dumfug/PIModel}} was fully specified, we evaluated it on synthetic networks.
+After the model\footnote{An open-source Python implementation of the proposed model can be found at \url{https://github.com/dumfug/PIModel}.} was fully specified, we evaluated it on synthetic networks.
 This included an examination of the effects on the topological structures of the network, which showed that the peer influence mechanism does accelerate the formation of the community structures and influences their strength.
-Additional investigations on the increased activity within the network and its implications was conducted as well.
-They revealed not only the complex behavior of the activations per iteration over time for larger magnitudes of peer influence, but also the impact on the activation patterns of nodes.
+Additional investigations on the increased activity within the networks and its implications was conducted as well.
+They revealed not only the complex behavior of the total number of activations per iteration over time for larger magnitudes of peer influence, but also the impact on the activation patterns of individual nodes.
 The distribution of time intervals between two consecutive activations changed in a way that allows for increased burstiness, which is a property that is observable in human activity patterns.
 Finally, we performed an evaluation of three different scenarios that vary the relative influence of the tie strengths between nodes and their effects on the overall network activity.
 This revealed interesting consequences, especially in the case in which the influence of nodes was set to be independent of the actual tie strengths, which resulted in diverging levels of activity in the network.
@@ -53,22 +53,23 @@ This revealed interesting consequences, especially in the case in which the infl
 \section{Limitations}
 \label{sec:limitations}
 
-One shortcoming, which effects all performed experiments, is the relatively small size of the generated networks.
+One shortcoming, which effected all performed experiments, is the relatively small size of the generated networks.
 The number of nodes in many real-world networks can be multiple orders of magnitude larger.
 However, to simulate temporal networks of this size efficiently, improvements in implementation of the model must be made, which minimize the additional overhead of the peer influence mechanism.
 Nevertheless, this would possibly help to explain some observed effects better.
 For example, the temporarily decrease in the network activity for higher levels of peer influence, which could possibly be explained by the merging of communities in the network, is probably more prominent in larger networks.
 
-Simulations of the model with an increased number of nodes would also allow to compare the properties of synthetically generated networks with those of real-world data sets more easily and therefore, help to verify the validity of the proposed model.
+Simulations of the model with an increased number of nodes would also allow to compare the properties of synthetically generated networks with those of real-world data sets more easily, and therefore help to verify the validity of the proposed model.
 This would not only be highly interesting for topological features like clustering, but also the inter-event time distribution.
 The observed changes in the distribution do not fully capture the discussed characteristics of human activity patterns, which are bursts followed by longer intervals of inactivity.
-While the probability for short breaks between activation increases with additional peer influence, which matches the first requirement, declines the length of the tail.
+While the probability for short breaks between activations increased with additional peer influence, which matches the first requirement, declined the length of the tail.
 This, again, restricts the possibilities for longer intervals between bursts.
 
-A possible explanation for this behavior is the imbalance of the peer influence mechanism.
-On one hand does a level of peer influence, which is set too low, not affect the activity significantly, on the other hand becomes the process too dominant for higher levels and leads to bursts within communities that are repeated over and over again.
-A potential solution would be to restrict the peer influence process in a way that nodes cannot be easily influenced multiple times within a short period of time (i.e., a cool down time of the effect).
-However, this requires additional investigation on how these cascading peer influence effects work.
+A possible explanation for this behavior is an imbalance of the peer influence mechanism.
+On one hand, a level of peer influence that is set too low, does not affect the activity in a significant way.
+On the other hand, the process becomes too dominant for higher levels, and leads to bursts within communities that are repeated over and over again.
+A potential solution would be to restrict the peer influence process in a way that nodes cannot be easily influenced multiple times within a short period of time (i.e., a cool-down time for the effect).
+However, this requires additional investigation on how these cascading peer influence effects actually work.
 
 
 %% ========================================================================
@@ -87,21 +88,21 @@ Two common types of these dynamic processes are epidemic models and opinion spre
 The first one deals with the spreading of diseases.
 It typically consists of a set of states (e.g., susceptible, infected, recovered,\ldots), which nodes can adopt, and transition rules between them.
 Such models can, for example, be used to study disease containment strategies.
-Opinion spreading models on the other hand deal with the spreading or adaption of certain concepts (e.g., opinions, ideas, products,\ldots), which usually have different spreading mechanisms.
-The in this thesis proposed model could be used as a framework to study such dynamic processes with respect to peer influence effects.
+Opinion spreading models, on the other hand, deal with the spreading or adaption of certain concepts (e.g., opinions, ideas, products,\ldots), which usually follow different spreading mechanisms.
+The by us proposed model could possibly be used as a framework to study such dynamic processes with respect to peer influence effects.
 
 \paragraph{Negative Peer Influence}
-Peer influence is always considered a positive force in the current version of the proposed model, which changes the activity level of nodes in a positive way.
-This could, for example, be observable in the context of open source projects in which the activity of maintainers increases the motivation of others to contribute as well.
-However, the activity of people in some social scenarios may lead to the opposite effect too.
-For example, a large number of malicious contributions (e.g., due to trolls) in online communities may induce an decline in the overall interest in the website.
+Peer influence is always considered a positive force in the current version of the proposed model, which affects the activity level of nodes in a positive way.
+This type of peer influence could, for example, be observable in the context of open-source software projects, in which the activity of maintainers possibly increases the motivation of others to contribute as well.
+However, the activity of people in some social scenarios may lead to the opposite effect.
+For example, a large number of malicious contributions (e.g., due to trolls) in online communities may induce a decline in the overall interest in the website.
 Therefore, it would be also feasible to introduce negative peer effects in the model, which reduces the activity of nodes, and study its implications.
 
 \paragraph{Peer Influence Mechanics}
-The way the peer influence mechanism was implemented in the proposed model was heavily based on the work by \citet{Walk2016} and on the intuitive understanding of the concept.
+The way the peer influence mechanism was implemented in the proposed model was based on the work of \citet{Walk2016}, and on the intuitive understanding of the concept.
 However, no claim to completeness and correctness for the presented model is made.
 There is always potential for improvement by the inclusion of new ideas or the removal of existing elements of the model.
-For example, the complex softmax weight rescaling mechanism could be replaced with a simple weighted fraction.
+For example, the complex softmax weight rescaling mechanism may be replaced with a simple weighted fraction.
 This would remove one free parameter and possibly improve the runtime performance.
-Another possible extension would be the introduction of a critical peer influence threshold, which depends on the size of the egocentric network of a node.
-This would allow for additional peer influence scenarios, like reduced influence for hubs.
+Another potential extension would be the introduction of a critical peer influence threshold, which depends on the size of the egocentric network of a node.
+This would allow for additional peer influence scenarios, like a reduced influence of hubs.
