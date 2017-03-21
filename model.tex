@@ -67,7 +67,7 @@ More specifically, the weight is set to \( 1 \) for the first contact and increm
     \end{tikzpicture}
 
     \caption[Egocentric network example]{Egocentric network of the node \( v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes). The link-reinforcement increment in this example is set to \( \delta = 1 \). This means that the weights exactly correspond to the number of previous interactions between the nodes.}
-    \label{fig:egocentric-network}
+\label{fig:egocentric-network}
 \end{figure}
 
 
@@ -196,7 +196,7 @@ Furthermore, they introduced a node deletion mechanism, which was adapted in thi
     \end{subfigure}
 
     \caption[Cyclic closure mechanism example]{This is an illustration of the cyclic closure mechanism of the model. The network depicted in these figures is part of the union of all egocentric networks (i.e., the integrated network). (\subref{subfig:cyclic-closure-a}) shows the active node in red. In the first step, this node has to select one of his neighbors. This is done at random with respect to the tie strengths. Therefore, the probabilities for the three neighbors to be selected are \(\sfrac{3}{10}\), \(\sfrac{5}{10}\), and \(\sfrac{2}{10}\) respectively. In this example the neighbor with the highest probability was selected, which is depicted in (\subref{subfig:cyclic-closure-b}) (green node). Since the selected neighbor has neighbors himself that do not share a link with the active node yet, the cyclic closure can be completed. This is done once more by selecting one of the candidates at random with respect to the weight of the ties and creating a new tie with unit strength with probability \( p_{\Delta} \). (\subref{subfig:cyclic-closure-c}) shows they selected node (orange node) and the newly formed triangle in the network.}
-    \label{fig:cyclic-closure}
+\label{fig:cyclic-closure}
 \end{figure}
 
 
@@ -212,10 +212,10 @@ Therefore, it takes longer to reach the time invariant state if the low activity
 The expected time that a node will be part of the network can be determined by viewing a nodes' lifetime as a simple Bernoulli process.
 In each iteration a biased coin is tossed for every node.
 The outcome of this Bernoulli random experiment determines if the node stays in the network or is replaced in the next round.
-The probability for a node to be deleted after exactly \( x \) iterations is \( \prob{x} = p_{d} (1 - p_{d})^{x-1} = p_{d} \bar{p}_{d}^{x-1} \).
+The probability for a node to be deleted after exactly \( x \) iterations is \( \prob{x} = p_{d} {(1 - p_{d})}^{x-1} = p_{d} \bar{p}_{d}^{x-1} \).
 Hence, the expected value for the lifetime of a node is given by \( \expval{x} = \sum_{x=1}^{\infty} x \prob{x} = \sum_{x=1}^{\infty} x p_{d} \bar{p}_{d}^{x-1} = p_{d} \sum_{x=1}^{\infty} x \bar{p}_{d}^{x-1} \).
-This sum is related to the sum of the geometric series \( \sum_{x=0}^{\infty} r^{x} = \frac{1}{1 - r} \), for \(|r| < 1 \), by being its first derivative\footnote{The first derivative of the sum of the geometric series is \( \frac{\mathrm{d} \sum_{x=0}^{\infty} r^{x}}{\mathrm{d} r} = \sum_{x=0}^{\infty} \frac{\mathrm{d} r^{x}}{\mathrm{d} r} = \sum_{x=1}^{\infty} x r^{x-1} = \frac{\mathrm{d} \frac{1}{1-r}}{\mathrm{d} r} = \frac{1}{(1 - r)^{2}} \), for \(|r| < 1\).}.
-Therefore, the expected value for the lifetime of a node is \( \expval{x} = \sfrac{p_{d}}{(1 - \bar{p}_{d})^{2}} = \sfrac{1}{p_{d}} \).
+This sum is related to the sum of the geometric series \( \sum_{x=0}^{\infty} r^{x} = \frac{1}{1 - r} \), for \(|r| < 1 \), by being its first derivative\footnote{The first derivative of the sum of the geometric series is \( \frac{\mathrm{d} \sum_{x=0}^{\infty} r^{x}}{\mathrm{d} r} = \sum_{x=0}^{\infty} \frac{\mathrm{d} r^{x}}{\mathrm{d} r} = \sum_{x=1}^{\infty} x r^{x-1} = \frac{\mathrm{d} \frac{1}{1-r}}{\mathrm{d} r} = \frac{1}{{(1 - r)}^{2}} \), for \(|r| < 1\).}.
+Therefore, the expected value for the lifetime of a node is \( \expval{x} = \sfrac{p_{d}}{{(1 - \bar{p}_{d})}^{2}} = \sfrac{1}{p_{d}} \).
 This means that, for example, nodes with a deletion probability of \( p_{d} = \num{5e-05} \) will be on average deleted after 20,000 iterations.
 
 
@@ -343,14 +343,14 @@ It is also, for example, used in the modeling of the decision making behavior of
     \end{tikzpicture}
 
     \caption[Extended egocentric network example]{Extended egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes). Each node stores additionally the point in time on which it was last active. For instance, node \(v_{j} \) was last active at \( t = 42 \). Furthermore, the scaled and normalized weights \( w'_{i,j} \) are part of the network. For example, the scaled weight for the tie between \( v_{i} \) and \( v_{j} \) can be calculated by \( w'_{i,j} = \sfrac{\exp(3)}{\exp(3) + \exp(5) + \exp(3)} = 0.114 \). For the sake of simplicity is \( \beta = 1 \) in this example.}
-    \label{fig:extended-egocentric-network}
+\label{fig:extended-egocentric-network}
 \end{figure}
 
 
 The usage of the softmax function in our model allows for different influence scenarios.
 For example, a value of \( \beta = 0 \) (this would correspond to a very high temperature) would scale every weight to the same value, which means that every active neighbor influences a node equally, regardless of the tie strength.
 However, it also possible to make \( \beta \) time-dependent (i.e., \( \beta(t) \)), similar to a physical system that is cooling off or heating up.
-For instance, for most of our experiments is the temperature at time \( t \) set to the average weight in the integrated network \( G_{T} = \sum_{i=0}^{t} G_{i}\) (i.e., \( \beta(t) = (\frac{1}{m} \sum_{(i,j) \in E(G_{T})} w_{i,j})^{-1} \)).
+For instance, for most of our experiments is the temperature at time \( t \) set to the average weight in the integrated network \( G_{T} = \sum_{i=0}^{t} G_{i}\) (i.e., \( \beta(t) = {(\frac{1}{m} \sum_{(i,j) \in E(G_{T})} w_{i,j})}^{-1} \)).
 The normalized weights \( w'_{i,j} \) are also part of the extended egocentric network (c.f. \cref{fig:extended-egocentric-network}) and must be updated at the end of every iteration.
 The weighted fraction of active neighbors \( \alpha_{i}(t) \) of node \(v_{i} \) at time \( t - 1 \) is then given by
 
@@ -379,7 +379,7 @@ Therefore, active neighbors always affect the peer influence probability, but on
 The satisfaction of the prior described requirements for the function can be verified by examine its first derivative
 
 \begin{equation}
-    \frac{\mathrm{d} g}{\mathrm{d} \alpha} = \frac{q \theta^{2}}{(\theta^2 + \alpha^2)^{\sfrac{3}{2}}},
+    \frac{\mathrm{d} g}{\mathrm{d} \alpha} = \frac{q \theta^{2}}{{(\theta^2 + \alpha^2)}^{\sfrac{3}{2}}},
 \end{equation}
 
 which approaches zero very fast for values grater than \( q \).

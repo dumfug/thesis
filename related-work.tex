@@ -9,7 +9,7 @@ In this section some graph theory related notation is defined, which is used dur
 It is for the most part based on~\cite{Thulasiraman1992} and~\cite{Diestel2012}.
 
 A graph is a mathematical construct that can be used to model and explore the relationship between objects.
-More formally, a graph is a ordered pair of finite sets \( G = (V, E) \), whereas \( V \) denotes the set of \emph{vertices} (i.e., the objects) and \( E \subseteq [V]^{2} \) the set of \emph{edges} (i.e., the relationships between the objects).
+More formally, a graph is a ordered pair of finite sets \( G = (V, E) \), whereas \( V \) denotes the set of \emph{vertices} (i.e., the objects) and \( E \subseteq {[V]}^{2} \) the set of \emph{edges} (i.e., the relationships between the objects).
 It is common to write \( V(G) \) and \( E(G) \) to refer to the set of vertices and the set of edges respectively, that are associated with a graph \( G \).
 
 An edge \( \{v_1, v_2\} \in E(G) \) is an unordered pair of two vertices.
@@ -84,7 +84,7 @@ The cardinality of this set is called the \emph{degree} of the vertex and is den
 A vertex without any neighbors (i.e., with a degree of zero) is called isolated.
 
 It is often very useful to measure degree properties for a graph.
-For example, the minimum degree \( \delta(G) = \min\{d(v_i) : v_i \in V(G)\} \), the maximal degree \( \Delta(G) = \max\{d(v_i) : v_i \in V(G)\} \), or the average degree \( d(G) = \frac{1}{n} \sum_{v_i \in V(G)} d(v_i) \).
+For example, the minimum degree \( \delta(G) = \min \{d(v_i) : v_i \in V(G)\} \), the maximal degree \( \Delta(G) = \max \{d(v_i) : v_i \in V(G)\} \), or the average degree \( d(G) = \frac{1}{n} \sum_{v_i \in V(G)} d(v_i) \).
 An alternative way for the calculation of the average degree is \( d(G) = \frac{2m}{n} \).
 This works since each edge is counted twice in the summation of the vertex degrees in the original formula.
 These global measures can be used to gain insight into a graph's basic structure.
@@ -112,7 +112,7 @@ There exists at most \( \binom{d(v_i)}{2} = \frac{d(v_i)(d(v_i) - 1)}{2} \) edge
 Therefore, the clustering coefficient can be calculated by
 
 \begin{equation}
- C(v_i) = \frac{2 \, |\{\{v_j, v_k\} \in E(G) : v_j \in N(v_i) \wedge v_k \in N(v_i)\}| }{d(v_i)(d(v_i) - 1)}.
+ C(v_i) = \frac{2 \, |\{ \{v_j, v_k \} \in E(G) : v_j \in N(v_i) \wedge v_k \in N(v_i) \}| }{d(v_i)(d(v_i) - 1)}.
 \end{equation}
 
 This is, of course, a local property of one vertex and is therefore sometimes called \emph{local clustering coefficient}.
@@ -481,8 +481,8 @@ There is another very similar model, the \( G(n, p) \) model, in which the numbe
 The link quantity is determined by \( p \), the probability of the presence of a link between any pair of nodes in the network.
 Hence, the edges of a random network are determined by flipping a biased coin for each of the \( \binom{n}{2} \) possible edges.
 
-The probability for an arbitrary network with exactly \( m \) links under the \( G(n, p) \) model is \( p^{m} (1-p)^{\binom{n}{2} - m} \).
-Therefore, the probability that the model will generate a network with \( m \) links is \( \prob{m} = \binom{\binom{n}{2}}{m} p^{m} (1-p)^{\binom{n}{2} - m} \) (i.e., the probability of such a network times the number of possible networks).
+The probability for an arbitrary network with exactly \( m \) links under the \( G(n, p) \) model is \( p^{m} {(1-p)}^{\binom{n}{2} - m} \).
+Therefore, the probability that the model will generate a network with \( m \) links is \( \prob{m} = \binom{\binom{n}{2}}{m} p^{m} {(1-p)}^{\binom{n}{2} - m} \) (i.e., the probability of such a network times the number of possible networks).
 This corresponds to the binomial distribution \( B(\binom{n}{2}, p) \).
 Hence, the expected value for the number of links is
 
@@ -491,7 +491,7 @@ Hence, the expected value for the number of links is
 \end{equation}
 
 The expected value for the average degree \( c \) of a network generated with this model is deduced in \cref{eq:avg-degree-erdos-model}.
-The probability that an arbitrary node has a degree of exactly \( k \) is given by \( p(k) = \binom{n-1}{k} p^{k} (1-p)^{n-1-k} \) (i.e., \( k \) of its possible \( n-1 \) links must exist and there are \( \binom{n-1}{k} \) possible combinations for the \( k \) links).
+The probability that an arbitrary node has a degree of exactly \( k \) is given by \( p(k) = \binom{n-1}{k} p^{k} {(1-p)}^{n-1-k} \) (i.e., \( k \) of its possible \( n-1 \) links must exist and there are \( \binom{n-1}{k} \) possible combinations for the \( k \) links).
 Therefore, the degree distribution of this model is a binomial distribution as well.
 However, it is also possible to approximate the degree distribution with a Poisson distribution \( p(k) = \exp(-c) \frac{c^{k}}{k!} \) for large values of \( n \).
 
@@ -813,8 +813,8 @@ For instance, memory effects are not present that would allow links, which were 
         \draw (7) -- (10);
 
     \end{tikzpicture}
-    \caption[Integrated network example]{Illustration for the formation of the integrated network for a small example with \( n = 12 \) nodes. The first three graphs show the instantaneous networks for the time steps \( t = 0 \), \( t = 1 \), and \( t = 2 \). In each time step a few nodes get active (green nodes) and establish links to \( m = 1 \) other nodes. The forth graph shows the integrated network up to \( T = 2 \). It contains all links that were established in the instantaneous networks. Parallel links are not allowed (i.e. a link is only added once to the integrated network even if it is present in multiple time steps).}
-    \label{fig:integrated-network-example}
+    \caption[Integrated network example]{Illustration for the formation of the integrated network for a small example with \( n = 12 \) nodes. The first three graphs show the instantaneous networks for the time steps \( t = 0 \), \( t = 1 \), and \( t = 2 \). In each time step a few nodes get active (green nodes) and establish links to \( m = 1 \) other nodes. The forth graph shows the integrated network up to \( T = 2 \). It contains all links that were established in the instantaneous networks. Parallel links are not allowed (i.e., a link is only added once to the integrated network even if it is present in multiple time steps).}
+\label{fig:integrated-network-example}
 \end{figure}
 
 
@@ -907,7 +907,7 @@ Furthermore, every user \( v_{i} \) is assigned a positive real-valued variable 
 The dynamic process is then defined by the following system of coupled non-linear differential equations:
 
 \begin{equation}
-    \frac{\mathrm{d} a_{i}}{\mathrm{d} t} =  \underbrace{f(a_{i})}_{\text{activity decay}} + \underbrace{\sum_{j \in N(v_{i})} g(a_{j})}_{\text{peer influence}} \,\, \text{ for } i = 1,2,\ldots,n
+    \frac{\mathrm{d} a_{i}}{\mathrm{d} t} =  \underbrace{f(a_{i})}_{\text{activity decay}} + \underbrace{\sum_{j \in N(v_{i})} g(a_{j})}_{\text{peer influence}} \, \, \text{ for } i = 1,2,\ldots,n
 \end{equation}
 
 The first part of the right hand side of the equation represents the intrinsic activity decay of a user, and the function \( f \) defines how fast the loss of activity should occur.
