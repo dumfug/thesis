@@ -62,7 +62,7 @@
 
 \newcommand{\mytitlepage}{template/title_Thesis_TU_Graz}
 
-\newcommand{\mytodonotesoptions}{}
+\newcommand{\mytodonotesoptions}{disable}
 %% e.g., "" (empty), "disable", ...
 %% Options for the todonotes-package. If "disable", all todonotes will
 %% be hidden (including listoftodos).
@@ -105,7 +105,7 @@
 \newcommand{\myhomestreet}{Jakominigürtel~5a} %% your home street (with house number)
 \newcommand{\myhometown}{Graz} %% your home town
 \newcommand{\myhomepostalnumber}{8010} %% your postal number of home town
-\newcommand{\mysubmissionmonth}{sometime} %% month you are handing in
+\newcommand{\mysubmissionmonth}{March} %% month you are handing in
 \newcommand{\mysubmissionyear}{2017} %% year you are handing in
 \newcommand{\mysubmissiontown}{\myhometown} %% town of handing in (or \myhometown)
 
@@ -177,7 +177,7 @@
   \newpage\listoftodos
 }{}
 
-\mainmatter                     %% KOMA: marks main part using arabic page numbers and such; only available in scrbook
+\mainmatter                  %% KOMA: marks main part using arabic page numbers and such; only available in scrbook
 
 %% include tex file chapters:
 \include{introduction}
@@ -191,8 +191,10 @@
 
 \include{power-law-dist}
 
-\printbibliography
-
+\begingroup
+  \setlength{\emergencystretch}{3em}
+  \printbibliography
+\endgroup
 
 %%%% end{document}
 \end{document}
