@@ -23,8 +23,8 @@ The additionally introduced mechanisms, which allow for peer influenced activity
 Since this community-oriented model~\cite{Laurent2015} is based on the activity-driven framework by \citet{Perra2012a}, an activity potential \( a_{i} = \eta x_{i} \),  which is drawn from a suitable distribution, is assigned to each of the \( n \) nodes.
 To reflect the heterogeneous activity patterns of people, a power-law distribution \( f(x) \sim x^{-\gamma} \) is selected.
 The exponent for the activity potential distribution is fixed to \( \gamma = 2.7 \), which is a value that is similar to the exponent observed in real world communication networks.
-The lower bound for the activity potential is set to \( \varepsilon = 10^{-3} \), and the time scaling parameter is fixed to \( \eta = 1 \), so that \( a_{i} = x_{i} \in [\varepsilon, 1] \).
-Furthermore, for the sake of simplicity and without loss of generality we fix the size of the time window \( \Delta t \), and the number of generated links at each activation \( m \) to the value \( 1 \) as well.
+The lower bound for the activity potential is set to \( \varepsilon = 10^{-3} \), and the time rescaling parameter is fixed to \( \eta = 1 \), so that \( a_{i} = x_{i} \in [\varepsilon, 1] \).
+Furthermore, for the sake of simplicity, and without loss of generality, we fix the size of the time window \( \Delta t \) and the number of generated links at each activation \( m \) to the value \( 1 \) as well.
 
 The dynamic element of the model is basically identical to the activity-driven framework.
 A node becomes active in every time window with probability equal to its activity potential and selects other nodes to interact with.
@@ -48,7 +48,7 @@ This counter intuitive result can be explained by the observation that most acti
 The memory of a node is represented by a weighted egocentric network that includes all other nodes, which were already part of one or more interactions in the past.
 These previous communication partners are also called neighbors.
 The weight represents the number of previous interactions scaled by the link-reinforcement constant \( \delta \).
-More specifically, the weight is set to \( 1 \) for the first contact and incremented by \( \delta \) for every additional contact.
+More specifically, the weight is set to \( 1 \) for the first contact, and incremented by \( \delta \) for every additional contact.
 \Cref{fig:egocentric-network} shows an exemplary egocentric network of the node \( v_{i} \) and its neighbors.
 
 
@@ -56,14 +56,14 @@ More specifically, the weight is set to \( 1 \) for the first contact and increm
     \centering
 
     \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=3pt]}, neighbor/.style={circle,fill=blue!70,minimum size=1em,inner sep=3pt]}]
-      \node[node] (1) at (-1, -1)  {i};
-      \node[neighbor] (2) at (2.5, 1.5) {j};
-      \node[neighbor] (3) at (2.5, -1) {k};
-      \node[neighbor] (4) at (2.5, -3.5) {l};
+      \node[node] (1) at (-1, -1)  {\( i \)};
+      \node[neighbor] (2) at (2.5, 1.5) {\( j \)};
+      \node[neighbor] (3) at (2.5, -1) {\( k \)};
+      \node[neighbor] (4) at (2.5, -3.5) {\( l \)};
 
-      \draw (1) -- (2) node [midway, above, sloped] (a) {$w_{i,j} = 3$};
-      \draw (1) -- (3) node [midway, above, sloped] (b) {$w_{i,k} = 5$};
-      \draw (1) -- (4) node [midway, above, sloped] (c) {$w_{i,l} = 2$};
+      \draw (1) -- (2) node [midway, above, sloped] (a) {\small $w_{i,j} = 3$};
+      \draw (1) -- (3) node [midway, above, sloped] (b) {\small $w_{i,k} = 5$};
+      \draw (1) -- (4) node [midway, above, sloped] (c) {\small $w_{i,l} = 2$};
     \end{tikzpicture}
 
     \caption[Egocentric network example]{Egocentric network of the node \( v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes). The link-reinforcement increment in this example is set to \( \delta = 1 \). This means that the weights exactly correspond to the number of previous interactions between the nodes.}
@@ -71,22 +71,22 @@ More specifically, the weight is set to \( 1 \) for the first contact and increm
 \end{figure}
 
 
-The choice of a node between forming a new tie and reinforcing an existing one depends on the number of its neighbors.
+A node's choice between forming a new tie and reinforcing an existing one depends on the number of its neighbors.
 This corresponds to the observations in social interaction dynamics, where actors tend to communicate almost exclusively within their social cycle, which has a limited size, due to cognitive capacities of the actors~\cite{Dunbar1992}.
 Let \( k_{i} = d(v_{i}) \) be the degree of the node \( v_{i} \) in its egocentric network.
 The probability for a node to form a new tie is given by \( p(k_{i}) = \sfrac{c}{(k_{i} + c)} \), and the probability to reinforce an already established tie is \( \bar{p}(k_{i}) = 1 - p(k_{i}) = \sfrac{k_{i}}{(k_{i} + c)} \), where the constant \( c \) determines the memory strength of an actor (cf.  \cref{fig:reinforcement-process-prob-plot} for details).
 Therefore, the probability for the formation of a new tie decays very fast with increasing size of the egocentric network.
 The memory strength constant is fixed to \( c = 1 \) in the context of our work.
 
-If an active node decides to reinforce an existing tie, the neighbor is selected at random with respect to its tie strength.
+If an active node decides to reinforce an existing tie, the neighbor is selected at random with respect to its tie strength (i.e., the number of previous interactions).
 Therefore, the probability for node \( v_{j} \) to be selected as communication partner by node \( v_{i} \) is given by
 \( p_{i,j} = \sfrac{w_{i,j}}{\sum_{k \in N(v_{i})} w_{i, k}} \), where \( w_{i,j} \) denotes the tie strength between node \( v_{i} \) and \( v_{j} \) in the egocentric network of \( v_{i} \).
-This reinforcement process allows for the introduction of dependencies between successive interactions of node pairs and replaces the approach from the original activity-driven framework of selecting a communication partner uniformly at random.
+This reinforcement process allows for the introduction of dependencies between successive interactions of node pairs, and replaces the approach of the original activity-driven framework in which communication partners are selected uniformly at random.
 
 
 \myfig{reinforcement-process-prob-function}
       {width=0.75\textwidth}
-      {Plots of the function that determines the probability for the formation of a new tie based on the degree of a node \( p(k) \) for different values of the memory strength \( c \). This constant can be used to model different types of users. Larger values may correspond to social explorers, that are more prone to form new ties, and smaller values are related to social keepers, which communicate almost exclusively to peers in their social circle.}
+      {Plots of the function that determines the probability for the formation of a new tie based on the degree of a node \( p(k) \) for different values of the memory strength \( c \). This constant can be used to model different types of users. Larger values may correspond to social explorers, that are more prone to form new ties, and smaller values are related to social keepers, which communicate almost exclusively to peers in their social circle~\cite{Miritello2013}.}
       {Probability distribution for the formation of new ties.}
       {fig:reinforcement-process-prob-plot}
 
@@ -98,9 +98,9 @@ They showed that this mechanism is sufficient to generate networks with complex 
 If a node wants to form a new tie, it tries to perform a cyclic closure with probability \( p_{\Delta} \), by interacting with a randomly selected neighbor of a neighbor.
 
 The second closure process, \emph{focal closure}, tries to emulate the social dynamic that users tend to form ties with other users that are similar to them (e.g., if they share common interests).
-This process is performed whenever a new tie should be created with a probability of \( 1 - p_{\Delta} \) or if there are no suitable candidates for a cyclical closure available.
+This process is performed whenever a new tie should be created with a probability of \( 1 - p_{\Delta} \), or if there are no suitable candidates for a cyclical closure available.
 This is, for instance, the case if a node becomes active for the first time.
-The weight of a new tie is always initialized to \( 1 \), regardless of the type of closure that was used to establish the new tie.
+The weight of a new tie is always initialized to \( 1 \), regardless of the type of closure that was used to establish the tie.
 
 The actual implementation of these two closure mechanisms was adapted from the work of \citet{Kumpula2007}, who used the same closure mechanisms to study the formation of community structures in weighted static networks.
 They model cyclic closure as a biased local search (cf. \cref{fig:cyclic-closure} for details) and focal closure as an unbiased global search, which means selecting a new node uniformly at random from the entire network.
@@ -127,12 +127,12 @@ Furthermore, they introduced a node deletion mechanism, which was adapted in thi
       \draw (5) -- (3.4, 0);
       \draw (6) -- (3.4, 2);
 
-      \draw (1) -- (2) node [midway, below] (a) {2};
-      \draw (1) -- (3) node [midway, above] (b) {3};
-      \draw (1) -- (4) node [midway, below] (c) {5};
-      \draw (4) -- (6) node [midway, below] (d) {3};
-      \draw (4) -- (5) node [midway, above] (e) {4};
-      \draw (2) -- (5) node [midway, below] (f) {7};
+      \draw (1) -- (2) node [midway, below] (a) {\small \( 2 \)};
+      \draw (1) -- (3) node [midway, above] (b) {\small \( 3 \)};
+      \draw (1) -- (4) node [midway, below] (c) {\small \( 5 \)};
+      \draw (4) -- (6) node [midway, below] (d) {\small \( 3 \)};
+      \draw (4) -- (5) node [midway, above] (e) {\small \( 4 \)};
+      \draw (2) -- (5) node [midway, below] (f) {\small \( 7 \)};
     \end{tikzpicture}
     \caption{}
     \label{subfig:cyclic-closure-a}
@@ -155,12 +155,12 @@ Furthermore, they introduced a node deletion mechanism, which was adapted in thi
       \draw (5) -- (3.4, 0);
       \draw (6) -- (3.4, 2);
 
-      \draw (1) -- (2) node [midway, below] (a) {2};
-      \draw (1) -- (3) node [midway, above] (b) {3};
-      \draw (1) -- (4) node [midway, below] (c) {5};
-      \draw (4) -- (6) node [midway, below] (d) {3};
-      \draw (4) -- (5) node [midway, above] (e) {4};
-      \draw (2) -- (5) node [midway, below] (f) {7};
+      \draw (1) -- (2) node [midway, below] (a) {\small \( 2 \)};
+      \draw (1) -- (3) node [midway, above] (b) {\small \( 3 \)};
+      \draw (1) -- (4) node [midway, below] (c) {\small \( 5 \)};
+      \draw (4) -- (6) node [midway, below] (d) {\small \( 3 \)};
+      \draw (4) -- (5) node [midway, above] (e) {\small \( 4 \)};
+      \draw (2) -- (5) node [midway, below] (f) {\small \( 7 \)};
     \end{tikzpicture}
     \caption{}
     \label{subfig:cyclic-closure-b}
@@ -183,13 +183,13 @@ Furthermore, they introduced a node deletion mechanism, which was adapted in thi
       \draw (5) -- (3.4, 0);
       \draw (6) -- (3.4, 2);
 
-      \draw (1) -- (2) node [midway, below] (a) {2};
-      \draw (1) -- (3) node [midway, above] (b) {3};
-      \draw[line width=0.5mm] (1) -- (4) node [midway, below] (c) {5};
-      \draw[line width=0.5mm] (4) -- (6) node [midway, below] (d) {3};
-      \draw (4) -- (5) node [midway, above] (e) {4};
-      \draw (2) -- (5) node [midway, below] (f) {7};
-      \draw[line width=0.5mm] (1) -- (6) node [midway, above] (g) {1};
+      \draw (1) -- (2) node [midway, below] (a) {\small \( 2 \)};
+      \draw (1) -- (3) node [midway, above] (b) {\small \( 3 \)};
+      \draw[line width=0.5mm] (1) -- (4) node [midway, below] (c) {\small \( 5 \)};
+      \draw[line width=0.5mm] (4) -- (6) node [midway, below] (d) {\small \( 3 \)};
+      \draw (4) -- (5) node [midway, above] (e) {\small \( 4 \)};
+      \draw (2) -- (5) node [midway, below] (f) {\small \( 7 \)};
+      \draw[line width=0.5mm] (1) -- (6) node [midway, above] (g) {\small \( 1 \)};
     \end{tikzpicture}
     \caption{}
     \label{subfig:cyclic-closure-c}
@@ -209,9 +209,9 @@ The deletion probability of nodes determines how fast the network reaches its eq
 A small value for \( p_{d} \) allows for nodes to stay a long time in the network and even nodes with relatively small activity potential can become fully integrated in the community structures.
 Therefore, it takes longer to reach the time invariant state if the low activity nodes are not removed fast enough.
 
-The expected time that a node will be part of the network can be determined by viewing a nodes' lifetime as a simple Bernoulli process.
+The expected time that a node will be part of the network can be determined by viewing a node's lifetime as a simple Bernoulli process.
 In each iteration a biased coin is tossed for every node.
-The outcome of this Bernoulli random experiment determines if the node stays in the network or is replaced in the next round.
+The outcome of this Bernoulli random experiment determines if the node stays in the network, or is replaced in the next round.
 The probability for a node to be deleted after exactly \( x \) iterations is \( \prob{x} = p_{d} {(1 - p_{d})}^{x-1} = p_{d} \bar{p}_{d}^{x-1} \).
 Hence, the expected value for the lifetime of a node is given by \( \expval{x} = \sum_{x=1}^{\infty} x \prob{x} = \sum_{x=1}^{\infty} x p_{d} \bar{p}_{d}^{x-1} = p_{d} \sum_{x=1}^{\infty} x \bar{p}_{d}^{x-1} \).
 This sum is related to the sum of the geometric series \( \sum_{x=0}^{\infty} r^{x} = \frac{1}{1 - r} \), for \(|r| < 1 \), by being its first derivative\footnote{The first derivative of the sum of the geometric series is \( \frac{\mathrm{d} \sum_{x=0}^{\infty} r^{x}}{\mathrm{d} r} = \sum_{x=0}^{\infty} \frac{\mathrm{d} r^{x}}{\mathrm{d} r} = \sum_{x=1}^{\infty} x r^{x-1} = \frac{\mathrm{d} \frac{1}{1-r}}{\mathrm{d} r} = \frac{1}{{(1 - r)}^{2}} \), for \(|r| < 1\).}.
@@ -227,7 +227,7 @@ These graphs are denoted as instantaneous networks, and the union of these netwo
 This is also true for this extension, however, the links in the integrated network have an additional weight assigned to them, which corresponds to the tie strength in the egocentric networks of the nodes.
 Another equivalent way to define the integrated network is the union of all egocentric networks up to some time step \( T \).
 
-These newly introduced mechanisms have interesting effects on how the structures on the integrated network evolve over time.
+These newly introduced mechanisms have interesting effects on how the structures in the integrated network evolve over time.
 In the beginning, after nodes formed their first ties, they start to close triangles and reinforce the ties in their egocentric network.
 This means that strong community structures are formed early in the process.
 However, after a while more and more weak ties are introduced and fewer triangles are closed, so that the strength of the communities declines and the network reaches its equilibrium state.
@@ -263,10 +263,10 @@ For example, weight-topology correlations (i.e., stronger ties within groups) ar
 
 \subsection{Idea}
 
-So far was the activity in temporal networks entirely determined by the activity-potential distribution.
+So far, the activity in temporal networks was entirely determined by the activity-potential distribution.
 Each node is assigned an intrinsic probability to become active in each round, which is drawn from this distribution.
-The assignment is done only once for every node when it is created and does not change afterwards.
-After that, a node can become active in an iteration of the model either by himself or by being contacted by another active node.
+The assignment is done only once for every node when it is created, and does not change afterwards.
+After that, a node can become active in an iteration either by himself or by being contacted by another active node.
 
 The process of becoming active on one's own accord does not dependent on whether or not the node was active in previous time steps.
 This corresponds to a memory-less Poisson process and leads necessarily to exponentially distributed times between two consecutive activations of a node (i.e., inter-event times).
@@ -277,7 +277,7 @@ For example, lets assume a node with very low activity potential is part of a gr
 The self-activation rate of the low-activity node will be quite low, with a mean value and standard deviation of the inter-event times that is equal to the inverse of its activity probability.
 
 Nevertheless, the other nodes in the group will fairly often select the low-active node as communication partner when they become active, due the biased local search.
-This can, of course, alter the inter-event time distributions of nodes with a small activity potential in a significant way, compared to the distributions that are generated by the activity-driven framework, where the activation through other nodes happens totally at random.
+This can, of course, alter the inter-event time distributions of nodes with a small activity potential in a significant way, compared to the distributions that are generated by the activity-driven framework, where the activation through other nodes happens completely at random.
 This, in this case implicit, influence that nodes have on the activity of their neighbors is an interesting effect and was a starting point for our thesis.
 In this section, an extension of the prior discussed underlying model with memory and closure effects is presented, which tries to model the influences of peers in the local network in a more explicit way.
 
@@ -302,7 +302,7 @@ It denotes the maximal probability for an activation motivated by the neighbors 
 
 Since the peer influence probability depends on the neighbors that were active in the last round, the information of the last activations of the nodes must be stored as well.
 This is done by extending the egocentric networks to save the timestamp of the last activation for each node.
-The time of last activation of \( v_{i} \) is called \( t_{i} \) and is updated independently of the type of activation (i.e., due to self activation or by being contacted by another active node).
+The time of last activation of \( v_{i} \) is called \( t_{i} \) and is updated independently of the type of activation (i.e., due to self activation, or by being contacted by another active node).
 
 Furthermore, the peer influence probability should not only be dependent on how many neighbors of a node were active in the round before, but also on the strength of the ties between them.
 A neighbor that shares a strong connection with a node should be more influential than, for example, neighbors that were only recently introduced to the egocentric network.
@@ -328,29 +328,10 @@ For instance, it is used in the machine learning area of reinforcement learning,
 \citet{Crites1998} apply this method to control a group of elevators using multiple agents.
 It is also, for example, used in the modeling of the decision making behavior of humans in economic settings~\cite{Ray2008}.
 
-
-\begin{figure}
-    \centering
-    \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=3pt]}, neighbor/.style={circle,fill=blue!70,minimum size=1em,inner sep=3pt]}]
-      \node[node, label=left:{$t_{i} = 43$}] (1) at (-1, -1) {i};
-      \node[neighbor, label=right:{$t_{j} = 42$}] (2) at (3, 2.0) {j};
-      \node[neighbor, label=right:{$t_{k} = 23$}] (3) at (3, -1) {k};
-      \node[neighbor, label=right:{$t_{l} = 39$}] (4) at (3, -4.0) {l};
-
-      \draw (1) -- (2) node [midway, above, sloped, align=right] (a) {$w_{i,j} = 3$ \\ $w'_{i,j} = 0.114$};
-      \draw (1) -- (3) node [midway, above, sloped, align=right] (b) {$w_{i,k} = 5$ \\ $w'_{i,k} = 0.844$};
-      \draw (1) -- (4) node [midway, above, sloped, align=right] (c) {$w_{i,l} = 2$ \\ $w'_{i,l} = 0.042$};
-    \end{tikzpicture}
-
-    \caption[Extended egocentric network example]{Extended egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes). Each node stores additionally the point in time on which it was last active. For instance, node \(v_{j} \) was last active at \( t = 42 \). Furthermore, the scaled and normalized weights \( w'_{i,j} \) are part of the network. For example, the scaled weight for the tie between \( v_{i} \) and \( v_{j} \) can be calculated by \( w'_{i,j} = \sfrac{\exp(3)}{\exp(3) + \exp(5) + \exp(3)} = 0.114 \). For the sake of simplicity is \( \beta = 1 \) in this example.}
-\label{fig:extended-egocentric-network}
-\end{figure}
-
-
 The usage of the softmax function in our model allows for different influence scenarios.
 For example, a value of \( \beta = 0 \) (this would correspond to a very high temperature) would scale every weight to the same value, which means that every active neighbor influences a node equally, regardless of the tie strength.
 However, it also possible to make \( \beta \) time-dependent (i.e., \( \beta(t) \)), similar to a physical system that is cooling off or heating up.
-For instance, for most of our experiments is the temperature at time \( t \) set to the average weight in the integrated network \( G_{T} = \sum_{i=0}^{t} G_{i}\) (i.e., \( \beta(t) = {(\frac{1}{m} \sum_{(i,j) \in E(G_{T})} w_{i,j})}^{-1} \)).
+For instance, for most of our experiments is the temperature at time \( t \) set to the average weight in the integrated network \( G_{T} = \sum_{i=0}^{t} G_{i}\) (i.e., \( \beta(t) = (\frac{1}{m} \sum_{(i,j) \in E(G_{T})} w_{i,j}) \inv \)).
 The normalized weights \( w'_{i,j} \) are also part of the extended egocentric network (c.f. \cref{fig:extended-egocentric-network}) and must be updated at the end of every iteration.
 The weighted fraction of active neighbors \( \alpha_{i}(t) \) of node \(v_{i} \) at time \( t - 1 \) is then given by
 
@@ -360,6 +341,25 @@ The weighted fraction of active neighbors \( \alpha_{i}(t) \) of node \(v_{i} \)
 
 where \( \mathbf{1}_{\{x\}} \) is the indicator function, which yields the value \( 1 \) every time the predicate \( x \) is true, otherwise it is \( 0 \).
 
+
+\begin{figure}
+    \centering
+    \begin{tikzpicture}[node/.style={circle,fill=red!70,minimum size=1em,inner sep=3pt]}, neighbor/.style={circle,fill=blue!70,minimum size=1em,inner sep=3pt]}]
+      \node[node, label=left:{\small $t_{i} = 43$}] (1) at (-1, -1) {\( i \)};
+      \node[neighbor, label=right:{\small $t_{j} = 42$}] (2) at (3, 2) {\( j \)};
+      \node[neighbor, label=right:{\small $t_{k} = 23$}] (3) at (3, -1) {\( k \)};
+      \node[neighbor, label=right:{\small $t_{l} = 39$}] (4) at (3, -4) {\( l \)};
+
+      \draw (1) -- (2) node [midway, above, sloped, align=right] (a) {\small $w_{i,j} = 3$ \\ \small $w'_{i,j} = 0.114$};
+      \draw (1) -- (3) node [midway, above, sloped, align=right] (b) {\small $w_{i,k} = 5$ \\ \small $w'_{i,k} = 0.844$};
+      \draw (1) -- (4) node [midway, above, sloped, align=right] (c) {\small $w_{i,l} = 2$ \\ \small $w'_{i,l} = 0.042$};
+    \end{tikzpicture}
+
+    \caption[Extended egocentric network example]{Extended egocentric network of the node \(v_{i} \) (red node) and its neighbors \( v_{j} \), \( v_{k} \), and \( v_{l} \) (blue nodes). Each node stores additionally the point in time on which it was last active. For instance, node \(v_{j} \) was last active at \( t = 42 \). Furthermore, the scaled and normalized weights \( w'_{i,j} \) are part of the network. For example, the scaled weight for the tie between \( v_{i} \) and \( v_{j} \) can be calculated by \( w'_{i,j} = \sfrac{\exp(3)}{\exp(3) + \exp(5) + \exp(3)} = 0.114 \). For the sake of simplicity is \( \beta = 1 \) in this example.}
+\label{fig:extended-egocentric-network}
+\end{figure}
+
+
 Next, the weighted fraction of prior active neighbors must be mapped to a peer influence probability in the range \( [0, q] \) using a monotonically increasing function.
 One possibility would be the usage of a linear function \( g(\alpha) = q \alpha \) defined for values \(0 \leq \alpha \leq 1 \).
 However, this function seems to not capture the peer influence mechanism very well.
@@ -368,7 +368,7 @@ The peer influence should saturate after some fraction of active neighbors is re
 On the other hand, the peer influence for a node should become noticeable after some threshold of active neighbors is reached.
 
 These requirements can be satisfied by using a sigmoid function.
-Similar to~\cite{Walk2016}, the following algebraic sigmoid function \( g \) is used to determine the peer influence for the node \( v_{i} \)
+Similar to~\cite{Walk2016}, the following algebraic sigmoid function \( g \) is used to determine the peer influence for the node \( v_{i} \):
 
 \begin{equation}
     p_{i}(t) = g(\alpha_{i}(t)) = \frac{\alpha_{i}(t) q}{\sqrt{\alpha_{i}^{2}(t) + \theta^2}},
@@ -376,7 +376,7 @@ Similar to~\cite{Walk2016}, the following algebraic sigmoid function \( g \) is 
 
 where the parameter \( q \) is the maximum peer influence, as discussed prior, and \( \theta > 0 \) denotes a critical threshold, which determines the required (weighted) fraction of active neighbors to set the peer influence probability close to its maximum.
 Therefore, active neighbors always affect the peer influence probability, but only after a certain point in a significant way.
-The satisfaction of the prior described requirements for the function can be verified by examine its first derivative
+The satisfaction of the prior described requirements for the function can be verified by examining its first derivative
 
 \begin{equation}
     \frac{\mathrm{d} g}{\mathrm{d} \alpha} = \frac{q \theta^{2}}{{(\theta^2 + \alpha^2)}^{\sfrac{3}{2}}},
@@ -384,7 +384,7 @@ The satisfaction of the prior described requirements for the function can be ver
 
 which approaches zero very fast for values grater than \( q \).
 
-Sigmoid functions are usually defined for all real values, since they are often used to re-scale values to the range \([-1, 1] \) or \( [0, 1] \).
+Sigmoid functions are usually defined for all real values, since they are often used to rescale values to the range \( [-1, 1] \) or \( [0, 1] \).
 However, in our model only input values on the unit interval are relevant and, therefore, the two parameter \( q \) and \( \theta \) should be selected carefully to archive the desired peer influence behavior.
 For instance, too large values for \( \theta \) may obstruct the peer influence mechanism critically, since the maximum influence may never be reached, even if \( \alpha = 1 \).
 \Cref{fig:peer-influence-sigmoid} shows the discussed sigmoid function with different values for the critical threshold.
@@ -392,7 +392,7 @@ For instance, too large values for \( \theta \) may obstruct the peer influence 
 
 \myfig{peer-influence-sigmoid}
       {width=0.75\textwidth}
-      {Depiction of the sigmoid function that is used to calculate the peer influence probability \(p_{i} \) of a node based on its (weighted) fraction of active neighbors \( \alpha \) for different values of the critical threshold \( \theta \). The maximum possible peer influence probability in this example is fixed to \( q = 0.10 \). The critical threshold determines how fast the maximum peer probability can be reached. Values in the range between 5\% and 20\% seem to be a sound choice, since already a small number of influential neighbors should suffice to have an notable effect on a user.}
+      {Depiction of the sigmoid function that is used to calculate the peer influence probability \( p_{i} \) of a node based on its (weighted) fraction of active neighbors \( \alpha \) for different values of the critical threshold \( \theta \). The maximum possible peer influence probability in this example is fixed to \( q = 0.10 \). The critical threshold determines how fast the maximum peer probability can be reached. Values in the range between 5\% and 20\% seem to be a sound choice, since already a small number of influential neighbors should suffice to have an notable effect on a user.}
       {Peer influence sigmoid function examples}
       {fig:peer-influence-sigmoid}
 
@@ -431,7 +431,7 @@ Note that many of them (e.g., \( \Delta t \), \( \eta \), \ldots) have reasonabl
 \multicolumn{2}{c}{community structure extension} \\
 \midrule
 \( p_{\Delta} \) & The probability to form a triangle when establishing a new tie. \\
-\( p_{d} \) & The probability for node to get deleted in a iteration. \\
+\( p_{d} \) & The probability for node to get deleted in an iteration. \\
 \( \delta \) & The constant value that is added to the tie strength when it is reinforced. \\
 \( c \) &  The memory constant, which influences the probability to form a new tie.\\
 \midrule
