@@ -238,7 +238,7 @@ The cyclic closure probability \( p_{\Delta} \) and the reinforcement increment 
 Furthermore, like the node deletion probability, the two parameter have an effect on the average degree of the converged network.
 Higher values for the cyclic closure probability or the tie reinforcement increment result in a smaller average degree.
 However, the two parameter do not influence the actual (heterogeneous) distribution of the degrees in a significant way.
-The tie strengths, which are power-law distributed, are not effected by \( p_{\Delta} \), and larger values for \( \delta \) only influence the length of the tail of the distribution.
+The tie strengths, which are power-law distributed, are not affected by \( p_{\Delta} \), and larger values for \( \delta \) only influence the length of the tail of the distribution.
 
 Another characteristic of this model is the larger impact of the cyclic closure probability on the emerging community structures compared to the tie reinforcement increment.
 This is true since \( p_{\Delta} \) affects the number of triangles directly, whereas \( \delta \) is responsible for the creation of strong ties, which increases the bias in the local search, and only assists in the process of finding suitable nodes for the triangle formation.
@@ -261,7 +261,7 @@ For example, weight-topology correlations (i.e., stronger ties within groups) ar
 \label{sec:peer-influence-model}
 
 
-\subsection{Idea}
+\subsection{Idea and Incentive}
 
 So far, the activity in temporal networks was entirely determined by the activity-potential distribution.
 Each node is assigned an intrinsic probability to become active in each round, which is drawn from this distribution.
@@ -392,7 +392,7 @@ For instance, too large values for \( \theta \) may obstruct the peer influence 
 
 \myfig{peer-influence-sigmoid}
       {width=0.75\textwidth}
-      {Depiction of the sigmoid function that is used to calculate the peer influence probability \( p_{i} \) of a node based on its (weighted) fraction of active neighbors \( \alpha \) for different values of the critical threshold \( \theta \). The maximum possible peer influence probability in this example is fixed to \( q = 0.10 \). The critical threshold determines how fast the maximum peer probability can be reached. Values in the range between 5\% and 20\% seem to be a sound choice, since already a small number of influential neighbors should suffice to have an notable effect on a user.}
+      {Depiction of the sigmoid function that is used to calculate the peer influence probability \( p_{i} \) of a node based on its (weighted) fraction of active neighbors \( \alpha \) for different values of the critical threshold \( \theta \). The maximum possible peer influence probability in this example is fixed to \( q = 0.10 \). The critical threshold determines how fast the maximum peer probability can be reached. Values in the range between 5\% and 20\% seem to be a sound choice, since already a small number of influential neighbors should suffice to have a notable effect on a user.}
       {Peer influence sigmoid function examples}
       {fig:peer-influence-sigmoid}
 
@@ -401,7 +401,7 @@ The self-activation mechanism for nodes must be adapted as well.
 The simple biased coin flip becomes a more sophisticated two-step random experiment.
 First, like in the base model, a biased coin is tossed to determine if a node becomes active with probability that corresponds to its activity potential.
 If this first random experiment fails, the node gets a second chance to become active by himself.
-This is done by calculating the nodes' peer influence probability and tossing another biased coin.
+This is done by calculating the node's peer influence probability and tossing another biased coin.
 Therefore, the total probability for a node \( v_{i} \) to become active at time \( t \) can be expressed by
 
 \begin{equation}
