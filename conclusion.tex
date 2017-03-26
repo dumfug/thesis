@@ -38,7 +38,7 @@ The actual specification of the peer influence mechanism resolves various import
 \end{itemize}
 
 After the model\footnote{An open-source Python implementation of the proposed model can be found at \url{https://github.com/dumfug/PIModel}.} was fully specified, we evaluated it on synthetic networks.
-This included an examination of the effects on the topological structures of the network, which showed that the peer influence mechanism does accelerate the formation of the community structures and influences their strength.
+This included an examination of the effects on the topological structures of networks, which showed that the peer influence mechanism does accelerate the formation of the community structures and influences their strength.
 Additional investigations on the increased activity within the networks and its implications was conducted as well.
 They revealed not only the complex behavior of the total number of activations per iteration over time for larger magnitudes of peer influence, but also the impact on the activation patterns of individual nodes.
 The distribution of time intervals between two consecutive activations changed in a way that allows for increased burstiness, which is a property that is observable in human activity patterns.
@@ -53,15 +53,15 @@ This revealed interesting consequences, especially in the case in which the infl
 \section{Limitations}
 \label{sec:limitations}
 
-One shortcoming, which effected all performed experiments, is the relatively small size of the generated networks.
+One shortcoming, which affected all performed experiments, is the relatively small size of the generated networks.
 The number of nodes in many real-world networks can be multiple orders of magnitude larger.
 However, to simulate temporal networks of this size efficiently, improvements in implementation of the model must be made, which minimize the additional overhead of the peer influence mechanism.
 Nevertheless, this would possibly help to explain some observed effects better.
 For example, the temporarily decrease in the network activity for higher levels of peer influence, which could possibly be explained by the merging of communities in the network, is probably more prominent in larger networks.
 
 Simulations of the model with an increased number of nodes would also allow to compare the properties of synthetically generated networks with those of real-world data sets more easily, and therefore help to verify the validity of the proposed model.
-This would not only be highly interesting for topological features like clustering, but also the inter-event time distribution.
-The observed changes in the distribution do not fully capture the discussed characteristics of human activity patterns, which are bursts followed by longer intervals of inactivity.
+This would not only be highly interesting for topological features like clustering, but also for the inter-event time distributions.
+The observed changes in the distributions do not fully capture the discussed characteristics of human activity patterns, which are bursts followed by longer intervals of inactivity.
 While the probability for short breaks between activations increased with additional peer influence, which matches the first requirement, declined the length of the tail.
 This, again, restricts the possibilities for longer intervals between bursts.
 
@@ -69,7 +69,7 @@ A possible explanation for this behavior is an imbalance of the peer influence m
 On one hand, a level of peer influence that is set too low, does not affect the activity in a significant way.
 On the other hand, the process becomes too dominant for higher levels, and leads to bursts within communities that are repeated over and over again.
 A potential solution would be to restrict the peer influence process in a way that nodes cannot be easily influenced multiple times within a short period of time (i.e., a cool-down time for the effect).
-However, this requires additional investigation on how these cascading peer influence effects actually work.
+However, this requires additional investigations on how these cascading peer influence effects actually work.
 
 
 %% ========================================================================
@@ -102,8 +102,8 @@ Therefore, it would also be feasible to introduce negative peer effects in our m
 \paragraph{Peer Influence Mechanics}
 The way the peer influence mechanism was implemented in the proposed model was based on the work of \citet{Walk2016}, and on the intuitive understanding of the concept.
 However, no claim to completeness and correctness for the presented model is made.
-There is always potential for improvement by the inclusion of new ideas or the removal of existing elements of the model.
+There is always potential for improvement by the inclusion of new ideas, or the removal of existing elements of the model.
 For example, the complex softmax weight rescaling mechanism may be replaced with a simple weighted fraction.
 This would remove one free parameter and possibly improve the runtime performance.
 Another potential extension would be the introduction of a critical peer influence threshold, which depends on the size of the egocentric network of a node.
-This would allow for additional peer influence scenarios, like a reduced influence of hubs.
+This would allow for additional peer influence scenarios, like a reduced influenceability of hubs.
